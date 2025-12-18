@@ -197,15 +197,15 @@ The **OPT-INS framework** defines six canonical axes for information topology:
 
 ## 8. v6.0 Nomenclature
 
-# 8.2 Controlled Vocabulary — Nomenclature v6.0 (COMPLETE SINGLE OUTPUT)
+# 8.2 Controlled Vocabulary — Nomenclature v6.0 
 
-## 8.2.1 Canonical filename format (normative)
+## 8.1 Canonical filename format (normative)
 
 `[ATA]_[PROJECT]_[PROGRAM]_[FAMILY]_[VARIANT]_[VERSION]_[MODEL]_[BLOCK]_[PHASE]_[KNOT]_[AoR]__[SUBJECT]_[CATEGORY]_[TYPE]_[ISSUE-REV]_[STATUS].[EXT]`
 
 ---
 
-## 8.2.2 Field Definitions (allowed values)
+## 8.2 Field Definitions (allowed values)
 
 | # | Field | Allowed Values | Notes |
 |---:|---|---|---|
@@ -230,7 +230,7 @@ The **OPT-INS framework** defines six canonical axes for information topology:
 
 ---
 
-## 8.2.3 Naming invariants (normative)
+## 8.2.1 Naming invariants (normative)
 
 1) **Double-underscore** `__` is mandatory before SUBJECT.  
 2) **No KNOT outside K01..K14** may appear anywhere in filename.  
@@ -241,7 +241,7 @@ The **OPT-INS framework** defines six canonical axes for information topology:
 
 ---
 
-## 8.2.4 Regex constraints (validator-grade)
+## 8.2.2 Regex constraints (validator-grade)
 
 - **ATA**: `^(0[0-9]|[1-9][0-9]|1[01][0-6])$`
 - **PROJECT**: `^AMPEL360$`
