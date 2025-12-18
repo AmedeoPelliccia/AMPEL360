@@ -151,7 +151,121 @@ This portal model provides:
 
 ---
 
-## 6. OPT-INS Framework
+## 6. KNOTS — Knowledge Nets and Ontology as Tasking Strategy
+
+**KNOTS** (Knowledge Nets and Ontology as Tasking Strategy) is the AMPEL360 CAXS method for turning **design thinking** into **certifiable, repeatable agentic work**, expressed as **SysML-consumable task structures** and enforced by governance gates.
+
+A KNOT is a **controlled process node** that:
+1) defines **what knowledge must exist** (ontology commitments),
+2) defines **how it must connect** (knowledge net interfaces),
+3) defines **what tasks agents may execute** (tasking strategy),
+4) defines **what evidence must be produced** (compliance-ready outputs).
+
+KNOTS are the bridge between:
+- **MBSE/SysML architecture** (requirements, behavior, structure, interfaces),
+- **agentic execution** (task decomposition, automation, prompting/tooling),
+- **configuration control** (traceability, naming standard, release packs),
+- **certification evidence** (VV packs, audit queries, signed manifests).
+
+---
+
+### 6.1 Core Concepts
+
+**Knowledge Net**
+A directed graph where nodes are controlled artifacts (models, specs, data, test results) and edges are typed relations (e.g., *satisfies*, *verifies*, *allocatesTo*, *dependsOn*, *evidencedBy*).
+
+**Ontology Commitments**
+A governed vocabulary and schema set that makes artifacts machine-checkable:
+- controlled terms (AoR/STK, TYPE/STATUS, IDENTIFIER grammars),
+- schemas (SSOT) for registers, evidence, and interfaces,
+- constraints (allowed ranges, required fields, invariants).
+
+**Tasking Strategy**
+A rule set that converts "what we need" into "what agents do":
+- permitted actions per AoR,
+- sequencing rules and dependencies,
+- minimum evidence required to close a KNOT.
+
+**SysML Expression**
+KNOTS are represented as:
+- **activity** flows (task decomposition),
+- **state** constraints (status transitions),
+- **requirements** relations (satisfy/verify),
+- **interfaces/ports** (ICDs and knowledge edges),
+- **allocation** to AoR/STK owners and toolchains.
+
+---
+
+### 6.2 Governance: Controlled KNOT IDs (K01..K14)
+
+KNOT IDs are **configuration-controlled tokens** used in filenames and gates.
+- Allowed IDs: **K01..K14 only**
+- Optional task suffix: **`-T###`** (e.g., `K06-T001`)
+- Any new KNOT requires a **standard upgrade + CM approval**.
+
+This ensures:
+- stable automation rules,
+- predictable portal navigation,
+- auditable process boundaries.
+
+---
+
+### 6.3 KNOT Execution Model (Agentic Systems)
+
+Each KNOT has:
+- **Inputs**: required artifacts + schemas
+- **Transforms**: allowed agentic actions (generate/validate/link/package)
+- **Outputs**: NKUs (implicit) + evidence bundles
+- **Guards**: PLC gates that must pass (PR-blocking)
+- **Trace edges**: relations recorded into the traceability graph / ontology DB
+
+A KNOT is "closed" only when:
+- naming/identifier validators pass,
+- evidence links resolve,
+- exceptions are registered and approved (where allowed),
+- release pack or checkpoint artifact is produced (when applicable).
+
+---
+
+### 6.4 Practical Mapping to Your STK Split (SE vs SPE)
+
+- **STK_SE (Architecture & Governance)**  
+  Owns: SysML structure, ontology commitments, interface/ICD rules, allocation logic, process constraints.
+
+- **STK_SPE (Software & Prompting Engineering)**  
+  Owns: agentic task runners, prompting specs, automation scripts, CI gates, validators, link-checkers, packaging tools.
+
+KNOTS is the contract between them:
+- SE defines "what must be true"
+- SPE implements "how it is enforced and executed"
+- CM/CERT decide "what is releasable / acceptable"
+
+---
+
+### 6.5 Minimal KNOT Metadata (Schema-ready)
+
+Each KNOT definition should include:
+
+- `knot_id`: K01..K14
+- `purpose`: why this knot exists
+- `inputs_required`: artifact types + schemas
+- `outputs_required`: artifact types + evidence expectations
+- `relations_required`: required trace edges (satisfy/verify/etc.)
+- `aor_owner`: primary AoR/STK
+- `dependencies`: other STKs and required handoffs
+- `gates`: validators that must pass
+- `close_criteria`: measurable completion criteria
+- `exceptions_policy`: what can be waived, by whom, and how recorded
+
+---
+
+### 6.6 One-sentence definition (for README/Portal)
+
+**KNOTS is design thinking operationalized as SysML-governed, agent-executable task networks, with ontology-backed validation and CM-controlled evidence closure.**
+
+---
+
+## 7. OPT-INS Framework
 
 The **OPT-INS framework** defines six canonical axes for information topology:
 
@@ -166,9 +280,9 @@ The **OPT-INS framework** defines six canonical axes for information topology:
 
 ---
 
-## 7. AoR / Stakeholder Codes
+## 8. AoR / Stakeholder Codes
 
-### 7.1 Primary Stakeholders (STK)
+### 8.1 Primary Stakeholders (STK)
 
 | Code | Name | Responsibility |
 |------|------|----------------|
@@ -186,7 +300,7 @@ The **OPT-INS framework** defines six canonical axes for information topology:
 | **STK_CY** | Cybersecurity | IAM, ZTA, secure networks, hardening, cyber evidence and controls |
 | **STK_SPACEPORT** | Spaceport / Ground Segment | Spaceport interfaces, off-board infrastructure, range constraints |
 
-### 7.2 Deprecations
+### 8.2 Deprecations
 
 | Deprecated | Replacement | Note |
 |------------|-------------|------|
@@ -195,53 +309,53 @@ The **OPT-INS framework** defines six canonical axes for information topology:
 
 ---
 
-## 8. v6.0 Nomenclature
+## 9. v6.0 Nomenclature
 
-# 8.2 Controlled Vocabulary — Nomenclature v6.0 
+# 9.2 Controlled Vocabulary — Nomenclature v6.0 
 
-## 8.1 Canonical filename format (normative)
+## 9.1 Canonical filename format (normative)
 
 `[ATA]_[PROJECT]_[PROGRAM]_[FAMILY]_[VARIANT]_[VERSION]_[MODEL]_[BLOCK]_[PHASE]_[KNOT]_[AoR]__[SUBJECT]_[CATEGORY]_[TYPE]_[ISSUE-REV]_[STATUS].[EXT]`
 
 ---
 
-## 8.2 Field Definitions (allowed values)
+## 9.2 Field Definitions (allowed values)
 
 | # | Field | Allowed Values | Notes |
 |---:|---|---|---|
-| 1 | **ATA** | `00..116` | Must be in ATA allowlist (8.2.12). |
+| 1 | **ATA** | `00..116` | Must be in ATA allowlist (9.2.12). |
 | 2 | **PROJECT** | `AMPEL360` | Fixed. |
 | 3 | **PROGRAM** | `AIRT` \| `SPACET` | Advanced transport systems tokens. |
-| 4 | **FAMILY** | `Q100` \| `Q200LR` \| `Q10` \| `QHABITAT` | Must satisfy PROGRAM×VERSION matrix (8.2.6). |
+| 4 | **FAMILY** | `Q100` \| `Q200LR` \| `Q10` \| `QHABITAT` | Must satisfy PROGRAM×VERSION matrix (9.2.6). |
 | 5 | **VARIANT** | `GEN` \| `BASELINE` \| `FLIGHT_TEST` \| `CERT` \| `MSN` \| `CUST` | Operating context; must appear once only. |
 | 6 | **VERSION** | `PLUS` \| `PLUSULTRA` | Branding tier. |
 | 7 | **MODEL** | `BB` \| `HW` \| `SW` \| `PR` | Body-Brain / Hardware / Software / Process. |
-| 8 | **BLOCK** | `00` \| `10` \| `20` \| `30` \| `40` \| `50` \| `60` \| `70` \| `80` \| `90` | Domain/subsystem segmentation (8.2.7). |
-| 9 | **PHASE** | `LC01..LC14` | Lifecycle phase (14 controlled values; see 8.2.8). |
+| 8 | **BLOCK** | `00` \| `10` \| `20` \| `30` \| `40` \| `50` \| `60` \| `70` \| `80` \| `90` | Domain/subsystem segmentation (9.2.7). |
+| 9 | **PHASE** | `LC01..LC14` | Lifecycle phase (14 controlled values; see 9.2.8). |
 | 10 | **KNOT** | `K01..K14` with optional `-T###` | Only K01..K14 allowed; optional suffix `-T001..-T999`. |
-| 11 | **AoR** | `STK_*` allowlist (8.2.9) | Portal entry point / accountable owner. |
+| 11 | **AoR** | `STK_*` allowlist (9.2.9) | Portal entry point / accountable owner. |
 | — | **`__`** | exactly `__` | Mandatory separator before SUBJECT. |
-| 12 | **SUBJECT** | lowercase kebab-case | `a-z0-9-` only (8.2.4). |
-| 13 | **CATEGORY** | allowlist (8.2.10) | Governance intent of the artifact. |
-| 14 | **TYPE** | allowlist (8.2.11) | Document/artifact genre; stable and short. |
+| 12 | **SUBJECT** | lowercase kebab-case | `a-z0-9-` only (9.2.4). |
+| 13 | **CATEGORY** | allowlist (9.2.10) | Governance intent of the artifact. |
+| 14 | **TYPE** | allowlist (9.2.11) | Document/artifact genre; stable and short. |
 | 15 | **ISSUE-REV** | `I##-R##` | `I01..I99` and `R01..R99` (00 reserved only if explicitly approved). |
-| 16 | **STATUS** | allowlist (8.2.5) | Controlled state machine. |
-| 17 | **EXT** | allowlist (8.2.13) | Repo-supported extensions only. |
+| 16 | **STATUS** | allowlist (9.2.5) | Controlled state machine. |
+| 17 | **EXT** | allowlist (9.2.13) | Repo-supported extensions only. |
 
 ---
 
-## 8.2.1 Naming invariants (normative)
+## 9.2.1 Naming invariants (normative)
 
 1) **Double-underscore** `__` is mandatory before SUBJECT.  
 2) **No KNOT outside K01..K14** may appear anywhere in filename.  
-3) **AoR must be one allowlisted STK token** (8.2.9).  
+3) **AoR must be one allowlisted STK token** (9.2.9).  
 4) **BLOCK is domain segmentation, not lifecycle** (LC stays in PHASE).  
-5) **One Official Chain** applies to `CATEGORY=DELIVERABLE` (8.2.15).  
-6) **TEKNIA credentials** are `CATEGORY=REGISTRY` with `TYPE=BADGE|CERT|LIC` and AoR restricted (8.2.16).  
+5) **One Official Chain** applies to `CATEGORY=DELIVERABLE` (9.2.15).  
+6) **TEKNIA credentials** are `CATEGORY=REGISTRY` with `TYPE=BADGE|CERT|LIC` and AoR restricted (9.2.16).  
 
 ---
 
-## 8.2.2 Regex constraints (validator-grade)
+## 9.2.2 Regex constraints (validator-grade)
 
 - **ATA**: `^(0[0-9]|[1-9][0-9]|1[01][0-6])$`
 - **PROJECT**: `^AMPEL360$`
@@ -256,14 +370,14 @@ The **OPT-INS framework** defines six canonical axes for information topology:
 - **AoR**: `^(STK_CM|STK_PMO|STK_SE|STK_DAB|STK_PHM|STK_SAF|STK_CERT|STK_TEST|STK_OPS|STK_MRO|STK_AI|STK_CY|STK_SPACEPORT)$`
 - **SUBJECT**: `^[a-z0-9]+(?:-[a-z0-9]+)*$`
 - **CATEGORY**: `^(DELIVERABLE|EVIDENCE|REGISTRY|SIGNOFF|EXPORT_CONTROL|INTERNAL_PRODUCTION)$`
-- **TYPE**: build from allowlist in 8.2.11 (exact match).
+- **TYPE**: build from allowlist in 9.2.11 (exact match).
 - **ISSUE-REV**: `^I(0[1-9]|[1-9][0-9])-R(0[1-9]|[1-9][0-9])$`
 - **STATUS**: `^(DRAFT|ACTIVE|RELEASED|SUPERSEDED|OBSOLETE)$`
-- **EXT**: build from allowlist in 8.2.13 (exact match).
+- **EXT**: build from allowlist in 9.2.13 (exact match).
 
 ---
 
-## 8.2.5 STATUS allowlist (controlled)
+## 9.2.5 STATUS allowlist (controlled)
 
 | STATUS | Meaning | Allowed for CATEGORY |
 |---|---|---|
@@ -277,7 +391,7 @@ The **OPT-INS framework** defines six canonical axes for information topology:
 
 ---
 
-## 8.2.6 PROGRAM × VERSION → FAMILY matrix (CM-controlled)
+## 9.2.6 PROGRAM × VERSION → FAMILY matrix (CM-controlled)
 
 | PROGRAM | VERSION | FAMILY | Description |
 |---|---|---|---|
@@ -288,7 +402,7 @@ The **OPT-INS framework** defines six canonical axes for information topology:
 
 ---
 
-## 8.2.7 BLOCK dictionary (domain/subsystem segmentation)
+## 9.2.7 BLOCK dictionary (domain/subsystem segmentation)
 
 | BLOCK | Domain-Subsystem | Typical environment |
 |---:|---|---|
@@ -305,7 +419,7 @@ The **OPT-INS framework** defines six canonical axes for information topology:
 
 ---
 
-## 8.2.8 PHASE allowlist (LC01..LC14) — Controlled lifecycle definitions (normative)
+## 9.2.8 PHASE allowlist (LC01..LC14) — Controlled lifecycle definitions (normative)
 
 The lifecycle **PHASE** token is one of the following **14 controlled values**. Meanings are fixed and must not be repurposed.
 
@@ -334,7 +448,7 @@ The lifecycle **PHASE** token is one of the following **14 controlled values**. 
 
 ---
 
-## 8.2.9 AoR allowlist (portal entry points)
+## 9.2.9 AoR allowlist (portal entry points)
 
 | AoR | Ownership boundary |
 |---|---|
@@ -354,7 +468,7 @@ The lifecycle **PHASE** token is one of the following **14 controlled values**. 
 
 ---
 
-## 8.2.10 CATEGORY allowlist (governance intent)
+## 9.2.10 CATEGORY allowlist (governance intent)
 
 | CATEGORY | Meaning | Default visibility |
 |---|---|---|
@@ -367,7 +481,7 @@ The lifecycle **PHASE** token is one of the following **14 controlled values**. 
 
 ---
 
-## 8.2.11 TYPE allowlist (stable genres)
+## 9.2.11 TYPE allowlist (stable genres)
 
 ### A) Governance / engineering documents
 `CHARTER`, `README`, `STD`, `POL`, `PROC`, `PLAN`, `REQ`, `SPEC`, `ARCH`, `ICD`, `MOD`
@@ -390,7 +504,7 @@ The lifecycle **PHASE** token is one of the following **14 controlled values**. 
 
 ---
 
-## 8.2.12 ATA allowlist (00–116) — canonical descriptions
+## 9.2.12 ATA allowlist (00–116) — canonical descriptions
 
 | ATA | Description |
 |---:|---|
@@ -514,7 +628,7 @@ The lifecycle **PHASE** token is one of the following **14 controlled values**. 
 
 ---
 
-## 8.2.13 EXT allowlist (repo-supported)
+## 9.2.13 EXT allowlist (repo-supported)
 
 ### Primary (GitHub-first)
 `md`, `txt`, `yml`, `yaml`, `json`, `csv`, `svg`, `png`
@@ -524,7 +638,7 @@ The lifecycle **PHASE** token is one of the following **14 controlled values**. 
 
 ---
 
-## 8.2.14 Category/AoR constraints (normative)
+## 9.2.14 Category/AoR constraints (normative)
 
 1) `CATEGORY=SIGNOFF` → AoR must be `STK_CM` or `STK_CERT` only.  
 2) `CATEGORY=EXPORT_CONTROL` → AoR must be `STK_CM` or `STK_CERT` only.  
@@ -532,7 +646,7 @@ The lifecycle **PHASE** token is one of the following **14 controlled values**. 
 
 ---
 
-## 8.2.15 One Official Chain rule (normative)
+## 9.2.15 One Official Chain rule (normative)
 
 Define key:
 `K = (ATA,PROJECT,PROGRAM,FAMILY,VARIANT,VERSION,MODEL,BLOCK,PHASE,AoR,SUBJECT,CATEGORY,TYPE)`
@@ -547,7 +661,7 @@ Define key:
 
 ---
 
-## 8.2.16 TEKNIA credential binding rule (normative)
+## 9.2.16 TEKNIA credential binding rule (normative)
 
 For `TYPE in {BADGE,CERT,LIC}` (CATEGORY `REGISTRY`):
 - must bind to one or more NKUs via:
@@ -559,7 +673,7 @@ For `TYPE in {BADGE,CERT,LIC}` (CATEGORY `REGISTRY`):
 
 ---
 
-## 8.2.17 Examples (v6.0)
+## 9.2.17 Examples (v6.0)
 
 **DELIVERABLE (official)**
 `00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__nomenclature-standard_DELIVERABLE_STD_I01-R01_ACTIVE.md`

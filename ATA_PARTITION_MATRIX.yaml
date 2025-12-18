@@ -1,0 +1,532 @@
+# ATA_PARTITION_MATRIX.yaml
+# SSOT for OPT-INS Framework and [BLOCK] Applicability
+# Generated from Issue #56 specifications
+
+version: "1.0"
+definitions:
+  blocks:
+    "00": "GENERAL (Implicit/Universal)"
+    "10": "OPERATIONAL SYSTEMS"
+    "20": "CYBERSECURITY"
+    "30": "DATA, COMMS AND REGISTRY"
+    "40": "PHYSICS (pressure/thermal/crio/…)"
+    "50": "PHYSICAL (aerostructures + info HW)"
+    "60": "DYNAMICS (thrust/drag-lift/balancing/attitude/inerting)"
+    "70": "RECIPROCITY & ALTERNATIVE ENGINES"
+    "80": "RENEWABLE ENERGY & CIRCULARITY"
+    "90": "CONNECTIONS & MAPPING"
+
+matrix:
+  # O axis (Governance / reserved)
+  - ata_root: "00"
+    chapter: "GENERAL"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "90"]
+    common: true
+  - ata_root: "01"
+    chapter: "RESERVED policy"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "90"]
+    common: true
+  - ata_root: "02"
+    chapter: "RESERVED org"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "90"]
+    common: true
+  - ata_root: "03"
+    chapter: "RESERVED support"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "90"]
+    common: true
+  - ata_root: "04"
+    chapter: "RESERVED limits"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "90"]
+    common: true
+  - ata_root: "18"
+    chapter: "NOISE & VIBRATION MGMT"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "40", "50", "60", "90"]
+    common: true
+    airt_only: ["10", "60"]
+    spacet_only: ["40", "60"]
+
+  # I axis (05–19 + 80–89) — support + infrastructures
+  - ata_root: "05"
+    chapter: "TIME LIMITS / CHECKS"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "30", "90"]
+    common: true
+  - ata_root: "06"
+    chapter: "DIMENSIONS / AREAS"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "50", "90"]
+    common: true
+  - ata_root: "07"
+    chapter: "LIFTING / SHORING"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "50", "60", "90"]
+    common: true
+  - ata_root: "08"
+    chapter: "LEVELING / WEIGHING"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "50", "60", "90"]
+    common: true
+  - ata_root: "09"
+    chapter: "TOWING / TAXIING"
+    applicability: "AIRT primary"
+    blocks: ["10", "60", "90"]
+    common: true
+    airt_only: ["10", "60"]
+  - ata_root: "10"
+    chapter: "PARKING / MOORING / STORAGE / RTS"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "50", "60", "90"]
+    common: true
+    spacet_only: ["all"] # Implied addenda for range/spaceport
+  - ata_root: "11"
+    chapter: "PLACARDS / MARKINGS"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "30", "90"]
+    common: true
+  - ata_root: "12"
+    chapter: "SERVICING"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "30", "40", "50", "80", "90"]
+    common: true
+    spacet_only: ["40", "80"]
+  - ata_root: "80"
+    chapter: "OFFBOARD INFRA MASTER"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "40", "50", "80", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "81"
+    chapter: "OFFBOARD ENERGY / CRYO"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "30", "40", "80", "90"]
+    common: true
+    spacet_only: ["40", "80"]
+  - ata_root: "82"
+    chapter: "OFFBOARD MRO / TOOLING / LOGISTICS"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "30", "50", "80", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "83"
+    chapter: "GROUND COMMS / DATA EXCHANGE"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "84"
+    chapter: "SPACEPORT SAFETY / EMERGENCY"
+    applicability: "SPACET primary"
+    blocks: ["10", "20", "40", "90"]
+    common: true
+    spacet_only: ["10", "20", "40"]
+  - ata_root: "85"
+    chapter: "CIRCULARITY INFRA"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "30", "40", "80", "90"]
+    common: true
+    spacet_only: ["80"]
+  - ata_root: "86"
+    chapter: "OFFBOARD DIGITAL SERVICES PLATFORM"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "87"
+    chapter: "IDENTITY / ACCESS / CYBER INFRA"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "88"
+    chapter: "GSE CONFIG / ASSET MGMT"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "30", "50", "90"]
+    common: true
+    spacet_only: ["all"]
+  - ata_root: "89"
+    chapter: "TEST RIGS / INSTRUMENTATION INFRA"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "30", "40", "50", "60", "90"]
+    common: true
+    spacet_only: ["30", "60"]
+
+  # T axis (20–79) — onboard systems (root-first)
+  - ata_root: "20"
+    chapter: "STD PRACTICES AIRFRAME"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "30", "40", "50", "60", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "21"
+    chapter: "ENV CONTROL"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "40", "50", "60", "80", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "22"
+    chapter: "AUTOFLIGHT / GNC"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "50", "60", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "23"
+    chapter: "COMMS"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "50", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "24"
+    chapter: "ELECTRICAL POWER"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "40", "50", "60", "80", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "25"
+    chapter: "EQUIPMENT/FURNISHINGS"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "40", "50", "80", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "26"
+    chapter: "FIRE PROTECTION"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "40", "50", "90"]
+    common: true
+    spacet_only: ["all"]
+  - ata_root: "27"
+    chapter: "FLIGHT CONTROLS"
+    applicability: "AIRT primary"
+    blocks: ["10", "20", "30", "50", "60", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["conditional"]
+  - ata_root: "28"
+    chapter: "FUEL / PROPELLANT"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "40", "50", "60", "70", "80", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "29"
+    chapter: "HYDRAULIC POWER"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "40", "50", "60", "90"]
+    common: true
+    spacet_only: ["all"]
+  - ata_root: "30"
+    chapter: "ATMOSPHERIC/PROTECTION"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "40", "50", "60", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "31"
+    chapter: "INDICATING/RECORDING"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "50", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "32"
+    chapter: "LANDING GEAR"
+    applicability: "AIRT primary / SPACET conditional"
+    blocks: ["10", "20", "40", "50", "60", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "33"
+    chapter: "LIGHTS"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "50", "90"]
+    common: true
+  - ata_root: "34"
+    chapter: "NAVIGATION"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "50", "60", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "35"
+    chapter: "OXYGEN / LIFE SUPPORT GAS"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "40", "50", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "36"
+    chapter: "PNEUMATIC / GAS DISTRO"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "40", "50", "60", "90"]
+    common: true
+    spacet_only: ["all"]
+  - ata_root: "37"
+    chapter: "VACUUM"
+    applicability: "conditional"
+    blocks: ["10", "20", "30", "40", "50", "90"]
+    common: true
+    spacet_only: ["all"]
+  - ata_root: "38"
+    chapter: "WATER / WASTE"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "40", "50", "80", "90"]
+    common: true
+    spacet_only: ["all"]
+  - ata_root: "39"
+    chapter: "PANELS / MULTIPURPOSE"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "50", "90"]
+    common: true
+  - ata_root: "40"
+    chapter: "MULTI-SYSTEM SERVICES"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "50", "90"]
+    common: true
+  - ata_root: "41"
+    chapter: "BALLAST / MASS TRIM"
+    applicability: "conditional"
+    blocks: ["10", "20", "40", "50", "60", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "42"
+    chapter: "IMA / COMPUTE PLATFORM"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "50", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "43"
+    chapter: "RESERVED / PLATFORM INTEGRATION"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "50", "90"]
+    common: true
+  - ata_root: "44"
+    chapter: "CABIN SYSTEMS"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "40", "50", "80", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "45"
+    chapter: "CMS / HEALTH MONITORING"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "50", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "46"
+    chapter: "INFO SYSTEMS / DATA NETWORKS"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "50", "90"]
+    common: true
+    spacet_only: ["all"]
+  - ata_root: "47"
+    chapter: "INERT GAS / INERTING"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "40", "50", "60", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "48"
+    chapter: "IN-FLIGHT FUEL DISPENSING"
+    applicability: "conditional"
+    blocks: ["10", "20", "30", "40", "50", "60", "90"]
+    common: true
+  - ata_root: "49"
+    chapter: "APU / AUX POWER"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "40", "50", "60", "80", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "50"
+    chapter: "CARGO / COMPARTMENTS"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "50", "60", "80", "90"]
+    common: true
+    spacet_only: ["all"]
+  - ata_root: "51"
+    chapter: "STRUCTURES family"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "40", "50", "60", "80", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  # ... (Repeat pattern for 52-57)
+  - ata_root: "60"
+    chapter: "PROP/ROTOR family"
+    applicability: "AIRT conditional"
+    blocks: ["10", "20", "30", "40", "50", "60", "70", "90"]
+    common: true
+    airt_only: ["all"]
+  # ... (Repeat pattern for 61-67)
+  - ata_root: "70"
+    chapter: "PROPULSION family"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "40", "50", "60", "70", "80", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  # ... (Repeat pattern for 71-79)
+
+  # N axis (90–99) — registries/SSOT/ledgers
+  - ata_root: "90"
+    chapter: "Model registry"
+    applicability: "AIRT+SPACET"
+    blocks: ["20", "30", "90"]
+    common: true
+  - ata_root: "91"
+    chapter: "Ontologies / semantic SSOT"
+    applicability: "AIRT+SPACET"
+    blocks: ["30", "90"]
+    common: true
+  - ata_root: "92"
+    chapter: "Wiring/connectivity graphs"
+    applicability: "AIRT+SPACET"
+    blocks: ["30", "50", "90"]
+    common: true
+  - ata_root: "93"
+    chapter: "Traceability graph / ledgers"
+    applicability: "AIRT+SPACET"
+    blocks: ["30", "90"]
+    common: true
+  - ata_root: "94"
+    chapter: "DPP core / provenance"
+    applicability: "AIRT+SPACET"
+    blocks: ["30", "80", "90"]
+    common: true
+    spacet_only: ["all"]
+  - ata_root: "95"
+    chapter: "SBOM/BOM exports"
+    applicability: "AIRT+SPACET"
+    blocks: ["30", "80", "90"]
+    common: true
+  - ata_root: "96"
+    chapter: "AI governance"
+    applicability: "AIRT+SPACET"
+    blocks: ["20", "30", "90"]
+    common: true
+  - ata_root: "97"
+    chapter: "Change impact analytics"
+    applicability: "AIRT+SPACET"
+    blocks: ["30", "90"]
+    common: true
+  - ata_root: "98"
+    chapter: "Signed release packs"
+    applicability: "AIRT+SPACET"
+    blocks: ["20", "30", "90"]
+    common: true
+  - ata_root: "99"
+    chapter: "Master registers / golden records"
+    applicability: "AIRT+SPACET"
+    blocks: ["30", "90"]
+    common: true
+
+  # S axis (100–116) — SIM/TEST range
+  - ata_root: "100"
+    chapter: "SIM/TEST governance"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "90"]
+    common: true
+  - ata_root: "101"
+    chapter: "Digital twin catalog"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "30", "40", "50", "60", "90"]
+    common: true
+  - ata_root: "102"
+    chapter: "Scenario libraries"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "30", "60", "90"]
+    common: true
+  - ata_root: "103"
+    chapter: "SIL automation"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "90"]
+    common: true
+  - ata_root: "104"
+    chapter: "HIL benches"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "50", "60", "90"]
+    common: true
+  - ata_root: "105"
+    chapter: "PIL / target execution"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "50", "60", "90"]
+    common: true
+  - ata_root: "106"
+    chapter: "Test procedures/cases"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "60", "90"]
+    common: true
+  - ata_root: "107"
+    chapter: "Test data/stimuli"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "90"]
+    common: true
+  - ata_root: "108"
+    chapter: "Test results/anomaly"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "60", "90"]
+    common: true
+  - ata_root: "109"
+    chapter: "VV evidence packs"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "90"]
+    common: true
+  - ata_root: "110"
+    chapter: "Qualification/env testing (Space-T)"
+    applicability: "SPACET primary"
+    blocks: ["10", "20", "30", "40", "50", "60", "90"]
+    common: true
+    spacet_only: ["40", "60"]
+  - ata_root: "111"
+    chapter: "System integration testing"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "50", "60", "90"]
+    common: true
+  - ata_root: "112"
+    chapter: "Mission/flight testing"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "50", "60", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "113"
+    chapter: "UQ / Monte Carlo"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "40", "60", "90"]
+    common: true
+  - ata_root: "114"
+    chapter: "AI/ML validation suites"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "60", "90"]
+    common: true
+  - ata_root: "115"
+    chapter: "Certification tests / compliance"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "40", "50", "60", "90"]
+    common: true
+    airt_only: ["all"]
+    spacet_only: ["all"]
+  - ata_root: "116"
+    chapter: "Archives & frozen baselines"
+    applicability: "AIRT+SPACET"
+    blocks: ["10", "20", "30", "90"]
+    common: true
