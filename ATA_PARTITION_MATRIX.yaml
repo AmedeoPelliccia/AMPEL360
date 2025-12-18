@@ -9,7 +9,7 @@ definitions:
     "10": "OPERATIONAL SYSTEMS"
     "20": "CYBERSECURITY"
     "30": "DATA, COMMS AND REGISTRY"
-    "40": "PHYSICS (pressure/thermal/crio/…)"
+    "40": "PHYSICS (pressure/thermal/cryo/…)"
     "50": "PHYSICAL (aerostructures + info HW)"
     "60": "DYNAMICS (thrust/drag-lift/balancing/attitude/inerting)"
     "70": "RECIPROCITY & ALTERNATIVE ENGINES"
