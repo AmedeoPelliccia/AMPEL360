@@ -5,14 +5,6 @@
 
 ---
 
-## Document ID
-
-```
-00_AMPEL360_AIRT_Q200LR_BASELINE_PLUSULTRA_PR_00_LC01_K01_STK_CM__readme_README_I01-R01_ACTIVE
-```
-
----
-
 ## 1. Integrated Definition
 
 **AMPEL360** is a **unified digital lifecycle architecture** for advanced aerospace systems (**AIRT / SPACET**) that binds four foundational pillars into a single **certifiable, auditable, continuously evolving knowledge system**.
