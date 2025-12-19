@@ -1,0 +1,411 @@
+# STK_CM Portal Contract
+
+**AMPEL360 CA360º — Configuration Management Portal Configuration**
+
+---
+
+## Metadata
+
+- **AoR:** STK_CM (Configuration Management)
+- **Program:** SPACET Q10 BASELINE PLUS
+- **Contract Version:** 1.0.0
+- **Maintained By:** cm-team@ampel360.org
+- **Last Updated:** 2025-12-19
+- **Status:** ACTIVE
+
+---
+
+## Contract Definition
+
+```yaml
+contract_metadata:
+  aor_id: STK_CM
+  contract_version: 1.0.0
+  program: SPACET
+  family: Q10
+  variant: BASELINE
+  version: PLUS
+  maintained_by: cm-team@ampel360.org
+  last_updated: 2025-12-19
+
+# Default workspace context
+default_context:
+  filters:
+    opt_ins_axes:
+      - P-PROGRAM         # Program governance (primary)
+      - N-NEURAL_NETWORKS # Schemas, registries, ledgers
+      - O-OPS             # Organization policy
+    
+    ata_chapters:
+      - 00  # GENERAL
+      - 11  # Placards and Markings
+      - 91  # Data Schemas / Ontologies
+      - 93  # Traceability Graph
+      - 94  # DPP Core
+      - 95  # SBOM / BOM Exports
+      - 98  # Signed Release Packs
+      - 99  # Master Registers
+    
+    lc_phases:
+      - LC01  # Problem Statement / Generation
+      - LC06  # Quality
+      - LC10  # Industrialization / Serialization / CM
+    
+    knots:
+      - K01  # Problem Definition
+      - K06  # Verification
+      - K07  # Release
+      - K09  # Baseline Management
+    
+    blocks:
+      - 00  # GENERAL
+      - 30  # Data, Comms and Registry
+    
+    categories:
+      - DELIVERABLE
+      - REGISTRY
+      - SIGNOFF
+      - EXPORT_CONTROL
+    
+    types:
+      - STD
+      - POL
+      - PROC
+      - SCHEMA
+      - REG
+      - CAT
+      - IDX
+      - MANIFEST
+    
+    statuses:
+      - ACTIVE
+      - RELEASED
+      - SUPERSEDED
+
+  slice_selector:
+    program_family_variants:
+      - program: SPACET
+        family: Q10
+        variants: [GEN, BASELINE, CERT]
+      - program: AIRT
+        family: Q100
+        variants: [GEN, BASELINE]
+    
+    default_slice:
+      program: SPACET
+      family: Q10
+      variant: BASELINE
+      version: PLUS
+      node: "ATA-00"  # General as default
+
+# Feature set (MoSCoW)
+features:
+  moscow:
+    must:
+      - F01  # Context Bar
+      - F02  # AoR Dashboard
+      - F03  # Registry-Driven Work Queue
+      - F04  # Kanban / Backlog
+      - F05  # Artifact Generator
+      - F06  # Gates & Validator Console (emphasized - uniqueness, release protocol)
+      - F07  # Evidence Console
+      - F08  # Signoff Console
+      # F09 optional for CM (mainly governance tooling)
+    
+    should:
+      - F12  # Cross-AoR Handshake Panel
+      - F14  # Notification Engine
+    
+    could:
+      - F15  # "Start Task" Execution Runner
+    
+    wont:
+      - F19  # Auto-merge / Auto-signoff
+      - F20  # Unbounded external chatbots
+
+  config:
+    F02:  # Dashboard configuration
+      enabled: true
+      settings:
+        kpis:
+          - id: pending_baseline_approvals
+            label: "Pending Baseline Approvals"
+            source: signoff_index
+            filter: {aor: STK_CM, type: baseline, status: pending}
+          
+          - id: nomenclature_violations
+            label: "Nomenclature Violations"
+            source: gate_status
+            filter: {validator: nomenclature-validator, status: failed}
+          
+          - id: release_candidates
+            label: "Release Candidates"
+            source: task_registry
+            filter: {aor: STK_CM, knot: K07, status: ACTIVE}
+          
+          - id: open_change_requests
+            label: "Open Change Requests"
+            source: task_registry
+            filter: {aor: STK_CM, type: change_request, status: [DRAFT, ACTIVE]}
+          
+          - id: uniqueness_violations
+            label: "Uniqueness Violations"
+            source: gate_status
+            filter: {validator: uniqueness-validator, status: failed}
+        
+        refresh_interval: 180  # seconds (more frequent for CM)
+    
+    F04:  # Kanban configuration
+      enabled: true
+      settings:
+        columns:
+          - id: problem_definition
+            label: "Problem Definition"
+            knot_stages: [K01]
+          
+          - id: verification
+            label: "Verification"
+            knot_stages: [K06]
+          
+          - id: release_preparation
+            label: "Release Preparation"
+            knot_stages: [K07]
+          
+          - id: baseline_management
+            label: "Baseline Management"
+            knot_stages: [K09]
+          
+          - id: complete
+            label: "Released"
+            knot_stages: [K07]
+    
+    F06:  # Gates & Validator Console (emphasized)
+      enabled: true
+      settings:
+        validators:
+          - id: nomenclature-validator
+            name: "Nomenclature Validator"
+            priority: critical
+            blocking: true
+          
+          - id: uniqueness-validator
+            name: "Uniqueness Validator (One Official Chain)"
+            priority: critical
+            blocking: true
+          
+          - id: schema-validator
+            name: "Schema Validator"
+            priority: high
+            blocking: true
+          
+          - id: baseline-integrity-validator
+            name: "Baseline Integrity Validator"
+            priority: critical
+            blocking: true
+          
+          - id: release-protocol-validator
+            name: "Release Protocol Validator"
+            priority: critical
+            blocking: true
+        
+        gate_emphasis:
+          - "RC gate: All validators must pass"
+          - "RELEASE gate: Signoffs + validators + baseline integrity"
+    
+    F12:  # Cross-AoR Handshake Panel
+      enabled: true
+      settings:
+        show_interfaces:
+          - type: "baseline-dependencies"
+            from_aors: ["all"]
+            status_tracking: true
+          
+          - type: "release-packs"
+            from_aors: ["all"]
+            deadline_tracking: true
+
+# Tool Launchpad (TALF-aware)
+tool_launchpad:
+  tiles:
+    # Git/VCS Interface
+    - tool_id: git-portal
+      tool_name: "Git Portal"
+      version: "latest"
+      tool_class: "vcs"
+      owner_aor: STK_CM
+      vendor: "internal"
+      
+      launch:
+        channel: web
+        deep_link: "https://git.ampel360.org/portal?aor=STK_CM"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["cm-engineers", "developers"]
+      
+      audit:
+        events: [launch]
+    
+    # Baseline Manager
+    - tool_id: baseline-manager
+      tool_name: "Baseline Manager"
+      version: "2024.1"
+      tool_class: "cm"
+      owner_aor: STK_CM
+      vendor: "internal"
+      
+      launch:
+        channel: web
+        deep_link: "https://baseline.ampel360.org/launch"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS"]
+        datasets: ["baseline-snapshots"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["cm-engineers"]
+      
+      audit:
+        events: [launch, export]
+    
+    # Change Control Board Portal
+    - tool_id: ccb-portal
+      tool_name: "Change Control Board Portal"
+      version: "latest"
+      tool_class: "governance"
+      owner_aor: STK_CM
+      vendor: "internal"
+      
+      launch:
+        channel: web
+        deep_link: "https://ccb.ampel360.org/launch"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_CM"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["cm-engineers", "ccb-members"]
+      
+      audit:
+        events: [launch, export]
+
+# Execution surfaces
+execution:
+  kanban:
+    enabled: true
+    default_filters:
+      aor: STK_CM
+      lc_phase: [LC01, LC06, LC10]
+      status: [ACTIVE, RELEASED]
+  
+  task_wizard:
+    enabled: true
+    templates:
+      - "cm-change-request"
+      - "cm-baseline-snapshot"
+      - "cm-release-pack"
+      - "cm-nomenclature-update"
+      - "cm-schema-definition"
+  
+  evidence_console:
+    enabled: true
+    default_view: index
+  
+  signoff_console:
+    enabled: true
+    routing_rules:
+      - signoff_type: "baseline-approval"
+        target_aor: STK_CM
+      - signoff_type: "release-approval"
+        target_aor: STK_CM
+      - signoff_type: "change-approval"
+        target_aor: STK_CM
+
+# Assistant + communications
+assistant:
+  enabled: false  # CM prefers manual control for governance
+
+communications:
+  threads:
+    enabled: true
+    bindings:
+      - node
+      - task
+      - signoff
+      - decision
+
+# Backend bindings
+backend:
+  validators:
+    - nomenclature-validator
+    - uniqueness-validator
+    - schema-validator
+    - baseline-integrity-validator
+    - release-protocol-validator
+    - identifier-validator
+  
+  indexers:
+    - artifact-indexer
+    - baseline-indexer
+    - change-indexer
+  
+  trace_services:
+    - traceability-graph
+    - baseline-dependency-analyzer
+  
+  notification_rules:
+    - event: gate_failure
+      channels: [portal, email]
+      recipients: ["cm-leads", "artifact-owner"]
+    
+    - event: signoff_request
+      channels: [portal, email]
+      recipients: ["aor-specific"]
+    
+    - event: new_blocker
+      channels: [portal, email]
+      recipients: ["cm-leads", "task-owner"]
+    
+    - event: evidence_gap
+      channels: [portal]
+      recipients: ["task-owner"]
+```
+
+---
+
+## Change Log
+
+| Revision | Date | Author | Changes |
+|----------|------|--------|---------|
+| 1.0.0 | 2025-12-19 | STK_CM | Initial contract |
+
+---
+
+## References
+
+- **Portal Feature Catalog (SSOT):** `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_DAB__portal-feature-catalog_REGISTRY_CAT_I01-R01_ACTIVE.md`
+- **AoR Portal Contract Schema:** `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_DAB__aor-portal-contract-schema_DELIVERABLE_SCHEMA_I01-R01_ACTIVE.md`
+
+---
+
+**END OF DOCUMENT**

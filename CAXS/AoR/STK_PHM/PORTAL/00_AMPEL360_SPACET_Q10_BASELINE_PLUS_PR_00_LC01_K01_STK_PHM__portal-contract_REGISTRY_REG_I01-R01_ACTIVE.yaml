@@ -1,0 +1,508 @@
+# STK_PHM Portal Contract
+
+**AMPEL360 CA360º — Physical & Mechanical Engineering Portal Configuration**
+
+---
+
+## Metadata
+
+- **AoR:** STK_PHM (Physical & Mechanical Engineering)
+- **Program:** SPACET Q10 BASELINE PLUS
+- **Contract Version:** 1.0.0
+- **Maintained By:** phm-team@ampel360.org
+- **Last Updated:** 2025-12-19
+- **Status:** ACTIVE
+
+---
+
+## Contract Definition
+
+```yaml
+contract_metadata:
+  aor_id: STK_PHM
+  contract_version: 1.0.0
+  program: SPACET
+  family: Q10
+  variant: BASELINE
+  version: PLUS
+  maintained_by: phm-team@ampel360.org
+  last_updated: 2025-12-19
+
+# Default workspace context
+default_context:
+  filters:
+    opt_ins_axes:
+      - T-TECHNOLOGY      # On-board systems (primary focus)
+      - P-PROGRAM         # Program governance
+      - S-SIM_TEST        # Test and validation
+    
+    ata_chapters:
+      # Structures
+      - 51  # Standard Practices & Structures
+      - 52  # Doors / Hatches
+      - 53  # Fuselage / Pressure Vessel
+      - 54  # Nacelles / Pylons
+      - 55  # Stabilizers / Control Surfaces
+      - 56  # Windows / Viewports
+      - 57  # Wings / Lifting Surfaces
+      # Mechanical systems
+      - 27  # Flight Controls
+      - 28  # Fuel / Propellant Systems
+      - 29  # Hydraulic Power
+      - 32  # Landing Gear
+      - 36  # Pneumatic / Gas Distribution
+      # Analysis
+      - 06  # Dimensions and Areas
+      - 18  # Noise & Vibration Management
+      - 30  # Ice and Rain Protection
+    
+    lc_phases:
+      - LC01  # Problem Statement
+      - LC03  # Design Models
+      - LC04  # Engineering Analysis
+      - LC05  # Integration Testing
+      - LC10  # Industrialization
+      - LC13  # MRO and Sustainment
+    
+    knots:
+      - K01  # Problem Definition
+      - K02  # Requirements
+      - K03  # Design
+      - K04  # Analysis
+      - K05  # Integration
+      - K06  # Verification
+    
+    blocks:
+      - 40  # Physics (pressure/thermal/cryo)
+      - 50  # Physical (aerostructures)
+      - 60  # Dynamics (thrust, drag-lift, balancing)
+    
+    categories:
+      - DELIVERABLE
+      - EVIDENCE
+      - REGISTRY
+    
+    types:
+      - SPEC
+      - ARCH
+      - MOD
+      - TST
+      - RPT
+      - CASE
+    
+    statuses:
+      - DRAFT
+      - ACTIVE
+      - RELEASED
+
+  slice_selector:
+    program_family_variants:
+      - program: SPACET
+        family: Q10
+        variants: [BASELINE, FLIGHT_TEST, CERT]
+    
+    default_slice:
+      program: SPACET
+      family: Q10
+      variant: BASELINE
+      version: PLUS
+      node: "ATA-53"  # Fuselage as default
+
+# Feature set (MoSCoW)
+features:
+  moscow:
+    must:
+      - F01  # Context Bar (Slice Selector)
+      - F02  # AoR Dashboard (Default Filters + KPIs)
+      - F03  # Registry-Driven Work Queue
+      - F04  # Kanban / Backlog mapped to KNOTs
+      - F05  # Artifact Generator (Template Wizard)
+      - F06  # Gates & Validator Console
+      - F07  # Evidence Console (Index + Attach + Hash)
+      - F08  # Signoff Console
+      - F09  # Tool Launchpad (TALF-aware)
+    
+    should:
+      - F10  # Portal-aware AI Assistant
+      - F13  # Trace & Impact Viewer
+      - F14  # Notification Engine
+    
+    could:
+      - F15  # "Start Task" Execution Runner
+      - F17  # Comparative Dashboards
+    
+    wont:
+      - F19  # Auto-merge / Auto-signoff
+      - F20  # Unbounded external chatbots
+
+  config:
+    F02:  # Dashboard configuration
+      enabled: true
+      settings:
+        kpis:
+          - id: open_analysis_tasks
+            label: "Open Analysis Tasks"
+            source: task_registry
+            filter: {aor: STK_PHM, status: [DRAFT, ACTIVE]}
+          
+          - id: pending_thermal_signoffs
+            label: "Pending Thermal Signoffs"
+            source: signoff_index
+            filter: {aor: STK_PHM, domain: thermal, status: pending}
+          
+          - id: evidence_gaps
+            label: "Evidence Gaps"
+            source: evidence_index
+            filter: {aor: STK_PHM, status: missing}
+          
+          - id: gate_blockers
+            label: "Gate Blockers"
+            source: gate_status
+            filter: {aor: STK_PHM, status: failed}
+        
+        refresh_interval: 300  # seconds
+    
+    F04:  # Kanban configuration
+      enabled: true
+      settings:
+        columns:
+          - id: backlog
+            label: "Backlog"
+            knot_stages: [K01]
+          
+          - id: requirements
+            label: "Requirements"
+            knot_stages: [K02]
+          
+          - id: design
+            label: "Design"
+            knot_stages: [K03]
+          
+          - id: analysis
+            label: "Analysis"
+            knot_stages: [K04]
+          
+          - id: integration
+            label: "Integration"
+            knot_stages: [K05]
+          
+          - id: verification
+            label: "Verification"
+            knot_stages: [K06]
+          
+          - id: complete
+            label: "Complete"
+            knot_stages: [K07]
+    
+    F10:  # AI Assistant configuration
+      enabled: true
+      settings:
+        capabilities:
+          - draft_artifacts
+          - propose_tasks
+          - suggest_evidence
+          - identify_gaps
+        
+        constraints:
+          cannot_bypass_gates: true
+          cannot_invent_aors: true
+          must_cite_sources: true
+          must_link_ssot: true
+        
+        prompting_context:
+          - "Focus on structural and mechanical systems"
+          - "Reference ATA 50-series chapters"
+          - "Apply margins per STK_PHM standards"
+
+# Tool Launchpad (TALF-aware)
+tool_launchpad:
+  tiles:
+    # CFD Analysis
+    - tool_id: ansys-fluent-2024
+      tool_name: "ANSYS Fluent"
+      version: "2024.1"
+      tool_class: "cfd"
+      owner_aor: STK_PHM
+      vendor: "ANSYS"
+      documentation_url: "https://docs.ampel360.org/tools/ansys-fluent"
+      
+      launch:
+        channel: VDI
+        deep_link: "vdi://ansys-fluent-2024?profile=high-performance"
+        requires_interaction: true
+      
+      workspace_bindings:
+        repo_nodes:
+          - "CAXS/AoR/STK_PHM"
+          - "data/cfd-models"
+        exports:
+          - "exports/simulation-results/cfd"
+        datasets:
+          - "flight-test-data-2024"
+          - "material-properties-db"
+        templates:
+          - "phm-cfd-report"
+      
+      licensing:
+        model: concurrent
+        pool_id: ansys-pool-01
+        checkout_mode: automatic
+        max_duration: "PT8H"
+        grace_period: "PT15M"
+      
+      preflight:
+        checks:
+          - sso_session
+          - entitlement
+          - license
+          - compute_profile
+        requirements:
+          entitlement:
+            groups: ["phm-engineers", "cfd-users"]
+          compute_profile:
+            min_cores: 16
+            min_memory: "64GB"
+            min_storage: "100GB"
+        timeout: "PT30S"
+      
+      audit:
+        events:
+          - launch
+          - checkout
+          - export
+          - close
+          - failure
+        log_level: INFO
+        retention: "P7Y"
+      
+      failure_modes:
+        license_unavailable:
+          action: queue
+          message: "All ANSYS Fluent licenses are in use. You have been added to the queue."
+          queue_config:
+            max_wait: "PT30M"
+            notify_channels: ["portal", "email"]
+        
+        entitlement_denied:
+          action: block
+          message: "You do not have permission to use ANSYS Fluent. Contact STK_PHM."
+        
+        compute_unavailable:
+          action: queue
+    
+    # FEA Analysis
+    - tool_id: ansys-mechanical-2024
+      tool_name: "ANSYS Mechanical"
+      version: "2024.1"
+      tool_class: "fem"
+      owner_aor: STK_PHM
+      vendor: "ANSYS"
+      
+      launch:
+        channel: VDI
+        deep_link: "vdi://ansys-mechanical-2024"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_PHM", "data/fem-models"]
+        exports: ["exports/simulation-results/fem"]
+      
+      licensing:
+        model: concurrent
+        pool_id: ansys-pool-01
+        checkout_mode: automatic
+        max_duration: "PT8H"
+      
+      preflight:
+        checks: [sso_session, entitlement, license, compute_profile]
+        requirements:
+          entitlement:
+            groups: ["phm-engineers", "fem-users"]
+          compute_profile:
+            min_cores: 8
+            min_memory: "32GB"
+      
+      audit:
+        events: [launch, checkout, export, close, failure]
+      
+      failure_modes:
+        license_unavailable:
+          action: queue
+        entitlement_denied:
+          action: block
+    
+    # CAD Tool
+    - tool_id: catia-v5
+      tool_name: "CATIA V5"
+      version: "R2024x"
+      tool_class: "cad"
+      owner_aor: STK_PHM
+      vendor: "Dassault Systèmes"
+      
+      launch:
+        channel: VDI
+        deep_link: "vdi://catia-v5"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_PHM", "data/cad-models"]
+        exports: ["exports/cad-drawings"]
+      
+      licensing:
+        model: concurrent
+        pool_id: catia-pool-01
+        checkout_mode: automatic
+      
+      preflight:
+        checks: [sso_session, entitlement, license]
+        requirements:
+          entitlement:
+            groups: ["phm-engineers", "cad-users"]
+      
+      audit:
+        events: [launch, checkout, close]
+      
+      failure_modes:
+        license_unavailable:
+          action: queue
+    
+    # Python Environment
+    - tool_id: jupyter-phm
+      tool_name: "Jupyter Notebook (PHM)"
+      version: "latest"
+      tool_class: "data-analysis"
+      owner_aor: STK_PHM
+      vendor: "internal"
+      
+      launch:
+        channel: web
+        deep_link: "https://jupyter.ampel360.org/launch?aor=STK_PHM"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_PHM"]
+        exports: ["exports/notebooks"]
+        datasets: ["all"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["phm-engineers"]
+      
+      audit:
+        events: [launch, export]
+
+# Execution surfaces
+execution:
+  kanban:
+    enabled: true
+    default_filters:
+      aor: STK_PHM
+      lc_phase: [LC03, LC04, LC05]
+      status: [DRAFT, ACTIVE]
+  
+  task_wizard:
+    enabled: true
+    templates:
+      - "phm-thermal-analysis"
+      - "phm-structural-analysis"
+      - "phm-vibration-analysis"
+      - "phm-cfd-study"
+      - "phm-fem-study"
+      - "phm-evidence-pack"
+  
+  evidence_console:
+    enabled: true
+    default_view: index
+  
+  signoff_console:
+    enabled: true
+    routing_rules:
+      - signoff_type: "thermal-approval"
+        target_aor: STK_PHM
+      - signoff_type: "structural-approval"
+        target_aor: STK_PHM
+      - signoff_type: "safety-review"
+        target_aor: STK_SAF
+
+# Assistant + communications
+assistant:
+  enabled: true
+  capabilities:
+    - draft_artifacts
+    - propose_tasks
+    - suggest_evidence
+    - identify_gaps
+  
+  constraints:
+    cannot_bypass_gates: true
+    cannot_invent_aors: true
+    must_cite_sources: true
+    must_link_ssot: true
+
+communications:
+  threads:
+    enabled: true
+    bindings:
+      - node
+      - task
+      - signoff
+      - decision
+
+# Backend bindings
+backend:
+  validators:
+    - nomenclature-validator
+    - phm-margin-validator
+    - evidence-link-validator
+  
+  indexers:
+    - artifact-indexer
+    - evidence-indexer
+    - task-indexer
+  
+  trace_services:
+    - traceability-graph
+    - ata-impact-analyzer
+  
+  notification_rules:
+    - event: gate_failure
+      channels: [portal, email]
+      recipients: ["phm-leads"]
+    
+    - event: signoff_request
+      channels: [portal, email]
+      recipients: ["aor-specific"]
+    
+    - event: license_failure
+      channels: [portal]
+      recipients: ["requesting-user"]
+    
+    - event: new_blocker
+      channels: [portal, email]
+      recipients: ["phm-leads", "task-owner"]
+    
+    - event: evidence_gap
+      channels: [portal]
+      recipients: ["task-owner"]
+```
+
+---
+
+## Change Log
+
+| Revision | Date | Author | Changes |
+|----------|------|--------|---------|
+| 1.0.0 | 2025-12-19 | STK_PHM | Initial contract |
+
+---
+
+## References
+
+- **Portal Feature Catalog (SSOT):** `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_DAB__portal-feature-catalog_REGISTRY_CAT_I01-R01_ACTIVE.md`
+- **AoR Portal Contract Schema:** `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_DAB__aor-portal-contract-schema_DELIVERABLE_SCHEMA_I01-R01_ACTIVE.md`
+
+---
+
+**END OF DOCUMENT**

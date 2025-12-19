@@ -1,0 +1,433 @@
+# STK_CERT Portal Contract
+
+**AMPEL360 CA360º — Certification & Compliance Portal Configuration**
+
+---
+
+## Metadata
+
+- **AoR:** STK_CERT (Certification / Compliance)
+- **Program:** SPACET Q10 BASELINE PLUS
+- **Contract Version:** 1.0.0
+- **Maintained By:** cert-team@ampel360.org
+- **Last Updated:** 2025-12-19
+- **Status:** ACTIVE
+
+---
+
+## Contract Definition
+
+```yaml
+contract_metadata:
+  aor_id: STK_CERT
+  contract_version: 1.0.0
+  program: SPACET
+  family: Q10
+  variant: BASELINE
+  version: PLUS
+  maintained_by: cert-team@ampel360.org
+  last_updated: 2025-12-19
+
+# Default workspace context
+default_context:
+  filters:
+    opt_ins_axes:
+      - P-PROGRAM         # Program governance (primary)
+      - T-TECHNOLOGY      # Technical compliance
+      - S-SIM_TEST        # Verification evidence
+    
+    ata_chapters:
+      - 00  # GENERAL (master documentation)
+      - 04  # Airworthiness Limitations / Operational Limits
+      - 05  # Time Limits / Maintenance Checks
+      # Compliance-critical systems
+      - 22  # Auto Flight / Guidance-Navigation-Control
+      - 24  # Electrical Power
+      - 26  # Fire Protection
+      - 27  # Flight Controls
+      - 28  # Fuel / Propellant Systems
+      - 29  # Hydraulic Power
+      - 32  # Landing Gear
+      - 42  # Integrated Modular Avionics
+      - 45  # Central Maintenance System
+      # Safety and certification
+      - 100  # SIM/TEST GOVERNANCE
+      - 115  # Certification Tests
+    
+    lc_phases:
+      - LC02  # System Requirements
+      - LC05  # Integration Testing
+      - LC06  # Quality
+      - LC07  # Safety and Security
+      - LC08  # Certification and First Flight
+    
+    knots:
+      - K02  # Requirements
+      - K05  # Integration
+      - K06  # Verification
+      - K07  # Release
+      - K08  # Compliance
+    
+    blocks:
+      - 00  # GENERAL
+      - 10  # OPERATIONAL SYSTEMS
+    
+    categories:
+      - DELIVERABLE
+      - EVIDENCE
+      - REGISTRY
+      - SIGNOFF
+    
+    types:
+      - REQ
+      - SPEC
+      - CASE
+      - TST
+      - RPT
+      - EVD
+      - CERT
+    
+    statuses:
+      - ACTIVE
+      - RELEASED
+
+  slice_selector:
+    program_family_variants:
+      - program: SPACET
+        family: Q10
+        variants: [BASELINE, CERT]
+    
+    default_slice:
+      program: SPACET
+      family: Q10
+      variant: CERT
+      version: PLUS
+      node: "ATA-00"  # General as default
+
+# Feature set (MoSCoW)
+features:
+  moscow:
+    must:
+      - F01  # Context Bar
+      - F02  # AoR Dashboard
+      - F03  # Registry-Driven Work Queue
+      - F04  # Kanban / Backlog
+      - F05  # Artifact Generator
+      - F06  # Gates & Validator Console
+      - F07  # Evidence Console
+      - F08  # Signoff Console
+      # F09 optional for CERT (mainly review tooling)
+    
+    should:
+      - F10  # AI Assistant (for compliance mapping)
+      - F12  # Cross-AoR Handshake Panel
+      - F13  # Trace & Impact Viewer
+      - F14  # Notification Engine
+    
+    could:
+      - F17  # Comparative Dashboards
+    
+    wont:
+      - F19  # Auto-merge / Auto-signoff
+      - F20  # Unbounded external chatbots
+
+  config:
+    F02:  # Dashboard configuration
+      enabled: true
+      settings:
+        kpis:
+          - id: open_compliance_items
+            label: "Open Compliance Items"
+            source: task_registry
+            filter: {aor: STK_CERT, status: [DRAFT, ACTIVE]}
+          
+          - id: pending_authority_signoffs
+            label: "Pending Authority Signoffs"
+            source: signoff_index
+            filter: {aor: STK_CERT, type: authority, status: pending}
+          
+          - id: evidence_gaps
+            label: "Evidence Gaps"
+            source: evidence_index
+            filter: {aor: STK_CERT, status: missing}
+          
+          - id: certification_blockers
+            label: "Certification Blockers"
+            source: gate_status
+            filter: {aor: STK_CERT, category: cert_blocker}
+          
+          - id: compliance_closure_rate
+            label: "Compliance Closure Rate"
+            source: analytics
+            calculation: "closed / total * 100"
+        
+        refresh_interval: 300  # seconds
+    
+    F04:  # Kanban configuration
+      enabled: true
+      settings:
+        columns:
+          - id: requirements
+            label: "Requirements Analysis"
+            knot_stages: [K02]
+          
+          - id: evidence_collection
+            label: "Evidence Collection"
+            knot_stages: [K05, K06]
+          
+          - id: authority_review
+            label: "Authority Review"
+            knot_stages: [K08]
+          
+          - id: signoff
+            label: "Signoff Pending"
+            knot_stages: [K07]
+          
+          - id: complete
+            label: "Compliant"
+            knot_stages: [K07]
+    
+    F10:  # AI Assistant configuration
+      enabled: true
+      settings:
+        capabilities:
+          - draft_artifacts
+          - suggest_evidence
+          - identify_gaps
+        
+        constraints:
+          cannot_bypass_gates: true
+          cannot_invent_aors: true
+          must_cite_sources: true
+          must_link_ssot: true
+        
+        prompting_context:
+          - "Focus on certification and compliance requirements"
+          - "Reference applicable ECSS, DO-178C, DO-254, ISO standards"
+          - "Map requirements to evidence chains"
+    
+    F12:  # Cross-AoR Handshake Panel
+      enabled: true
+      settings:
+        show_interfaces:
+          - type: "compliance-evidence"
+            from_aors: ["all"]
+            status_tracking: true
+          
+          - type: "certification-packs"
+            from_aors: [STK_SE, STK_PHM, STK_SAF, STK_TEST]
+            deadline_tracking: true
+    
+    F13:  # Trace & Impact Viewer
+      enabled: true
+      settings:
+        trace_types:
+          - requirements_to_evidence
+          - evidence_to_signoff
+          - objective_to_compliance
+        
+        impact_views:
+          - ata_impact_matrix
+          - compliance_coverage_map
+
+# Tool Launchpad (TALF-aware)
+tool_launchpad:
+  tiles:
+    # Document Review Tool
+    - tool_id: doc-review-portal
+      tool_name: "Document Review Portal"
+      version: "latest"
+      tool_class: "review"
+      owner_aor: STK_CERT
+      vendor: "internal"
+      
+      launch:
+        channel: web
+        deep_link: "https://review.ampel360.org/launch?aor=STK_CERT"
+      
+      workspace_bindings:
+        repo_nodes:
+          - "CAXS/AoR/STK_CERT"
+        exports:
+          - "exports/review-reports"
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["cert-engineers"]
+      
+      audit:
+        events: [launch, export]
+    
+    # Compliance Management System
+    - tool_id: cms-portal
+      tool_name: "Compliance Management System"
+      version: "2024.1"
+      tool_class: "compliance"
+      owner_aor: STK_CERT
+      vendor: "internal"
+      
+      launch:
+        channel: web
+        deep_link: "https://cms.ampel360.org/launch?context=${current_context}"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_CERT"]
+        datasets: ["compliance-requirements", "certification-basis"]
+      
+      licensing:
+        model: named
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["cert-engineers", "compliance-managers"]
+      
+      audit:
+        events: [launch, export]
+    
+    # Requirements Traceability Tool
+    - tool_id: doors-ng
+      tool_name: "IBM DOORS Next Generation"
+      version: "7.0.3"
+      tool_class: "requirements"
+      owner_aor: STK_CERT
+      vendor: "IBM"
+      
+      launch:
+        channel: web
+        deep_link: "https://doors.ampel360.org/rm"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_CERT"]
+      
+      licensing:
+        model: concurrent
+        pool_id: doors-pool-01
+        checkout_mode: automatic
+      
+      preflight:
+        checks: [sso_session, entitlement, license]
+        requirements:
+          entitlement:
+            groups: ["cert-engineers", "requirements-engineers"]
+      
+      audit:
+        events: [launch, checkout, close]
+      
+      failure_modes:
+        license_unavailable:
+          action: queue
+
+# Execution surfaces
+execution:
+  kanban:
+    enabled: true
+    default_filters:
+      aor: STK_CERT
+      lc_phase: [LC06, LC07, LC08]
+      status: [ACTIVE, RELEASED]
+  
+  task_wizard:
+    enabled: true
+    templates:
+      - "cert-compliance-item"
+      - "cert-evidence-pack"
+      - "cert-authority-submission"
+      - "cert-signoff-request"
+  
+  evidence_console:
+    enabled: true
+    default_view: index
+  
+  signoff_console:
+    enabled: true
+    routing_rules:
+      - signoff_type: "authority-approval"
+        target_aor: STK_CERT
+      - signoff_type: "compliance-closure"
+        target_aor: STK_CERT
+      - signoff_type: "technical-review"
+        target_aor: STK_SE
+
+# Assistant + communications
+assistant:
+  enabled: true
+  capabilities:
+    - draft_artifacts
+    - suggest_evidence
+    - identify_gaps
+  
+  constraints:
+    cannot_bypass_gates: true
+    cannot_invent_aors: true
+    must_cite_sources: true
+    must_link_ssot: true
+
+communications:
+  threads:
+    enabled: true
+    bindings:
+      - node
+      - task
+      - signoff
+      - decision
+
+# Backend bindings
+backend:
+  validators:
+    - nomenclature-validator
+    - evidence-completeness-validator
+    - trace-link-validator
+    - compliance-mapping-validator
+  
+  indexers:
+    - artifact-indexer
+    - evidence-indexer
+    - compliance-indexer
+  
+  trace_services:
+    - traceability-graph
+    - compliance-coverage-analyzer
+  
+  notification_rules:
+    - event: gate_failure
+      channels: [portal, email]
+      recipients: ["cert-leads"]
+    
+    - event: signoff_request
+      channels: [portal, email]
+      recipients: ["aor-specific"]
+    
+    - event: new_blocker
+      channels: [portal, email]
+      recipients: ["cert-leads", "task-owner", "pmo"]
+    
+    - event: evidence_gap
+      channels: [portal, email]
+      recipients: ["task-owner", "cert-leads"]
+```
+
+---
+
+## Change Log
+
+| Revision | Date | Author | Changes |
+|----------|------|--------|---------|
+| 1.0.0 | 2025-12-19 | STK_CERT | Initial contract |
+
+---
+
+## References
+
+- **Portal Feature Catalog (SSOT):** `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_DAB__portal-feature-catalog_REGISTRY_CAT_I01-R01_ACTIVE.md`
+- **AoR Portal Contract Schema:** `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_DAB__aor-portal-contract-schema_DELIVERABLE_SCHEMA_I01-R01_ACTIVE.md`
+
+---
+
+**END OF DOCUMENT**
