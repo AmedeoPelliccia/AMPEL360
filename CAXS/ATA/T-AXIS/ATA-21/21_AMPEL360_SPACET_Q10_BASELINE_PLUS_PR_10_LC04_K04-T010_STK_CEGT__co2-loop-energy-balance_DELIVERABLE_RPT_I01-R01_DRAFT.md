@@ -134,7 +134,7 @@ Based on representative values for power electronics and CO₂ storage systems:
 
 **Interpretation**: For every 1.0 kWh charged from ATA-24, only 0.619 kWh can be discharged back to ATA-24. The difference (0.381 kWh per kWh cycled) is dissipated as heat and must be rejected to the vehicle thermal management system.
 
-**Compliance**: Meets REQ-ECS-PWR-RT-001 requirement (minimum 70% round-trip efficiency) is **NOT MET** with these assumptions. 
+**Compliance**: REQ-ECS-PWR-RT-001 (minimum 70% round-trip efficiency) is **NOT MET** with these assumptions. 
 
 **Design Implication**: Component selection and optimization must achieve ≥70% round-trip efficiency. Higher-efficiency power electronics (≥95%) and storage process (≥85% each direction) required:
 - Target: η_PE = 0.95, η_storage = 0.85 → η_RT = 0.95² × 0.85² = 0.652 (65.2%, still below 70%)

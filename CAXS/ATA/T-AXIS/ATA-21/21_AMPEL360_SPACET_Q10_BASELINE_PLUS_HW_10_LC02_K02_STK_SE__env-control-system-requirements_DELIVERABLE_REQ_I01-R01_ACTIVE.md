@@ -337,7 +337,7 @@ The Environmental Control System (ECS) for SPACET Q10 BASELINE PLUS provides:
 
 ### 9.2.1 CO₂ System Maintainability
 
-**REQ-ECS-OPS-MNT-001**: The CO₂ capture system shall define maintenance intervals for consumables and sorbents (if applicable) with documented servicing procedures. CO₂-battery module shall specify inspection intervals and performance degradation limits requiring maintenance action.
+**REQ-ECS-OPS-MNT-001**: The CO₂ capture system shall define maintenance intervals for consumables and sorbents (if applicable) and provide documented servicing procedures. CO₂-battery module shall specify inspection intervals and performance degradation limits requiring maintenance action.
 
 ---
 
