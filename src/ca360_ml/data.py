@@ -110,9 +110,17 @@ def split_dataset(
         Tuple of (X_train, X_val, X_test, y_train, y_val, y_test)
     """
     splits = config.get("splits", {})
-    train_ratio = splits.get("train", 0.7)
-    val_ratio = splits.get("val", 0.15)
-    test_ratio = splits.get("test", 0.15)
+    
+    # Handle both formats: dict with ratio keys or direct ratio values
+    if isinstance(splits.get("train"), dict):
+        train_ratio = splits["train"].get("ratio", 0.7)
+        val_ratio = splits["val"].get("ratio", 0.15)
+        test_ratio = splits["test"].get("ratio", 0.15)
+    else:
+        train_ratio = splits.get("train", 0.7)
+        val_ratio = splits.get("val", 0.15)
+        test_ratio = splits.get("test", 0.15)
+    
     seed = splits.get("split_seed", 42)
     
     # Validate ratios
