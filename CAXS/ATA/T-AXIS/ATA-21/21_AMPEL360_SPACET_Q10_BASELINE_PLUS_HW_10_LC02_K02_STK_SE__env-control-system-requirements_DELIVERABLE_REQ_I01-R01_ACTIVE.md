@@ -109,6 +109,12 @@ The Environmental Control System (ECS) for SPACET Q10 BASELINE PLUS provides:
 **REQ-ECS-ATM-004**: The ECS shall monitor oxygen partial pressure and maintain 19.5-23.5 kPa during crewed operations.
 
 **REQ-ECS-ATM-005**: The ECS shall limit cabin CO₂ partial pressure to maximum 0.5 kPa (5 mbar) during nominal operations.
+- **Measurement window**: Averaged over T_avg = 60 seconds
+- **Measurement zone**: Occupied zone per cabin layout, with sensors located at representative breathing height (1.2-1.8m from deck)
+- **Excursions**: No excursions above limit permitted; instantaneous peaks shall not exceed 0.6 kPa
+- **Recovery time**: System shall restore CO₂ level to setpoint within T_recover = 300 seconds following peak occupancy or activity events
+
+**REQ-ECS-ATM-007**: The ECS CO₂ capture system shall integrate with CO₂-battery energy storage module per interface requirements defined in CO₂ loop power support specification.
 
 **REQ-ECS-ATM-006**: The ECS shall provide emergency depressurization capability with controlled venting rate <50 Pa/s.
 
@@ -136,6 +142,16 @@ The Environmental Control System (ECS) for SPACET Q10 BASELINE PLUS provides:
 
 **REQ-ECS-AIR-005**: The ECS shall support air exchange rate sufficient for crew metabolic load (minimum 2 kg O₂/person/day consumption).
 
+### 4.3.1 CO₂ Capture and Control Requirements
+
+**REQ-ECS-CO2-REM-001**: The ECS CO₂ removal system shall provide minimum capture capacity of 1.0 kg CO₂/person/day based on nominal crew metabolic rate.
+
+**REQ-ECS-CO2-BUF-001**: The ECS shall provide CO₂ buffer capacity sufficient to accommodate occupancy peaks and activity spikes with minimum 2 hours buffer margin at maximum crew occupancy.
+
+**REQ-ECS-CO2-CTRL-001**: The ECS CO₂ control loop shall demonstrate stability margins per control analysis with settling time (to within 5% of setpoint) not exceeding T_recover defined in REQ-ECS-ATM-005.
+
+**REQ-ECS-CO2-STOR-001**: The CO₂ storage/pressure subsystem shall maintain safe operating pressure limits with overpressure protection and automatic isolation capability.
+
 ### 4.4 Monitoring and Control Requirements
 
 **REQ-ECS-MON-001**: The ECS shall provide real-time monitoring of cabin pressure, temperature, humidity, and O₂/CO₂ partial pressures.
@@ -157,6 +173,26 @@ The Environmental Control System (ECS) for SPACET Q10 BASELINE PLUS provides:
 **REQ-ECS-PWR-003**: The ECS shall provide graceful degradation modes for reduced power availability scenarios.
 
 **REQ-ECS-PWR-004**: The ECS shall minimize parasitic power losses in thermal control loops (<5% of transported heat load).
+
+### 4.5.1 CO₂-Battery Power Support Requirements
+
+**REQ-ECS-PWR-BIDIR-001**: The CO₂-battery energy storage module shall provide bidirectional power interface with ATA-24 electrical power system with the following envelope:
+- Charge mode: Maximum 2.0 kW continuous
+- Discharge mode: Maximum 1.5 kW continuous, 2.5 kW peak (≤60 seconds)
+- Charge/discharge ramp rate: ≤0.5 kW/s
+- Inrush current: ≤20A for ≤100ms
+- Response to shedding command: Acknowledgment within 100ms, load reduction complete within 500ms
+
+**REQ-ECS-PWR-RT-001**: The CO₂-battery energy storage module shall achieve minimum round-trip efficiency of 70% (AC-to-AC) over nominal operating cycle, with thermal management losses included in efficiency calculation.
+
+**REQ-ECS-PWR-MODE-001**: The CO₂-battery energy storage module shall support the following operational modes:
+- Normal: Charge from ATA-24 when available, discharge on demand for peak shaving
+- Peak shaving: Automatic discharge during vehicle peak power events to reduce EPS loading
+- Degraded: Reduced capacity operation with graceful performance reduction
+- Shedding: Controlled shutdown in response to EPS load shedding commands
+- Isolation: Automatic electrical and fluidic isolation upon fault detection
+
+**REQ-ECS-PWR-CLAIM-001**: The CO₂-battery system shall function as an energy storage and management device only (power support), with no propulsive thrust generation or net mass ejection during operation. All CO₂ shall be retained in closed-loop circulation.
 
 ---
 
@@ -240,6 +276,17 @@ The Environmental Control System (ECS) for SPACET Q10 BASELINE PLUS provides:
 
 **REQ-ECS-SAF-014**: The ECS shall provide safe shutdown capability preserving crew safety and vehicle integrity.
 
+### 7.2.1 CO₂ System Safety Requirements
+
+**REQ-ECS-SAF-CO2-001**: The CO₂ capture, storage, and energy module subsystems shall implement the following safety measures:
+- Overpressure protection with automatic pressure relief and isolation valving
+- Leak detection with cabin atmosphere monitoring and automatic isolation
+- Thermal runaway prevention with temperature monitoring and cooling system interlocks
+- Electrical isolation capability for fault containment
+- Fail-safe design defaulting to isolated/safe state upon loss of control power
+
+**REQ-ECS-SAF-CO2-002**: The CO₂-battery energy storage module shall undergo hazard analysis (FMEA/FMECA) with safety requirements traced to identified hazards and verification evidence required per LC06 compliance matrix.
+
 ---
 
 ## 8. Environmental Requirements
@@ -287,6 +334,10 @@ The Environmental Control System (ECS) for SPACET Q10 BASELINE PLUS provides:
 **REQ-ECS-MNT-003**: The ECS shall include provisions for ground servicing and functional checkout.
 
 **REQ-ECS-MNT-004**: The ECS shall be documented per ATA-21 maintenance manual requirements (STK_MRO).
+
+### 9.2.1 CO₂ System Maintainability
+
+**REQ-ECS-OPS-MNT-001**: The CO₂ capture system shall define maintenance intervals for consumables and sorbents (if applicable) with documented servicing procedures. CO₂-battery module shall specify inspection intervals and performance degradation limits requiring maintenance action.
 
 ---
 
