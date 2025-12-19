@@ -302,3 +302,439 @@ preflight_check_definitions:
   - check_id: check_storage_quota
     description: "Verify user/project has sufficient storage quota"
     blocking: false
+
+  # Systems Engineering Tools (STK_SE)
+  - tool_id: cameo-systems-modeler-vdi
+    tool_class: MBSE
+    display_name: "Cameo Systems Modeler (VDI)"
+    description: "SysML/MBSE modeling for systems engineering"
+    delivery_channel: VDI
+    licensing:
+      required: true
+      model: concurrent
+      server_type: flexlm
+      pool_id: cameo_se_modeling
+      checkout_mode: interactive
+      constraints:
+        max_duration_hours: 8
+    access:
+      sso_required: true
+      entitlement_groups:
+        - eng_se_team
+        - systems_architects
+      export_control: EAR
+    workspace:
+      mounts_required:
+        - repo_node
+        - project_exports
+        - mbse_models
+        - shared_datasets
+    preflight_checks:
+      - check_sso_valid
+      - check_entitlement_group
+      - check_license_available
+      - check_vdi_session_capacity
+
+  - tool_id: doors-ng-web
+    tool_class: REQUIREMENTS
+    display_name: "IBM DOORS Next (Web)"
+    description: "Requirements management and traceability"
+    delivery_channel: WEB
+    licensing:
+      required: true
+      model: named
+      server_type: ibm_license
+      pool_id: doors_ng_users
+      checkout_mode: session
+      constraints:
+        max_duration_hours: 12
+    access:
+      sso_required: true
+      entitlement_groups:
+        - eng_se_team
+        - requirements_managers
+      export_control: EAR
+    workspace:
+      mounts_required:
+        - repo_node
+        - requirements_exports
+    preflight_checks:
+      - check_sso_valid
+      - check_entitlement_group
+      - check_license_available
+
+  # AI/ML Tools (STK_AI)
+  - tool_id: pytorch-jupyter-container
+    tool_class: ML_FRAMEWORK
+    display_name: "PyTorch Jupyter (Container)"
+    description: "Deep learning framework with Jupyter interface"
+    delivery_channel: CONTAINER
+    licensing:
+      required: false
+      model: open_source
+    access:
+      sso_required: true
+      entitlement_groups:
+        - ai_ml_team
+        - data_scientists
+      export_control: EAR
+    workspace:
+      mounts_required:
+        - repo_node
+        - ml_models
+        - training_data
+        - notebooks
+    preflight_checks:
+      - check_sso_valid
+      - check_entitlement_group
+      - check_container_capacity
+      - check_gpu_availability
+
+  - tool_id: mlflow-platform-web
+    tool_class: MLOPS
+    display_name: "MLflow Platform (Web)"
+    description: "ML lifecycle management and model registry"
+    delivery_channel: WEB
+    licensing:
+      required: false
+      model: open_source
+    access:
+      sso_required: true
+      entitlement_groups:
+        - ai_ml_team
+        - mlops_team
+      export_control: EAR
+    workspace:
+      mounts_required:
+        - repo_node
+        - ml_models
+        - experiment_logs
+    preflight_checks:
+      - check_sso_valid
+      - check_entitlement_group
+
+  # Test Engineering Tools (STK_TEST)
+  - tool_id: labview-test-vdi
+    tool_class: TEST_AUTOMATION
+    display_name: "LabVIEW Test Automation (VDI)"
+    description: "Test automation and data acquisition"
+    delivery_channel: VDI
+    licensing:
+      required: true
+      model: concurrent
+      server_type: ni_license
+      pool_id: labview_test
+      checkout_mode: interactive
+      constraints:
+        max_duration_hours: 8
+    access:
+      sso_required: true
+      entitlement_groups:
+        - test_engineers
+        - bench_operators
+      export_control: EAR
+    workspace:
+      mounts_required:
+        - repo_node
+        - test_data
+        - test_procedures
+    preflight_checks:
+      - check_sso_valid
+      - check_entitlement_group
+      - check_license_available
+      - check_vdi_session_capacity
+
+  # DAB Development Tools (STK_DAB)
+  - tool_id: vscode-dev-container
+    tool_class: IDE
+    display_name: "VS Code Development (Container)"
+    description: "Integrated development environment for software development"
+    delivery_channel: CONTAINER
+    licensing:
+      required: false
+      model: open_source
+    access:
+      sso_required: true
+      entitlement_groups:
+        - software_developers
+        - dab_team
+      export_control: EAR
+    workspace:
+      mounts_required:
+        - repo_node
+        - project_exports
+        - dev_tools
+    preflight_checks:
+      - check_sso_valid
+      - check_entitlement_group
+      - check_container_capacity
+
+  # Safety Analysis Tools (STK_SAF)
+  - tool_id: medini-analyze-vdi
+    tool_class: SAFETY_ANALYSIS
+    display_name: "medini analyze (VDI)"
+    description: "Safety analysis including FTA, FMEA, and reliability"
+    delivery_channel: VDI
+    licensing:
+      required: true
+      model: concurrent
+      server_type: flexlm
+      pool_id: medini_safety
+      checkout_mode: interactive
+      constraints:
+        max_duration_hours: 8
+    access:
+      sso_required: true
+      entitlement_groups:
+        - safety_engineers
+        - saf_team
+      export_control: EAR
+    workspace:
+      mounts_required:
+        - repo_node
+        - safety_analyses
+        - project_exports
+    preflight_checks:
+      - check_sso_valid
+      - check_entitlement_group
+      - check_license_available
+      - check_vdi_session_capacity
+
+  # Cybersecurity Tools (STK_CY)
+  - tool_id: burp-suite-pro-vdi
+    tool_class: SECURITY_TESTING
+    display_name: "Burp Suite Professional (VDI)"
+    description: "Web application security testing"
+    delivery_channel: VDI
+    licensing:
+      required: true
+      model: named
+      server_type: portswigger
+      pool_id: burp_pro_users
+      checkout_mode: session
+      constraints:
+        max_duration_hours: 8
+    access:
+      sso_required: true
+      entitlement_groups:
+        - security_engineers
+        - cy_team
+      export_control: EAR
+    workspace:
+      mounts_required:
+        - repo_node
+        - security_reports
+    preflight_checks:
+      - check_sso_valid
+      - check_entitlement_group
+      - check_license_available
+      - check_vdi_session_capacity
+
+  # Project Management Tools (STK_PMO)
+  - tool_id: ms-project-web
+    tool_class: PROJECT_MANAGEMENT
+    display_name: "Microsoft Project (Web)"
+    description: "Project planning and schedule management"
+    delivery_channel: WEB
+    licensing:
+      required: true
+      model: named
+      server_type: microsoft_365
+      pool_id: ms_project_users
+      checkout_mode: session
+      constraints:
+        max_duration_hours: 12
+    access:
+      sso_required: true
+      entitlement_groups:
+        - project_managers
+        - pmo_team
+      export_control: EAR
+    workspace:
+      mounts_required:
+        - repo_node
+        - project_schedules
+    preflight_checks:
+      - check_sso_valid
+      - check_entitlement_group
+      - check_license_available
+
+  # Configuration Management Tools (STK_CM)
+  - tool_id: github-enterprise-web
+    tool_class: VERSION_CONTROL
+    display_name: "GitHub Enterprise (Web)"
+    description: "Version control and collaboration platform"
+    delivery_channel: WEB
+    licensing:
+      required: true
+      model: named
+      server_type: github_enterprise
+      pool_id: github_users
+      checkout_mode: session
+      constraints:
+        max_concurrent_sessions: unlimited
+    access:
+      sso_required: true
+      entitlement_groups:
+        - all_engineers
+        - cm_team
+      export_control: EAR
+    workspace:
+      mounts_required:
+        - repo_node
+    preflight_checks:
+      - check_sso_valid
+      - check_entitlement_group
+
+  # Circular Economy Tools (STK_CEGT)
+  - tool_id: simapro-lca-vdi
+    tool_class: SUSTAINABILITY
+    display_name: "SimaPro LCA (VDI)"
+    description: "Life Cycle Assessment for sustainability analysis"
+    delivery_channel: VDI
+    licensing:
+      required: true
+      model: concurrent
+      server_type: pre_license
+      pool_id: simapro_lca
+      checkout_mode: interactive
+      constraints:
+        max_duration_hours: 8
+    access:
+      sso_required: true
+      entitlement_groups:
+        - sustainability_team
+        - cegt_team
+      export_control: EAR
+    workspace:
+      mounts_required:
+        - repo_node
+        - lca_data
+        - project_exports
+    preflight_checks:
+      - check_sso_valid
+      - check_entitlement_group
+      - check_license_available
+      - check_vdi_session_capacity
+
+  # Operations Tools (STK_OPS)
+  - tool_id: flexsim-ops-simulator-vdi
+    tool_class: OPERATIONS_SIM
+    display_name: "FlexSim Operations (VDI)"
+    description: "Operations simulation and modeling"
+    delivery_channel: VDI
+    licensing:
+      required: true
+      model: concurrent
+      server_type: flexlm
+      pool_id: flexsim_ops
+      checkout_mode: interactive
+      constraints:
+        max_duration_hours: 8
+    access:
+      sso_required: true
+      entitlement_groups:
+        - operations_team
+        - ops_engineers
+      export_control: EAR
+    workspace:
+      mounts_required:
+        - repo_node
+        - operations_models
+        - project_exports
+    preflight_checks:
+      - check_sso_valid
+      - check_entitlement_group
+      - check_license_available
+      - check_vdi_session_capacity
+
+  # MRO Tools (STK_MRO)
+  - tool_id: ata-ispec-2200-web
+    tool_class: TECH_PUBS
+    display_name: "ATA iSpec 2200 (Web)"
+    description: "Technical publications authoring for maintenance manuals"
+    delivery_channel: WEB
+    licensing:
+      required: true
+      model: named
+      server_type: ata_spec
+      pool_id: ispec_authors
+      checkout_mode: session
+      constraints:
+        max_duration_hours: 12
+    access:
+      sso_required: true
+      entitlement_groups:
+        - tech_writers
+        - mro_team
+      export_control: EAR
+    workspace:
+      mounts_required:
+        - repo_node
+        - tech_pubs
+        - project_exports
+    preflight_checks:
+      - check_sso_valid
+      - check_entitlement_group
+      - check_license_available
+
+  # Certification Tools (STK_CERT)
+  - tool_id: compliance-tracker-web
+    tool_class: COMPLIANCE
+    display_name: "Compliance Tracker (Web)"
+    description: "Certification evidence and compliance management"
+    delivery_channel: WEB
+    licensing:
+      required: true
+      model: named
+      server_type: internal
+      pool_id: compliance_users
+      checkout_mode: session
+      constraints:
+        max_duration_hours: 12
+    access:
+      sso_required: true
+      entitlement_groups:
+        - cert_team
+        - compliance_managers
+      export_control: EAR
+    workspace:
+      mounts_required:
+        - repo_node
+        - compliance_evidence
+        - cert_packages
+    preflight_checks:
+      - check_sso_valid
+      - check_entitlement_group
+      - check_license_available
+
+  # Spaceport Tools (STK_SPACEPORT)
+  - tool_id: range-safety-analysis-vdi
+    tool_class: RANGE_SAFETY
+    display_name: "Range Safety Analysis (VDI)"
+    description: "Range safety analysis and trajectory simulation"
+    delivery_channel: VDI
+    licensing:
+      required: true
+      model: concurrent
+      server_type: flexlm
+      pool_id: range_safety
+      checkout_mode: interactive
+      constraints:
+        max_duration_hours: 8
+    access:
+      sso_required: true
+      entitlement_groups:
+        - spaceport_team
+        - range_safety_engineers
+      export_control: ITAR
+    workspace:
+      mounts_required:
+        - repo_node
+        - range_data
+        - project_exports
+    preflight_checks:
+      - check_sso_valid
+      - check_entitlement_group
+      - check_license_available
+      - check_vdi_session_capacity

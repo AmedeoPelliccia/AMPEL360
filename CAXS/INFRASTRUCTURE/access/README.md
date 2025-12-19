@@ -100,21 +100,31 @@ Portal enforces:
 - Workspace mounts configured (via `tool_catalog.yaml` mount specs)
 - Audit events recorded (via `license_events_registry.md` schema)
 
-## Pilot: STK_PHM
+## Coverage: All 14 AoRs
 
-**Scope:** PHM (Physical & Mechanical Engineering) tooling classes
+**Scope:** Portal-wide TALF infrastructure serving all Areas of Responsibility
 
-**Tools:**
-- CAD (VDI): CATIA V5/V6
-- CAE/Solver (HPC): ANSYS, Nastran
-- Analysis (VDI/Container): MATLAB, Python Jupyter
+**Tool Coverage by AoR:**
+- **STK_PHM** (Physical & Mechanical): CAD (CATIA V5/V6), CAE (ANSYS, Nastran), Analysis (MATLAB, Python)
+- **STK_SE** (Systems Engineering): MBSE (Cameo), Requirements (DOORS), Analysis (Python, MATLAB)
+- **STK_AI** (AI/ML): ML Frameworks (PyTorch), MLOps (MLflow), Notebooks (Python Jupyter)
+- **STK_TEST** (Test/V&V): Test Automation (LabVIEW), Analysis (Python, MATLAB)
+- **STK_DAB** (Digital Applications): IDEs (VS Code), Development (Python, Node.js, Go)
+- **STK_SAF** (Safety): Safety Analysis (medini analyze), Analysis (Python, MATLAB)
+- **STK_CY** (Cybersecurity): Security Testing (Burp Suite), Analysis (Python)
+- **STK_PMO** (Program Management): Project Management (MS Project)
+- **STK_CM** (Configuration Management): Version Control (GitHub Enterprise)
+- **STK_CEGT** (Circular Economy): LCA Tools (SimaPro), Analysis (Python)
+- **STK_OPS** (Operations): Operations Simulation (FlexSim), Analysis (Python)
+- **STK_MRO** (Maintenance): Technical Publications (ATA iSpec 2200)
+- **STK_CERT** (Certification): Compliance Tracking (Compliance Tracker)
+- **STK_SPACEPORT** (Ground Segment): Range Safety Analysis, Simulation
+
+**Total:** 22 tools serving 14 AoRs with 45 entitlement mappings
 
 **Lifecycle:** LC01 → LC03 → LC06
 
-**Evidence:**
-- LC03: Preflight + tool reference validation operational
-- LC06: Audit events + evidence linkage accepted
-
+**TALF Pilot (STK_PHM):**
 See: `CAXS/AoR/STK_PHM/PORTAL/DELIVERABLES/` for PHM TALF deliverable
 
 ## Interfaces

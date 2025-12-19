@@ -14,4 +14,33 @@ python-jupyter-container,phm_analysis_team,STK_PHM,Senior_Analyst,full,2025-01-0
 python-jupyter-container,data_science_team,STK_AI,Data_Scientist,full,2025-01-01,Data science Python access
 python-jupyter-vdi,eng_analysis_users,STK_PHM,Analysis_Engineer,full,2025-01-01,Python VDI for PHM analysis
 python-jupyter-vdi,phm_analysis_team,STK_PHM,Senior_Analyst,full,2025-01-01,PHM team Python VDI
-python-jupyter-vdi,data_science_team,STK_AI,Data_Scientist,full,2025-01-01,Data science Python VDI access
+python-jupyter-vdi,data_science_team,STK_AI,Data_Scientist,full,2025-01-01,Data science Python VDI accesscameo-systems-modeler-vdi,eng_se_team,STK_SE,Systems_Engineer,full,2025-01-01,MBSE modeling for systems engineering
+cameo-systems-modeler-vdi,systems_architects,STK_SE,Senior_Architect,full,2025-01-01,System architecture MBSE access
+doors-ng-web,eng_se_team,STK_SE,Systems_Engineer,full,2025-01-01,Requirements management
+doors-ng-web,requirements_managers,STK_SE,Requirements_Manager,full,2025-01-01,Requirements management lead
+pytorch-jupyter-container,ai_ml_team,STK_AI,ML_Engineer,full,2025-01-01,Deep learning development
+pytorch-jupyter-container,data_scientists,STK_AI,Data_Scientist,full,2025-01-01,ML research and development
+mlflow-platform-web,ai_ml_team,STK_AI,ML_Engineer,full,2025-01-01,MLOps and model registry
+mlflow-platform-web,mlops_team,STK_AI,MLOps_Engineer,full,2025-01-01,ML lifecycle management
+labview-test-vdi,test_engineers,STK_TEST,Test_Engineer,full,2025-01-01,Test automation and DAQ
+labview-test-vdi,bench_operators,STK_TEST,Bench_Operator,full,2025-01-01,Test bench operation
+vscode-dev-container,software_developers,STK_DAB,Software_Developer,full,2025-01-01,Software development IDE
+vscode-dev-container,dab_team,STK_DAB,Senior_Developer,full,2025-01-01,DAB team development access
+medini-analyze-vdi,safety_engineers,STK_SAF,Safety_Engineer,full,2025-01-01,Safety analysis tools
+medini-analyze-vdi,saf_team,STK_SAF,Senior_Safety_Engineer,full,2025-01-01,Safety team FTA/FMEA access
+burp-suite-pro-vdi,security_engineers,STK_CY,Security_Engineer,full,2025-01-01,Security testing
+burp-suite-pro-vdi,cy_team,STK_CY,Senior_Security_Engineer,full,2025-01-01,Cybersecurity penetration testing
+ms-project-web,project_managers,STK_PMO,Project_Manager,full,2025-01-01,Project planning and scheduling
+ms-project-web,pmo_team,STK_PMO,PMO_Lead,full,2025-01-01,Program management office access
+github-enterprise-web,all_engineers,STK_CM,Engineer,full,2025-01-01,Version control for all engineers
+github-enterprise-web,cm_team,STK_CM,CM_Manager,full,2025-01-01,Configuration management team
+simapro-lca-vdi,sustainability_team,STK_CEGT,Sustainability_Engineer,full,2025-01-01,Life cycle assessment
+simapro-lca-vdi,cegt_team,STK_CEGT,CEGT_Lead,full,2025-01-01,Circular economy analysis
+flexsim-ops-simulator-vdi,operations_team,STK_OPS,Operations_Engineer,full,2025-01-01,Operations simulation
+flexsim-ops-simulator-vdi,ops_engineers,STK_OPS,Senior_Ops_Engineer,full,2025-01-01,Operations modeling
+ata-ispec-2200-web,tech_writers,STK_MRO,Technical_Writer,full,2025-01-01,Technical publications authoring
+ata-ispec-2200-web,mro_team,STK_MRO,MRO_Lead,full,2025-01-01,Maintenance manual development
+compliance-tracker-web,cert_team,STK_CERT,Certification_Engineer,full,2025-01-01,Compliance tracking
+compliance-tracker-web,compliance_managers,STK_CERT,Compliance_Manager,full,2025-01-01,Certification management
+range-safety-analysis-vdi,spaceport_team,STK_SPACEPORT,Spaceport_Engineer,full,2025-01-01,Range safety analysis
+range-safety-analysis-vdi,range_safety_engineers,STK_SPACEPORT,Range_Safety_Engineer,full,2025-01-01,Range safety simulation
