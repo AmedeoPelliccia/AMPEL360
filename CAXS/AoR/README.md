@@ -2,7 +2,7 @@
 
 ## Overview
 
-The **AoR (Areas of Responsibility)** directory contains **13 stakeholder entry points**, each representing a primary governance domain with specific ownership boundaries, accountabilities, and portal views.
+The **AoR (Areas of Responsibility)** directory contains **14 stakeholder entry points**, each representing a primary governance domain with specific ownership boundaries, accountabilities, and portal views.
 
 Each subdirectory serves as a **role-routed entry point** into the CAXS Portal (CA360º).
 
@@ -240,6 +240,24 @@ Each subdirectory serves as a **role-routed entry point** into the CAXS Portal (
 
 ---
 
+### STK_CEGT — Circular Economy and Green Tech
+**Path:** `STK_CEGT/`
+
+**Ownership:** Circular systems, ESG reporting, alternative technologies, sustainability governance, social responsibility
+
+**Primary Responsibilities:**
+- Circular economy strategy and implementation
+- ESG (Environmental, Social, Governance) reporting
+- Alternative and green technology assessment
+- Sustainability governance framework
+- Social responsibility programs
+- Green tech integration and validation
+- Circularity metrics and KPIs
+
+**Primary ATA Chapters:** 85 (Circularity Infrastructure), LC09 integration
+
+---
+
 ## Usage Guidelines
 
 ### For Stakeholder Representatives
@@ -279,7 +297,7 @@ The following AoR codes are **configuration-controlled and fixed**:
 
 ```
 STK_CM, STK_PMO, STK_SE, STK_DAB, STK_PHM, STK_SAF, STK_CERT, 
-STK_TEST, STK_OPS, STK_MRO, STK_AI, STK_CY, STK_SPACEPORT
+STK_TEST, STK_OPS, STK_MRO, STK_AI, STK_CY, STK_SPACEPORT, STK_CEGT
 ```
 
 **No custom or ad-hoc AoR codes are permitted.**
@@ -310,6 +328,8 @@ Common interaction patterns:
 - **STK_CY ↔ STK_DAB** — Security architecture and digital security
 - **STK_OPS ↔ STK_MRO** — Operations and maintenance interfaces
 - **STK_SPACEPORT ↔ STK_OPS** — Ground segment and operations coordination
+- **STK_CEGT ↔ STK_PMO** — Sustainability strategy and ESG reporting
+- **STK_CEGT ↔ STK_DAB** — Green tech integration and circularity ledgers
 
 ---
 

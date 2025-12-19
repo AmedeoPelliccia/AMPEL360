@@ -16,7 +16,7 @@ The CAXS (CA360º) directory structure has been successfully created and validat
 
 | Category | Expected | Created | Status |
 |----------|----------|---------|--------|
-| **AoR Stakeholders** | 13 | 13 | ✅ |
+| **AoR Stakeholders** | 14 | 14 | ✅ |
 | **OPT-INS Axes** | 6 | 6 | ✅ |
 | **KNOTS** | 14 | 14 | ✅ |
 | **LIFECYCLE Phases** | 14 | 14 | ✅ |
@@ -58,11 +58,11 @@ The CAXS (CA360º) directory structure has been successfully created and validat
 
 ## Structural Integrity Checks
 
-### 1. AoR Stakeholder Codes (13 required)
-✅ All 13 stakeholder codes present:
+### 1. AoR Stakeholder Codes (14 required)
+✅ All 14 stakeholder codes present:
 - STK_CM, STK_PMO, STK_SE, STK_DAB, STK_PHM
 - STK_SAF, STK_CERT, STK_TEST, STK_OPS, STK_MRO
-- STK_AI, STK_CY, STK_SPACEPORT
+- STK_AI, STK_CY, STK_SPACEPORT, STK_CEGT
 
 ### 2. KNOTS Range (K01-K14 required)
 ✅ All 14 KNOT directories present: K01 through K14
@@ -216,7 +216,7 @@ The CAXS (CA360º) directory structure has been successfully created and validat
 
 | Requirement | Status | Notes |
 |-------------|--------|-------|
-| All stakeholder entry points | ✅ | 13/13 AoR directories |
+| All stakeholder entry points | ✅ | 14/14 AoR directories |
 | All KNOTS process nodes | ✅ | 14/14 K01-K14 |
 | All lifecycle phases | ✅ | 14/14 LC01-LC14 |
 | All ATA chapters | ✅ | 117/117 ATA 00-116 |

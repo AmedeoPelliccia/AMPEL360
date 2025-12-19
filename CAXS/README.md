@@ -24,7 +24,7 @@ The CAXS Portal provides:
 ### 1. AoR (Areas of Responsibility)
 **Path:** `AoR/`
 
-Contains **13 stakeholder entry points**, each representing a primary Area of Responsibility (AoR) with specific ownership boundaries:
+Contains **14 stakeholder entry points**, each representing a primary Area of Responsibility (AoR) with specific ownership boundaries:
 
 - **STK_CM** — Configuration Management
 - **STK_PMO** — Program Management Office
@@ -39,6 +39,7 @@ Contains **13 stakeholder entry points**, each representing a primary Area of Re
 - **STK_AI** — AI / ML Engineering & Assurance
 - **STK_CY** — Cybersecurity
 - **STK_SPACEPORT** — Spaceport / Ground Segment
+- **STK_CEGT** — Circular Economy and Green Tech
 
 Each AoR directory serves as a **portal entry point** exposing:
 - Scope (what this AoR owns)

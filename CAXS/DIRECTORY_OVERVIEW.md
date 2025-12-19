@@ -31,7 +31,7 @@ CAXS/
 
 ## 1. AoR (Areas of Responsibility)
 
-**13 Stakeholder Entry Points:**
+**14 Stakeholder Entry Points:**
 
 ```
 AoR/
@@ -47,7 +47,8 @@ AoR/
 ├── STK_MRO/         # Maintenance, Repair & Overhaul
 ├── STK_AI/          # AI / ML Engineering & Assurance
 ├── STK_CY/          # Cybersecurity
-└── STK_SPACEPORT/   # Spaceport / Ground Segment
+├── STK_SPACEPORT/   # Spaceport / Ground Segment
+└── STK_CEGT/        # Circular Economy and Green Tech
 ```
 
 **Purpose:** Role-routed portal entry points for stakeholder-specific views
