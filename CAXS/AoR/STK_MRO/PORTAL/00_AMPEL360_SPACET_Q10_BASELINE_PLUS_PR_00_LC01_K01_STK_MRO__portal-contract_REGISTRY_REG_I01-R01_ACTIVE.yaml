@@ -1,0 +1,199 @@
+# STK_MRO Portal Contract
+
+**AMPEL360 CA360º — Maintenance, Repair & Overhaul Portal Configuration**
+
+---
+
+## Metadata
+
+- **AoR:** STK_MRO (Maintenance, Repair & Overhaul)
+- **Program:** SPACET Q10 BASELINE PLUS
+- **Contract Version:** 1.0.0
+- **Maintained By:** mro-team@ampel360.org
+- **Last Updated:** 2025-12-19
+- **Status:** ACTIVE
+
+---
+
+## Contract Definition
+
+```yaml
+contract_metadata:
+  aor_id: STK_MRO
+  contract_version: 1.0.0
+  program: SPACET
+  family: Q10
+  variant: BASELINE
+  version: PLUS
+  maintained_by: mro-team@ampel360.org
+  last_updated: 2025-12-19
+
+default_context:
+  filters:
+    opt_ins_axes:
+      - O-OPS/ORG          # Operations
+      - T-TECHNOLOGY       # On-board systems
+      - I-INFRASTRUCTURES  # Off-board infrastructure
+    
+    ata_chapters:
+      - 05  # Time Limits / Maintenance Checks
+      - 12  # Servicing
+      - 82  # Off-board MRO Facilities
+    
+    lc_phases:
+      - LC10  # Industrialization
+      - LC12  # Support and Services
+      - LC13  # MRO and Sustainment
+    
+    knots:
+      - K09  # Support
+      - K10  # MRO
+      - K11  # Sustainment
+    
+    blocks:
+      - 00  # General
+      - 10  # Operational Systems
+    
+    categories:
+      - DELIVERABLE
+      - EVIDENCE
+      - REGISTRY
+    
+    types:
+      - MAN
+      - PROC
+      - PLAN
+      - LOG
+    
+    statuses:
+      - DRAFT
+      - ACTIVE
+      - RELEASED
+
+  slice_selector:
+    program_family_variants:
+      - program: SPACET
+        family: Q10
+        variants: [BASELINE, CERT, MSN]
+    
+    default_slice:
+      program: SPACET
+      family: Q10
+      variant: BASELINE
+      version: PLUS
+      node: "ATA-05"
+
+features:
+  moscow:
+    must:
+      - F01  # Context Bar
+      - F02  # AoR Dashboard
+      - F03  # Registry-Driven Work Queue
+      - F04  # Kanban / Backlog
+      - F05  # Artifact Generator
+      - F06  # Gates & Validator Console
+      - F07  # Evidence Console
+      - F08  # Signoff Console
+      - F09  # Tool Launchpad
+    
+    should:
+      - F10  # AI Assistant
+      - F14  # Notification Engine
+    
+    wont:
+      - F19  # Auto-merge / Auto-signoff
+      - F20  # Unbounded external chatbots
+
+  config:
+    F02:
+      enabled: true
+      settings:
+        kpis:
+          - id: open_maintenance_procedures
+            label: "Open Maintenance Procedures"
+            source: task_registry
+            filter: {aor: STK_MRO, status: [DRAFT, ACTIVE]}
+          
+          - id: pending_mro_approvals
+            label: "Pending MRO Approvals"
+            source: signoff_index
+            filter: {aor: STK_MRO, status: pending}
+        
+        refresh_interval: 300
+
+tool_launchpad:
+  tiles:
+    - tool_id: mro-manual-editor
+      tool_name: "MRO Manual Editor"
+      version: "2024.1"
+      tool_class: "documentation"
+      owner_aor: STK_MRO
+      vendor: "internal"
+      
+      launch:
+        channel: web
+        deep_link: "https://manuals.ampel360.org/launch?aor=STK_MRO"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_MRO"]
+        exports: ["exports/mro-manuals"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["mro-engineers"]
+      
+      audit:
+        events: [launch, export]
+
+execution:
+  kanban:
+    enabled: true
+    default_filters:
+      aor: STK_MRO
+      lc_phase: [LC13]
+      status: [DRAFT, ACTIVE]
+  
+  task_wizard:
+    enabled: true
+    templates:
+      - "mro-amm-aircraft-maintenance-manual"
+      - "mro-ipc-illustrated-parts-catalog"
+      - "mro-srm-structural-repair-manual"
+      - "mro-maintenance-plan"
+      - "mro-evidence-pack"
+
+backend:
+  validators:
+    - nomenclature-validator
+    - maintenance-completeness-validator
+  
+  indexers:
+    - artifact-indexer
+    - evidence-indexer
+  
+  notification_rules:
+    - event: gate_failure
+      channels: [portal, email]
+      recipients: ["mro-leads"]
+    
+    - event: signoff_request
+      channels: [portal, email]
+      recipients: ["aor-specific"]
+```
+
+---
+
+## Change Log
+
+| Revision | Date | Author | Changes |
+|----------|------|--------|---------|
+| 1.0.0 | 2025-12-19 | STK_MRO | Initial contract |
+
+---
+
+**END OF DOCUMENT**

@@ -727,3 +727,145 @@ jobs:
           
           echo ""
           echo "✓ Gate E: TALF validation complete"
+
+      - name: Gate F - Portal Contract Validation
+        run: |
+          echo "=== Gate F: Portal Contract Validation ==="
+          echo ""
+          echo "Validating AoR portal contracts..."
+          
+          # Define all AoRs that should have contracts
+          ALL_AORS=(
+            "STK_CM"
+            "STK_PMO"
+            "STK_SE"
+            "STK_DAB"
+            "STK_PHM"
+            "STK_SAF"
+            "STK_CERT"
+            "STK_TEST"
+            "STK_OPS"
+            "STK_MRO"
+            "STK_AI"
+            "STK_CY"
+            "STK_SPACEPORT"
+            "STK_CEGT"
+          )
+          
+          echo "Checking portal contracts for all 14 AoRs..."
+          echo ""
+          
+          MISSING_CONTRACTS=0
+          INVALID_CONTRACTS=0
+          
+          for aor in "${ALL_AORS[@]}"; do
+            CONTRACT_FILE="CAXS/AoR/$aor/PORTAL/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_${aor}__portal-contract_REGISTRY_REG_I01-R01_ACTIVE.yaml"
+            
+            if [ -f "$CONTRACT_FILE" ]; then
+              echo "✓ $aor: Contract file exists"
+              
+              # Validate contract structure
+              echo "  Validating $aor contract structure..."
+              
+              # Check for required sections
+              REQUIRED_SECTIONS=(
+                "contract_metadata"
+                "default_context"
+                "features"
+                "tool_launchpad"
+                "execution"
+                "backend"
+              )
+              
+              MISSING_SECTIONS=0
+              for section in "${REQUIRED_SECTIONS[@]}"; do
+                if grep -q "$section:" "$CONTRACT_FILE"; then
+                  echo "    ✓ Section '$section' present"
+                else
+                  echo "    ✗ ERROR: Section '$section' missing"
+                  MISSING_SECTIONS=$((MISSING_SECTIONS + 1))
+                fi
+              done
+              
+              if [ $MISSING_SECTIONS -gt 0 ]; then
+                echo "  ✗ ERROR: $aor contract incomplete ($MISSING_SECTIONS missing sections)"
+                INVALID_CONTRACTS=$((INVALID_CONTRACTS + 1))
+              else
+                echo "  ✓ $aor contract structure valid"
+              fi
+              
+              # Validate aor_id matches
+              if grep -q "aor_id: $aor" "$CONTRACT_FILE"; then
+                echo "  ✓ aor_id matches filename"
+              else
+                echo "  ✗ ERROR: aor_id does not match filename"
+                INVALID_CONTRACTS=$((INVALID_CONTRACTS + 1))
+              fi
+              
+              # Check for MUST features (F01-F09)
+              echo "  Checking MUST features..."
+              MUST_FEATURES=("F01" "F02" "F03" "F04" "F05" "F06" "F07" "F08" "F09")
+              MISSING_MUST=0
+              
+              for feature in "${MUST_FEATURES[@]}"; do
+                if grep -q "- $feature" "$CONTRACT_FILE"; then
+                  true  # Feature found
+                else
+                  echo "    ✗ ERROR: MUST feature $feature missing"
+                  MISSING_MUST=$((MISSING_MUST + 1))
+                fi
+              done
+              
+              if [ $MISSING_MUST -gt 0 ]; then
+                echo "  ✗ ERROR: $MISSING_MUST MUST features missing from $aor contract"
+                INVALID_CONTRACTS=$((INVALID_CONTRACTS + 1))
+              else
+                echo "  ✓ All MUST features present"
+              fi
+              
+              # Validate tool references exist in tool_catalog.yaml
+              echo "  Validating tool references..."
+              TOOL_IDS=$(grep "tool_id:" "$CONTRACT_FILE" | awk '{print $2}' | sort -u)
+              
+              if [ -f "CAXS/INFRASTRUCTURE/access/tool_catalog.yaml" ]; then
+                INVALID_TOOLS=0
+                for tool_id in $TOOL_IDS; do
+                  if grep -q "tool_id: $tool_id" "CAXS/INFRASTRUCTURE/access/tool_catalog.yaml"; then
+                    echo "    ✓ Tool '$tool_id' exists in catalog"
+                  else
+                    echo "    ⚠ Warning: Tool '$tool_id' not found in catalog (may be defined inline)"
+                  fi
+                done
+              else
+                echo "    ✗ ERROR: Tool catalog not found - required for tool validation"
+                INVALID_CONTRACTS=$((INVALID_CONTRACTS + 1))
+              fi
+              
+            else
+              echo "✗ ERROR: $aor contract missing at $CONTRACT_FILE"
+              MISSING_CONTRACTS=$((MISSING_CONTRACTS + 1))
+            fi
+            
+            echo ""
+          done
+          
+          # Summary
+          echo "=== Contract Validation Summary ==="
+          echo "Total AoRs: ${#ALL_AORS[@]}"
+          echo "Missing contracts: $MISSING_CONTRACTS"
+          echo "Invalid contracts: $INVALID_CONTRACTS"
+          
+          if [ $MISSING_CONTRACTS -gt 0 ]; then
+            echo ""
+            echo "✗ ERROR: $MISSING_CONTRACTS AoR(s) missing portal contracts"
+            exit 1
+          fi
+          
+          if [ $INVALID_CONTRACTS -gt 0 ]; then
+            echo ""
+            echo "✗ ERROR: $INVALID_CONTRACTS AoR(s) have invalid portal contracts"
+            exit 1
+          fi
+          
+          echo ""
+          echo "✓ Gate F: All portal contracts validated successfully"

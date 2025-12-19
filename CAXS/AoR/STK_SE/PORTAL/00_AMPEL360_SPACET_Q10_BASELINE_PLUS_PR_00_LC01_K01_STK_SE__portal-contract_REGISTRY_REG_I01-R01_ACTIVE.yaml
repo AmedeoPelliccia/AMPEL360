@@ -1,0 +1,469 @@
+# STK_SE Portal Contract
+
+**AMPEL360 CA360º — Systems Engineering Portal Configuration**
+
+---
+
+## Metadata
+
+- **AoR:** STK_SE (Systems Engineering)
+- **Program:** SPACET Q10 BASELINE PLUS
+- **Contract Version:** 1.0.0
+- **Maintained By:** se-team@ampel360.org
+- **Last Updated:** 2025-12-19
+- **Status:** ACTIVE
+
+---
+
+## Contract Definition
+
+```yaml
+contract_metadata:
+  aor_id: STK_SE
+  contract_version: 1.0.0
+  program: SPACET
+  family: Q10
+  variant: BASELINE
+  version: PLUS
+  maintained_by: se-team@ampel360.org
+  last_updated: 2025-12-19
+
+# Default workspace context
+default_context:
+  filters:
+    opt_ins_axes:
+      - P-PROGRAM         # Program governance
+      - T-TECHNOLOGY      # On-board systems
+      - S-SIM_TEST        # Simulation and test
+    
+    ata_chapters:
+      # Architecture and systems
+      - 00  # General
+      - 20  # Standard Practices - Airframe
+      - 40  # Multi-system / Integration Services
+      - 42  # Integrated Modular Avionics
+      - 51  # Standard Practices & Structures
+      # Requirements and interfaces
+      - 91  # Data Schemas / Ontologies
+      - 92  # Wiring / Connectivity Graphs
+      - 93  # Traceability Graph
+    
+    lc_phases:
+      - LC01  # Problem Statement
+      - LC02  # System Requirements
+      - LC03  # Design Models
+      - LC04  # Engineering Analysis
+      - LC05  # Integration Testing
+      - LC07  # Safety and Security
+    
+    knots:
+      - K01  # Problem Definition
+      - K02  # Requirements
+      - K03  # Design
+      - K04  # Analysis
+      - K05  # Integration
+      - K06  # Verification
+    
+    blocks:
+      - 00  # General
+      - 10  # Operational Systems
+      - 30  # Data, Comms and Registry
+      - 90  # Connections & Mapping
+    
+    categories:
+      - DELIVERABLE
+      - EVIDENCE
+      - REGISTRY
+    
+    types:
+      - REQ
+      - SPEC
+      - ARCH
+      - ICD
+      - MOD
+      - SCHEMA
+    
+    statuses:
+      - DRAFT
+      - ACTIVE
+      - RELEASED
+
+  slice_selector:
+    program_family_variants:
+      - program: SPACET
+        family: Q10
+        variants: [BASELINE, FLIGHT_TEST, CERT]
+    
+    default_slice:
+      program: SPACET
+      family: Q10
+      variant: BASELINE
+      version: PLUS
+      node: "ATA-00"  # General as default
+
+# Feature set (MoSCoW)
+features:
+  moscow:
+    must:
+      - F01  # Context Bar (Slice Selector)
+      - F02  # AoR Dashboard (Default Filters + KPIs)
+      - F03  # Registry-Driven Work Queue
+      - F04  # Kanban / Backlog mapped to KNOTs
+      - F05  # Artifact Generator (Template Wizard)
+      - F06  # Gates & Validator Console
+      - F07  # Evidence Console (Index + Attach + Hash)
+      - F08  # Signoff Console
+      - F09  # Tool Launchpad (TALF-aware)
+    
+    should:
+      - F10  # Portal-aware AI Assistant
+      - F12  # Cross-AoR Handshake Panel
+      - F13  # Trace & Impact Viewer
+      - F14  # Notification Engine
+    
+    could:
+      - F15  # "Start Task" Execution Runner
+      - F17  # Comparative Dashboards
+    
+    wont:
+      - F19  # Auto-merge / Auto-signoff
+      - F20  # Unbounded external chatbots
+
+  config:
+    F02:  # Dashboard configuration
+      enabled: true
+      settings:
+        kpis:
+          - id: open_requirements_tasks
+            label: "Open Requirements Tasks"
+            source: task_registry
+            filter: {aor: STK_SE, status: [DRAFT, ACTIVE]}
+          
+          - id: pending_architecture_reviews
+            label: "Pending Architecture Reviews"
+            source: signoff_index
+            filter: {aor: STK_SE, domain: architecture, status: pending}
+          
+          - id: interface_gaps
+            label: "Interface Gaps"
+            source: evidence_index
+            filter: {aor: STK_SE, type: ICD, status: missing}
+          
+          - id: traceability_gaps
+            label: "Traceability Gaps"
+            source: trace_graph
+            filter: {aor: STK_SE, status: incomplete}
+        
+        refresh_interval: 300  # seconds
+    
+    F04:  # Kanban configuration
+      enabled: true
+      settings:
+        columns:
+          - id: backlog
+            label: "Backlog"
+            knot_stages: [K01]
+          
+          - id: requirements
+            label: "Requirements"
+            knot_stages: [K02]
+          
+          - id: design
+            label: "Design"
+            knot_stages: [K03]
+          
+          - id: analysis
+            label: "Analysis"
+            knot_stages: [K04]
+          
+          - id: integration
+            label: "Integration"
+            knot_stages: [K05]
+          
+          - id: verification
+            label: "Verification"
+            knot_stages: [K06]
+          
+          - id: complete
+            label: "Complete"
+            knot_stages: [K07]
+    
+    F10:  # AI Assistant configuration
+      enabled: true
+      settings:
+        capabilities:
+          - draft_artifacts
+          - propose_tasks
+          - suggest_evidence
+          - identify_gaps
+          - generate_icds
+        
+        constraints:
+          cannot_bypass_gates: true
+          cannot_invent_aors: true
+          must_cite_sources: true
+          must_link_ssot: true
+        
+        prompting_context:
+          - "Focus on system architecture and requirements"
+          - "Apply SysML/MBSE best practices"
+          - "Ensure traceability completeness"
+
+# Tool Launchpad (TALF-aware)
+tool_launchpad:
+  tiles:
+    # SysML/MBSE Tool
+    - tool_id: cameo-systems-modeler
+      tool_name: "Cameo Systems Modeler"
+      version: "2024.1"
+      tool_class: "mbse"
+      owner_aor: STK_SE
+      vendor: "Dassault Systèmes"
+      documentation_url: "https://docs.ampel360.org/tools/cameo"
+      
+      launch:
+        channel: VDI
+        deep_link: "vdi://cameo-systems-modeler?profile=se"
+        requires_interaction: true
+      
+      workspace_bindings:
+        repo_nodes:
+          - "CAXS/AoR/STK_SE"
+          - "data/sysml-models"
+        exports:
+          - "exports/sysml-exports"
+        datasets:
+          - "requirements-db"
+          - "interface-catalog"
+        templates:
+          - "se-architecture-model"
+      
+      licensing:
+        model: concurrent
+        pool_id: cameo-pool-01
+        checkout_mode: automatic
+        max_duration: "PT8H"
+        grace_period: "PT15M"
+      
+      preflight:
+        checks:
+          - sso_session
+          - entitlement
+          - license
+          - compute_profile
+        requirements:
+          entitlement:
+            groups: ["se-engineers", "mbse-users"]
+          compute_profile:
+            min_cores: 8
+            min_memory: "32GB"
+            min_storage: "50GB"
+        timeout: "PT30S"
+      
+      audit:
+        events:
+          - launch
+          - checkout
+          - export
+          - close
+          - failure
+        log_level: INFO
+        retention: "P7Y"
+      
+      failure_modes:
+        license_unavailable:
+          action: queue
+          message: "All Cameo licenses are in use. You have been added to the queue."
+          queue_config:
+            max_wait: "PT30M"
+            notify_channels: ["portal", "email"]
+        
+        entitlement_denied:
+          action: block
+          message: "You do not have permission to use Cameo. Contact STK_SE."
+        
+        compute_unavailable:
+          action: queue
+    
+    # Requirements Management
+    - tool_id: doors-ng
+      tool_name: "IBM DOORS Next"
+      version: "7.0.3"
+      tool_class: "requirements"
+      owner_aor: STK_SE
+      vendor: "IBM"
+      
+      launch:
+        channel: web
+        deep_link: "https://doors.ampel360.org/launch?aor=STK_SE"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_SE"]
+        exports: ["exports/requirements"]
+      
+      licensing:
+        model: concurrent
+        pool_id: doors-pool-01
+        checkout_mode: automatic
+        max_duration: "PT8H"
+      
+      preflight:
+        checks: [sso_session, entitlement, license]
+        requirements:
+          entitlement:
+            groups: ["se-engineers", "requirements-users"]
+      
+      audit:
+        events: [launch, checkout, export, close]
+      
+      failure_modes:
+        license_unavailable:
+          action: queue
+    
+    # Python Environment for Analysis
+    - tool_id: jupyter-se
+      tool_name: "Jupyter Notebook (SE)"
+      version: "latest"
+      tool_class: "data-analysis"
+      owner_aor: STK_SE
+      vendor: "internal"
+      
+      launch:
+        channel: web
+        deep_link: "https://jupyter.ampel360.org/launch?aor=STK_SE"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_SE"]
+        exports: ["exports/notebooks"]
+        datasets: ["all"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["se-engineers"]
+      
+      audit:
+        events: [launch, export]
+
+# Execution surfaces
+execution:
+  kanban:
+    enabled: true
+    default_filters:
+      aor: STK_SE
+      lc_phase: [LC02, LC03, LC04]
+      status: [DRAFT, ACTIVE]
+  
+  task_wizard:
+    enabled: true
+    templates:
+      - "se-requirements-specification"
+      - "se-architecture-model"
+      - "se-interface-control-document"
+      - "se-allocation-matrix"
+      - "se-verification-matrix"
+      - "se-evidence-pack"
+  
+  evidence_console:
+    enabled: true
+    default_view: index
+  
+  signoff_console:
+    enabled: true
+    routing_rules:
+      - signoff_type: "requirements-approval"
+        target_aor: STK_SE
+      - signoff_type: "architecture-review"
+        target_aor: STK_SE
+      - signoff_type: "icd-approval"
+        target_aor: STK_SE
+      - signoff_type: "safety-review"
+        target_aor: STK_SAF
+
+# Assistant + communications
+assistant:
+  enabled: true
+  capabilities:
+    - draft_artifacts
+    - propose_tasks
+    - suggest_evidence
+    - identify_gaps
+    - generate_icds
+  
+  constraints:
+    cannot_bypass_gates: true
+    cannot_invent_aors: true
+    must_cite_sources: true
+    must_link_ssot: true
+
+communications:
+  threads:
+    enabled: true
+    bindings:
+      - node
+      - task
+      - signoff
+      - decision
+
+# Backend bindings
+backend:
+  validators:
+    - nomenclature-validator
+    - requirements-traceability-validator
+    - icd-completeness-validator
+    - evidence-link-validator
+  
+  indexers:
+    - artifact-indexer
+    - evidence-indexer
+    - task-indexer
+  
+  trace_services:
+    - traceability-graph
+    - ata-impact-analyzer
+    - requirements-trace-checker
+  
+  notification_rules:
+    - event: gate_failure
+      channels: [portal, email]
+      recipients: ["se-leads"]
+    
+    - event: signoff_request
+      channels: [portal, email]
+      recipients: ["aor-specific"]
+    
+    - event: license_failure
+      channels: [portal]
+      recipients: ["requesting-user"]
+    
+    - event: new_blocker
+      channels: [portal, email]
+      recipients: ["se-leads", "task-owner"]
+    
+    - event: traceability_gap
+      channels: [portal]
+      recipients: ["task-owner"]
+```
+
+---
+
+## Change Log
+
+| Revision | Date | Author | Changes |
+|----------|------|--------|---------|
+| 1.0.0 | 2025-12-19 | STK_SE | Initial contract |
+
+---
+
+## References
+
+- **Portal Feature Catalog (SSOT):** `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_DAB__portal-feature-catalog_REGISTRY_CAT_I01-R01_ACTIVE.md`
+- **AoR Portal Contract Schema:** `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_DAB__aor-portal-contract-schema_DELIVERABLE_SCHEMA_I01-R01_ACTIVE.md`
+
+---
+
+**END OF DOCUMENT**
