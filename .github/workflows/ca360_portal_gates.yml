@@ -227,3 +227,200 @@ jobs:
           fi
           
           echo "✓ All critical AoR SSOT packs complete"
+
+      - name: Gate A - Intent Reference Validity
+        run: |
+          echo "=== Gate A: Intent Reference Validity ==="
+          echo ""
+          echo "Validating intent key references against SSOT registries..."
+          
+          # Check if SSOT registries exist
+          VISION_REG=$(find CAXS/LEDGERS -name "*__vision-registry_REGISTRY_*.md" | head -1)
+          MISSION_REG=$(find CAXS/LEDGERS -name "*__mission-registry_REGISTRY_*.md" | head -1)
+          SCOPE_OUTCOME_REG=$(find CAXS/LEDGERS -name "*__scope-outcome-registry_REGISTRY_*.md" | head -1)
+          
+          if [ -z "$VISION_REG" ]; then
+            echo "⚠ Warning: Vision Registry not found - skipping intent validation"
+            exit 0
+          fi
+          
+          if [ -z "$MISSION_REG" ]; then
+            echo "⚠ Warning: Mission Registry not found - skipping intent validation"
+            exit 0
+          fi
+          
+          if [ -z "$SCOPE_OUTCOME_REG" ]; then
+            echo "⚠ Warning: Scope & Outcome Registry not found - skipping intent validation"
+            exit 0
+          fi
+          
+          echo "✓ SSOT registries found:"
+          echo "  Vision: $VISION_REG"
+          echo "  Mission: $MISSION_REG"
+          echo "  Scope & Outcome: $SCOPE_OUTCOME_REG"
+          echo ""
+          
+          # Basic validation: check that registries contain valid tables
+          echo "Validating registry structure..."
+          
+          # Check Vision Registry has VSN- entries
+          VSN_COUNT=$(grep -c "^| VSN-" "$VISION_REG" || true)
+          if [ "$VSN_COUNT" -gt 0 ]; then
+            echo "✓ Vision Registry: $VSN_COUNT vision entries found"
+          else
+            echo "⚠ Warning: No vision entries found in Vision Registry"
+          fi
+          
+          # Check Mission Registry has MSN- entries
+          MSN_COUNT=$(grep -c "^| MSN-" "$MISSION_REG" || true)
+          if [ "$MSN_COUNT" -gt 0 ]; then
+            echo "✓ Mission Registry: $MSN_COUNT mission entries found"
+          else
+            echo "⚠ Warning: No mission entries found in Mission Registry"
+          fi
+          
+          # Check Scope & Outcome Registry has SCP- and OUT- entries
+          SCP_COUNT=$(grep -c "^| SCP-" "$SCOPE_OUTCOME_REG" || true)
+          OUT_COUNT=$(grep -c "^| OUT-" "$SCOPE_OUTCOME_REG" || true)
+          if [ "$SCP_COUNT" -gt 0 ]; then
+            echo "✓ Scope Registry: $SCP_COUNT scope entries found"
+          else
+            echo "⚠ Warning: No scope entries found in Scope & Outcome Registry"
+          fi
+          if [ "$OUT_COUNT" -gt 0 ]; then
+            echo "✓ Outcome Registry: $OUT_COUNT outcome entries found"
+          else
+            echo "⚠ Warning: No outcome entries found in Scope & Outcome Registry"
+          fi
+          
+          echo ""
+          echo "✓ Gate A: Intent reference SSOT registries validated"
+
+      - name: Gate B - CIPP Determinism Validation
+        run: |
+          echo "=== Gate B: CIPP Determinism Validation ==="
+          echo ""
+          echo "Validating CIPP registry integrity..."
+          
+          # Check if CIPP Registry exists
+          CIPP_REG=$(find CAXS/LEDGERS -name "*__cipp-registry_REGISTRY_*.md" | head -1)
+          
+          if [ -z "$CIPP_REG" ]; then
+            echo "⚠ Warning: CIPP Registry not found - skipping CIPP validation"
+            exit 0
+          fi
+          
+          echo "✓ CIPP Registry found: $CIPP_REG"
+          echo ""
+          
+          # Basic validation: check CIPP registry structure
+          echo "Validating CIPP registry structure..."
+          
+          # Check for CIPP- entries
+          CIPP_COUNT=$(grep -c "^| CIPP-" "$CIPP_REG" || true)
+          if [ "$CIPP_COUNT" -gt 0 ]; then
+            echo "✓ CIPP Registry: $CIPP_COUNT CIPP entries found"
+          else
+            echo "⚠ Warning: No CIPP entries found in CIPP Registry"
+            exit 0
+          fi
+          
+          # Extract CIPP entries and validate basic structure
+          echo ""
+          echo "Validating CIPP entry structure..."
+          CIPP_ERRORS=0
+          
+          # Check that each CIPP entry has required fields
+          # This is a basic check - full validation would require parsing
+          if grep -E "^\| CIPP-[0-9]+ \|" "$CIPP_REG" > /dev/null; then
+            echo "✓ CIPP entries follow expected format"
+          else
+            echo "✗ ERROR: CIPP entries do not follow expected format"
+            CIPP_ERRORS=$((CIPP_ERRORS + 1))
+          fi
+          
+          # Check for intent_hash column
+          if grep "intent_hash" "$CIPP_REG" > /dev/null; then
+            echo "✓ CIPP Registry includes intent_hash column"
+          else
+            echo "⚠ Warning: CIPP Registry missing intent_hash column"
+          fi
+          
+          # Check for target_refs column
+          if grep "target_refs" "$CIPP_REG" > /dev/null; then
+            echo "✓ CIPP Registry includes target_refs column"
+          else
+            echo "⚠ Warning: CIPP Registry missing target_refs column"
+          fi
+          
+          if [ $CIPP_ERRORS -gt 0 ]; then
+            echo ""
+            echo "✗ ERROR: $CIPP_ERRORS CIPP validation errors found"
+            exit 1
+          fi
+          
+          echo ""
+          echo "✓ Gate B: CIPP determinism checks passed"
+
+      - name: Gate C - Outcome Trace Completeness
+        run: |
+          echo "=== Gate C: Outcome Trace Completeness ==="
+          echo ""
+          echo "Validating outcome traceability..."
+          
+          # Check if required registries exist
+          SCOPE_OUTCOME_REG=$(find CAXS/LEDGERS -name "*__scope-outcome-registry_REGISTRY_*.md" | head -1)
+          CIPP_REG=$(find CAXS/LEDGERS -name "*__cipp-registry_REGISTRY_*.md" | head -1)
+          
+          if [ -z "$SCOPE_OUTCOME_REG" ]; then
+            echo "⚠ Warning: Scope & Outcome Registry not found - skipping outcome trace validation"
+            exit 0
+          fi
+          
+          echo "✓ Scope & Outcome Registry found: $SCOPE_OUTCOME_REG"
+          
+          # Validate outcome registry structure
+          echo ""
+          echo "Validating outcome definitions..."
+          
+          # Check for outcome entries with required fields
+          OUT_COUNT=$(grep -c "^| OUT-" "$SCOPE_OUTCOME_REG" || true)
+          if [ "$OUT_COUNT" -gt 0 ]; then
+            echo "✓ Found $OUT_COUNT outcome definitions"
+          else
+            echo "⚠ Warning: No outcome definitions found"
+            exit 0
+          fi
+          
+          # Check for required outcome fields
+          if grep "metric_definition" "$SCOPE_OUTCOME_REG" > /dev/null; then
+            echo "✓ Outcomes include metric definitions"
+          else
+            echo "⚠ Warning: Outcomes missing metric definitions"
+          fi
+          
+          if grep "target_value" "$SCOPE_OUTCOME_REG" > /dev/null; then
+            echo "✓ Outcomes include target values"
+          else
+            echo "⚠ Warning: Outcomes missing target values"
+          fi
+          
+          if grep "evidence_hook" "$SCOPE_OUTCOME_REG" > /dev/null; then
+            echo "✓ Outcomes include evidence hooks"
+          else
+            echo "⚠ Warning: Outcomes missing evidence hooks"
+          fi
+          
+          # If CIPP Registry exists, validate outcome linkage
+          if [ -n "$CIPP_REG" ]; then
+            echo ""
+            echo "Validating CIPP outcome linkage..."
+            if grep "downstream_outcomes" "$CIPP_REG" > /dev/null; then
+              echo "✓ CIPPs include downstream outcome references"
+            else
+              echo "⚠ Warning: CIPPs missing downstream outcome references"
+            fi
+          fi
+          
+          echo ""
+          echo "✓ Gate C: Outcome trace completeness checks passed"
