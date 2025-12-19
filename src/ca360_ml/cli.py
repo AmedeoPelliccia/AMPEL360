@@ -393,7 +393,7 @@ def cross_validate(config: str, dataset_manifest: str, n_folds: int, use_sample:
     results_path = cv_dir / f"cv_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.json"
     save_cv_results(results, results_path)
     
-    click.echo(f"\n✓ Cross-validation complete")
+    click.echo("\n✓ Cross-validation complete")
 
 
 @cli.command()
