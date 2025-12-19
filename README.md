@@ -233,12 +233,82 @@ The **Tool Launchpad** is a UI + policy surface with mandatory elements per tool
 - Assistant panel operating within templates and SSOT context
 - Threaded communications bound to objects (task/node/signoff)
 
-### 6.5 References
+### 6.5 AoR Portal Contracts (Complete)
+
+All 14 AoRs now have portal contracts defining their workspace context, feature sets, tool launchpads, and backend bindings:
+
+- **STK_CM** — Configuration Management
+- **STK_PMO** — Program Management Office
+- **STK_SE** — Systems Engineering
+- **STK_DAB** — Digital Applications & Blockchains
+- **STK_PHM** — Physical & Mechanical Engineering
+- **STK_SAF** — Safety
+- **STK_CERT** — Certification / Compliance
+- **STK_TEST** — Test / V&V
+- **STK_OPS** — Operations
+- **STK_MRO** — Maintenance, Repair & Overhaul
+- **STK_AI** — AI / ML Engineering & Assurance
+- **STK_CY** — Cybersecurity
+- **STK_SPACEPORT** — Spaceport / Ground Segment
+- **STK_CEGT** — Circular Economy and Green Tech
+
+**Contract Locations:** `CAXS/AoR/STK_*/PORTAL/*__portal-contract_REGISTRY_REG_I01-R01_ACTIVE.yaml`
+
+### 6.6 Backend Services
+
+**TALF (Tool Access & Licensing Fabric):**
+- Entitlement checking via IAM/SSO integration
+- License pool management with concurrent checkout
+- Preflight validation (SSO, compute, license, entitlements)
+- Launch orchestration across VDI, web, HPC channels
+- Audit logging with 7-year retention
+
+**Service Specification:** `CAXS/INFRASTRUCTURE/portals/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_DAB__talf-service-specification_DELIVERABLE_SPEC_I01-R01_DRAFT.md`
+
+**Infrastructure:**
+- **Tool Catalog:** `CAXS/INFRASTRUCTURE/access/tool_catalog.yaml`
+- **Entitlement Matrix:** `CAXS/INFRASTRUCTURE/access/entitlement_matrix.csv`
+- **License Events Registry:** `CAXS/INFRASTRUCTURE/access/license_events_registry.md`
+
+### 6.7 Frontend Components
+
+**Implementation Guide:** `CAXS/INFRASTRUCTURE/portals/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_DAB__portal-frontend-components-specification_DELIVERABLE_SPEC_I01-R01_DRAFT.md`
+
+All MUST features (F01-F09) have detailed component specifications including:
+- Component structure and UI requirements
+- State management patterns
+- API integration points
+- Performance requirements
+
+### 6.8 Feature Governance
+
+**Governance Process:** `CAXS/INFRASTRUCTURE/portals/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_DAB__portal-feature-governance-process_DELIVERABLE_PROC_I01-R01_DRAFT.md`
+
+**Processes defined:**
+- Feature addition (6-step workflow with review/approval gates)
+- Feature modification (6-step workflow with AoR consultation)
+- Feature deprecation (5-step workflow with migration support)
+
+**Governance bodies:**
+- Portal Steering Committee (monthly reviews)
+- Portal Working Group (bi-weekly coordination)
+
+### 6.9 CI Validation
+
+**CA360 Portal Gates Workflow:** `.github/workflows/ca360_portal_gates.yml`
+
+**Gate F — Portal Contract Validation:**
+- Validates all 14 AoR contracts exist and are well-formed
+- Checks for required sections (metadata, context, features, tools, execution, backend)
+- Validates aor_id matches filename
+- Ensures all MUST features (F01-F09) are present
+- Cross-validates tool references against tool catalog
+
+### 6.10 References
 
 - **Portal Feature Catalog (SSOT):** `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_DAB__portal-feature-catalog_REGISTRY_CAT_I01-R01_ACTIVE.md`
 - **AoR Portal Contract Schema:** `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_DAB__aor-portal-contract-schema_DELIVERABLE_SCHEMA_I01-R01_ACTIVE.md`
 - **Tool Launchpad Specification:** `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_DAB__tool-launchpad-specification_DELIVERABLE_SPEC_I01-R01_ACTIVE.md`
-- **Per-AoR Contract Examples:** See individual AoR portal directories under `CAXS/AoR/STK_*/PORTAL/`
 
 ---
 
