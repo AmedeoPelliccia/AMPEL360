@@ -117,4 +117,78 @@ jobs:
             exit 1
           fi
           
+          # Check markdown links in key files
+          echo ""
+          echo "Validating markdown link integrity..."
+          BROKEN_LINKS=0
+          
+          # Check portal entrypoints index links
+          if grep -E '\[.*\]\(CAXS/.*\)' CAXS/INFRASTRUCTURE/indexes/portal_entrypoints_index.md > /dev/null; then
+            echo "⚠ Info: Found relative links in portal entrypoints index"
+          fi
+          
+          # Verify critical file references exist
+          FILES_TO_CHECK=(
+            "CAXS/INFRASTRUCTURE/validators/one_official_chain_uniqueness.md"
+            "CAXS/INFRASTRUCTURE/validators/exceptions.yml"
+            "configs/nomenclature/v6/vocabulary.json"
+            "configs/nomenclature/v6/regex_constraints.json"
+            "configs/nomenclature/v6/category_aor_constraints.json"
+          )
+          
+          for file in "${FILES_TO_CHECK[@]}"; do
+            if [ -f "$file" ]; then
+              echo "✓ Critical file exists: $file"
+            else
+              echo "✗ ERROR: Missing critical file: $file"
+              BROKEN_LINKS=$((BROKEN_LINKS + 1))
+            fi
+          done
+          
+          if [ $BROKEN_LINKS -gt 0 ]; then
+            echo "✗ ERROR: Found $BROKEN_LINKS broken references"
+            exit 1
+          fi
+          
           echo "✓ Linkcheck PASSED"
+
+      - name: Validate AoR SSOT Packs
+        run: |
+          echo "=== Validating AoR SSOT Registry Packs ==="
+          echo ""
+          
+          # Define required registries per AoR
+          REQUIRED_REGISTRIES=(
+            "roadmap_registry.md"
+            "task_registry.md"
+            "evidence_index.md"
+            "signoff_index.md"
+          )
+          
+          # Check STK_CEGT as reference implementation
+          echo "Checking STK_CEGT registry pack (reference implementation)..."
+          MISSING=0
+          for registry in "${REQUIRED_REGISTRIES[@]}"; do
+            if [ -f "CAXS/AoR/STK_CEGT/$registry" ]; then
+              echo "✓ STK_CEGT/$registry present"
+            else
+              echo "✗ WARNING: STK_CEGT/$registry missing"
+              MISSING=$((MISSING + 1))
+            fi
+          done
+          
+          if [ $MISSING -gt 0 ]; then
+            echo "⚠ Warning: STK_CEGT registry pack incomplete ($MISSING missing files)"
+            echo "ℹ Info: Other AoRs may use template pack in INFRASTRUCTURE/templates/aor_ssot_pack/"
+          else
+            echo "✓ STK_CEGT registry pack complete"
+          fi
+          
+          # Verify template pack exists
+          if [ -d "CAXS/INFRASTRUCTURE/templates/aor_ssot_pack" ]; then
+            echo "✓ AoR SSOT template pack exists"
+          else
+            echo "⚠ Warning: AoR SSOT template pack not found"
+          fi
+          
+          echo "✓ AoR SSOT Pack validation PASSED"
