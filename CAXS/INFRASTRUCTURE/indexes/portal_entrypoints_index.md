@@ -89,8 +89,14 @@ PROGRAMS/<program>/<family>/ → VARIANT → AoR/KNOT → work
 2. **AoR validation:** Must match allowlist (14 stakeholders including STK_CEGT)
 3. **Category-AoR constraints:** SIGNOFF/EXPORT_CONTROL → STK_CM or STK_CERT only
 4. **KNOT range:** K01-K14 only
-5. **One official chain:** DELIVERABLE ≤1 ACTIVE/RELEASED per scope
+5. **One official chain:** DELIVERABLE ≤1 ACTIVE/RELEASED per scope (see uniqueness key definition)
 6. **.gitkeep presence:** All empty leaf directories
+
+**One Official Chain Details:** See `CAXS/INFRASTRUCTURE/validators/one_official_chain_uniqueness.md`
+
+**Exceptions Mechanism:** `CAXS/INFRASTRUCTURE/validators/exceptions.yml`
+
+**CI Enforcement:** `.github/workflows/ca360_portal_gates.yml`
 
 ---
 

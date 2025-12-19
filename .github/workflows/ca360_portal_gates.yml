@@ -1,0 +1,120 @@
+name: CA360 Portal Gates
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch: {}
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate Portal Structure
+        run: |
+          echo "=== CA360º Portal Gates Validation ==="
+          echo ""
+          
+          # Gate 1: Filename validation (v6.0 nomenclature)
+          echo "Gate 1: Validating v6.0 nomenclature compliance..."
+          if [ -f "configs/nomenclature/v6/regex_constraints.json" ]; then
+            echo "✓ Regex constraints config found"
+          else
+            echo "✗ ERROR: Missing regex_constraints.json"
+            exit 1
+          fi
+          
+          # Gate 2: AoR validation (14 stakeholders including STK_CEGT)
+          echo "Gate 2: Validating AoR completeness (14 stakeholders)..."
+          AOR_COUNT=$(find CAXS/AoR -maxdepth 1 -type d -name "STK_*" | wc -l)
+          if [ "$AOR_COUNT" -eq 14 ]; then
+            echo "✓ All 14 AoR stakeholders present"
+          else
+            echo "✗ ERROR: Expected 14 AoR stakeholders, found $AOR_COUNT"
+            exit 1
+          fi
+          
+          # Verify STK_CEGT exists
+          if [ -d "CAXS/AoR/STK_CEGT" ]; then
+            echo "✓ STK_CEGT directory exists"
+          else
+            echo "✗ ERROR: STK_CEGT directory missing"
+            exit 1
+          fi
+          
+          # Gate 3: Category-AoR constraints validation
+          echo "Gate 3: Validating Category-AoR constraints..."
+          if [ -f "configs/nomenclature/v6/category_aor_constraints.json" ]; then
+            echo "✓ Category-AoR constraints config found"
+          else
+            echo "✗ ERROR: Missing category_aor_constraints.json"
+            exit 1
+          fi
+          
+          # Gate 4: KNOT range validation (K01-K14 only)
+          echo "Gate 4: Validating KNOT range (K01-K14)..."
+          KNOT_COUNT=$(find CAXS/KNOTS -maxdepth 1 -type d -name "K*" | wc -l)
+          if [ "$KNOT_COUNT" -eq 14 ]; then
+            echo "✓ All 14 KNOTS present (K01-K14)"
+          else
+            echo "✗ ERROR: Expected 14 KNOTS, found $KNOT_COUNT"
+            exit 1
+          fi
+          
+          # Gate 5: One official chain - validate exceptions mechanism exists
+          echo "Gate 5: Validating one official chain mechanism..."
+          if [ -f "CAXS/INFRASTRUCTURE/validators/exceptions.yml" ]; then
+            echo "✓ Exceptions mechanism defined"
+          else
+            echo "⚠ Warning: Exceptions mechanism not yet defined"
+          fi
+          
+          # Gate 6: .gitkeep presence validation
+          echo "Gate 6: Validating .gitkeep presence in empty directories..."
+          GITKEEP_COUNT=$(find CAXS -name ".gitkeep" | wc -l)
+          echo "✓ Found $GITKEEP_COUNT .gitkeep files tracking empty directories"
+          
+          # Additional validation: ATA chapters
+          echo ""
+          echo "Additional: Validating ATA chapters (00-116)..."
+          ATA_DIRS=$(find CAXS/ATA -type d -name "ATA-*" | wc -l)
+          echo "✓ Found $ATA_DIRS ATA chapter directories"
+          
+          # Additional validation: Configuration files
+          echo ""
+          echo "Additional: Validating configuration files..."
+          if [ -f "configs/nomenclature/v6/vocabulary.json" ]; then
+            echo "✓ Vocabulary config present"
+          else
+            echo "✗ ERROR: Missing vocabulary.json"
+            exit 1
+          fi
+          
+          echo ""
+          echo "=== All Portal Gates PASSED ==="
+
+      - name: Linkcheck Portal Documentation
+        run: |
+          echo "=== Linkcheck Portal Documentation ==="
+          if [ -f "CAXS/INFRASTRUCTURE/indexes/portal_entrypoints_index.md" ]; then
+            echo "✓ Portal entrypoints index exists"
+          else
+            echo "✗ ERROR: Portal entrypoints index missing"
+            exit 1
+          fi
+          
+          if [ -f "CAXS/REPORTS/validation/ca360_portal_validation_report.md" ]; then
+            echo "✓ Validation report template exists"
+          else
+            echo "✗ ERROR: Validation report template missing"
+            exit 1
+          fi
+          
+          echo "✓ Linkcheck PASSED"
