@@ -69,7 +69,7 @@ jobs:
           
           # Gate 4: KNOT range validation (K01-K14 only)
           echo "Gate 4: Validating KNOT range (K01-K14)..."
-          KNOT_COUNT=$(find CAXS/KNOTS -maxdepth 1 -type d -name "K*" | wc -l)
+          KNOT_COUNT=$(find CAXS/KNOTS -maxdepth 1 -mindepth 1 -type d -name "K*" | wc -l)
           if [ "$KNOT_COUNT" -eq 14 ]; then
             echo "✓ All 14 KNOTS present (K01-K14)"
           else
