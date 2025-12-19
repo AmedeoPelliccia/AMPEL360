@@ -1,0 +1,36 @@
+# Training Configuration
+# Configuration for model training
+
+training:
+  # Model type
+  model_type: "sklearn_random_forest"  # or "sklearn_logistic", "sklearn_svm"
+  
+  # Reproducibility
+  seed: 42
+  deterministic: true
+  
+  # Model hyperparameters
+  hyperparameters:
+    n_estimators: 100
+    max_depth: 10
+    min_samples_split: 2
+    random_state: 42
+  
+  # Training parameters
+  batch_size: 32
+  epochs: 10
+  learning_rate: 0.001
+  
+  # Validation
+  validation_strategy: "holdout"  # or "cross_validation"
+  cv_folds: 5
+  
+  # Checkpointing
+  checkpoint_interval: 5
+  save_best_only: true
+  
+  # Early stopping
+  early_stopping:
+    enabled: true
+    patience: 10
+    min_delta: 0.001

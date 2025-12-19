@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RunProvenance",
+  "description": "Provenance manifest for reproducible ML training runs",
+  "type": "object",
+  "required": [
+    "run_id",
+    "git_sha",
+    "dataset_manifest_sha256",
+    "config_sha256",
+    "seed",
+    "timestamp_utc",
+    "env_lock_sha256"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "description": "Unique identifier for this training run"
+    },
+    "git_sha": {
+      "type": "string",
+      "description": "Git commit SHA of the code used for training"
+    },
+    "dirty_state": {
+      "type": "boolean",
+      "description": "Whether the git working directory had uncommitted changes"
+    },
+    "dataset_id": {
+      "type": "string",
+      "description": "Dataset identifier (name:version+sha256)"
+    },
+    "dataset_manifest_sha256": {
+      "type": "string",
+      "description": "SHA256 hash of the dataset manifest file"
+    },
+    "config_sha256": {
+      "type": "string",
+      "description": "SHA256 hash of the resolved configuration"
+    },
+    "seed": {
+      "type": "integer",
+      "description": "Random seed used for reproducibility"
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of run start"
+    },
+    "env_lock_sha256": {
+      "type": "string",
+      "description": "SHA256 hash of the environment lock file (e.g., uv.lock)"
+    },
+    "hardware": {
+      "type": "object",
+      "description": "Hardware configuration details",
+      "properties": {
+        "cpu": {"type": "string"},
+        "gpu": {"type": "string"},
+        "memory_gb": {"type": "number"}
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Training and evaluation metrics"
+    },
+    "python_version": {
+      "type": "string",
+      "description": "Python version used"
+    },
+    "framework_versions": {
+      "type": "object",
+      "description": "ML framework versions (e.g., sklearn, torch)"
+    }
+  }
+}
