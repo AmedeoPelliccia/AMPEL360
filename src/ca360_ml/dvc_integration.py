@@ -135,7 +135,7 @@ class DVCManager:
                 check=True,
                 capture_output=True
             )
-            print(f"✓ Pushed data to remote")
+            print("✓ Pushed data to remote")
             return True
         except subprocess.CalledProcessError as e:
             print(f"✗ Failed to push: {e.stderr.decode()}")
