@@ -284,7 +284,7 @@ def export_model_with_metadata(
             meta.value = str(value)
         
         onnx.save(onnx_model, str(onnx_path))
-        print(f"✓ Added metadata to ONNX model")
+        print("✓ Added metadata to ONNX model")
         return True
         
     except Exception as e:
