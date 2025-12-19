@@ -162,7 +162,7 @@ class DVCManager:
                 check=True,
                 capture_output=True
             )
-            print(f"✓ Pulled data from remote")
+            print("✓ Pulled data from remote")
             return True
         except subprocess.CalledProcessError as e:
             print(f"✗ Failed to pull: {e.stderr.decode()}")
