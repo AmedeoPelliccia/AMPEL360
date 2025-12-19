@@ -1,6 +1,6 @@
 # STK_PHM Task Registry
 
-**AoR:** STK_PHM (Physical & Mechanical Engineering)  
+**AoR:** STK_PHM (Physical Hardware and Mechanical Engineering)  
 **Status:** ACTIVE  
 **Version:** 1.0  
 **Last Updated:** 2025-12-19
