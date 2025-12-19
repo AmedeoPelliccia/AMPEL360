@@ -22,7 +22,7 @@ jobs:
           echo "=== CA360º Portal Gates Validation ==="
           echo ""
           
-          # Gate 1: Filename validation (v6.0 nomenclature)
+          # Gate 1: Filename validation (v6.0 nomenclature) with scope reporting
           echo "Gate 1: Validating v6.0 nomenclature compliance..."
           if [ -f "configs/nomenclature/v6/regex_constraints.json" ]; then
             echo "✓ Regex constraints config found"
@@ -30,6 +30,15 @@ jobs:
             echo "✗ ERROR: Missing regex_constraints.json"
             exit 1
           fi
+          
+          # Report scope boundary explicitly
+          echo ""
+          echo "v6.0 Scope Boundary Report:"
+          IN_SCOPE=$(find CAXS/LEDGERS -name "*.md" ! -name "README.md" 2>/dev/null | wc -l)
+          OUT_OF_SCOPE=$(find CAXS -name "README.md" -o -name "*_template.md" 2>/dev/null | wc -l)
+          echo "  In-scope files (ledgers/deliverables/registries): $IN_SCOPE"
+          echo "  Out-of-scope files (READMEs/templates/configs): $OUT_OF_SCOPE"
+          echo "  ℹ Info: Only in-scope files require PROJECT=AMPEL360 in filename"
           
           # Gate 2: AoR validation (14 stakeholders including STK_CEGT)
           echo "Gate 2: Validating AoR completeness (14 stakeholders)..."
@@ -165,30 +174,56 @@ jobs:
             "signoff_index.md"
           )
           
-          # Check STK_CEGT as reference implementation
-          echo "Checking STK_CEGT registry pack (reference implementation)..."
-          MISSING=0
-          for registry in "${REQUIRED_REGISTRIES[@]}"; do
-            if [ -f "CAXS/AoR/STK_CEGT/$registry" ]; then
-              echo "✓ STK_CEGT/$registry present"
-            else
-              echo "✗ WARNING: STK_CEGT/$registry missing"
-              MISSING=$((MISSING + 1))
-            fi
-          done
+          # Define critical AoRs (PR-blocking enforcement)
+          CRITICAL_AORS=(
+            "STK_CM"
+            "STK_PMO"
+            "STK_CERT"
+            "STK_SAF"
+            "STK_TEST"
+            "STK_CEGT"
+          )
           
-          if [ $MISSING -gt 0 ]; then
-            echo "⚠ Warning: STK_CEGT registry pack incomplete ($MISSING missing files)"
-            echo "ℹ Info: Other AoRs may use template pack in INFRASTRUCTURE/templates/aor_ssot_pack/"
-          else
-            echo "✓ STK_CEGT registry pack complete"
-          fi
+          echo "Critical AoRs requiring registry packs: ${CRITICAL_AORS[@]}"
+          echo ""
+          
+          # Check critical AoRs with ERROR on missing packs
+          CRITICAL_ERRORS=0
+          for aor in "${CRITICAL_AORS[@]}"; do
+            echo "Checking $aor registry pack (CRITICAL - PR-blocking)..."
+            MISSING=0
+            for registry in "${REQUIRED_REGISTRIES[@]}"; do
+              if [ -f "CAXS/AoR/$aor/$registry" ]; then
+                echo "  ✓ $aor/$registry present"
+              else
+                echo "  ✗ ERROR: $aor/$registry missing"
+                MISSING=$((MISSING + 1))
+              fi
+            done
+            
+            if [ $MISSING -gt 0 ]; then
+              echo "  ✗ ERROR: $aor registry pack incomplete ($MISSING missing files)"
+              CRITICAL_ERRORS=$((CRITICAL_ERRORS + 1))
+            else
+              echo "  ✓ $aor registry pack complete"
+            fi
+            echo ""
+          done
           
           # Verify template pack exists
           if [ -d "CAXS/INFRASTRUCTURE/templates/aor_ssot_pack" ]; then
             echo "✓ AoR SSOT template pack exists"
           else
-            echo "⚠ Warning: AoR SSOT template pack not found"
+            echo "✗ ERROR: AoR SSOT template pack not found"
+            exit 1
           fi
           
-          echo "✓ AoR SSOT Pack validation PASSED"
+          # Fail if critical AoRs missing packs
+          if [ $CRITICAL_ERRORS -gt 0 ]; then
+            echo ""
+            echo "✗ ERROR: $CRITICAL_ERRORS critical AoRs have incomplete registry packs"
+            echo "ℹ Info: Use template pack in INFRASTRUCTURE/templates/aor_ssot_pack/ to create missing registries"
+            exit 1
+          fi
+          
+          echo "✓ All critical AoR SSOT packs complete"

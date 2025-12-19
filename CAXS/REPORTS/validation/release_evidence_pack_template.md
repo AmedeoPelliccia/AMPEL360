@@ -82,6 +82,93 @@ This evidence pack provides defensible proof that the CA360º portal meets all r
 
 ### Audit Results
 
+**Total DELIVERABLE artifacts checked:** __  
+**UniqueKey collisions detected:** 0 (REQUIRED)  
+**Audit timestamp:** YYYY-MM-DD HH:MM:SS
+
+### Collision Report
+
+```
+No collisions detected. ✓
+```
+
+**Requirement:** Zero collisions mandatory for release.
+
+## 5. Exceptions Registry Snapshot
+
+**File:** `CAXS/INFRASTRUCTURE/validators/exceptions.yml`  
+**SHA256:** [to be filled]
+
+### Status
+
+- [ ] exceptions.yml is empty (preferred), OR
+- [ ] All exceptions have future expires_on dates
+- [ ] All exceptions have valid approval_ref to SIGNOFF artifacts
+- [ ] All exceptions have designated owner AoR
+
+### Active Exceptions Count
+
+**Count:** __ (0 preferred for v1.0.0 release)
+
+## 6. Portal Contract File Manifest (Closed Chain)
+
+**Source:** `CAXS/INFRASTRUCTURE/portal_contract_files_v1.0.md`  
+**Contract Manifest SHA256:** [to be filled]
+
+### Contract Files (31 mandatory for v1.0.0)
+
+All files must be present and integrity-verified:
+
+| Category | File | SHA256 | Status |
+|----------|------|--------|--------|
+| Core Docs | CAXS/README.md | [hash] | PASS/FAIL |
+| Core Docs | CAXS/DIRECTORY_OVERVIEW.md | [hash] | PASS/FAIL |
+| Core Docs | CAXS/AoR/README.md | [hash] | PASS/FAIL |
+| Core Docs | CAXS/KNOTS/README.md | [hash] | PASS/FAIL |
+| Core Docs | CAXS/LIFECYCLE/README.md | [hash] | PASS/FAIL |
+| Core Docs | CAXS/OPT-INS/README.md | [hash] | PASS/FAIL |
+| Core Docs | CAXS/ATA/README.md | [hash] | PASS/FAIL |
+| Core Docs | CAXS/PROGRAMS/README.md | [hash] | PASS/FAIL |
+| Core Docs | CAXS/LEDGERS/README.md | [hash] | PASS/FAIL |
+| Core Docs | CAXS/INFRASTRUCTURE/README.md | [hash] | PASS/FAIL |
+| Governance | CAXS/INFRASTRUCTURE/indexes/portal_entrypoints_index.md | [hash] | PASS/FAIL |
+| Governance | CAXS/INFRASTRUCTURE/validators/one_official_chain_uniqueness.md | [hash] | PASS/FAIL |
+| Governance | CAXS/INFRASTRUCTURE/validators/exceptions.yml | [hash] | PASS/FAIL |
+| Governance | CAXS/00_AMPEL360_..._ca360-portal-rc-protocol_DELIVERABLE_PROC_I01-R01_ACTIVE.md | [hash] | PASS/FAIL |
+| Governance | CAXS/STRUCTURE_VALIDATION.md | [hash] | PASS/FAIL |
+| Config | configs/nomenclature/v6/vocabulary.json | [hash] | PASS/FAIL |
+| Config | configs/nomenclature/v6/regex_constraints.json | [hash] | PASS/FAIL |
+| Config | configs/nomenclature/v6/category_aor_constraints.json | [hash] | PASS/FAIL |
+| CI/CD | .github/workflows/ca360_portal_gates.yml | [hash] | PASS/FAIL |
+| Templates | CAXS/INFRASTRUCTURE/templates/aor_ssot_pack/README.md | [hash] | PASS/FAIL |
+| Templates | CAXS/INFRASTRUCTURE/templates/aor_ssot_pack/roadmap_registry_template.md | [hash] | PASS/FAIL |
+| Templates | CAXS/INFRASTRUCTURE/templates/aor_ssot_pack/task_registry_template.md | [hash] | PASS/FAIL |
+| Templates | CAXS/INFRASTRUCTURE/templates/aor_ssot_pack/evidence_index_template.md | [hash] | PASS/FAIL |
+| Templates | CAXS/INFRASTRUCTURE/templates/aor_ssot_pack/signoff_index_template.md | [hash] | PASS/FAIL |
+| STK_CEGT Ref | CAXS/AoR/STK_CEGT/roadmap_registry.md | [hash] | PASS/FAIL |
+| STK_CEGT Ref | CAXS/AoR/STK_CEGT/task_registry.md | [hash] | PASS/FAIL |
+| STK_CEGT Ref | CAXS/AoR/STK_CEGT/evidence_index.md | [hash] | PASS/FAIL |
+| STK_CEGT Ref | CAXS/AoR/STK_CEGT/signoff_index.md | [hash] | PASS/FAIL |
+| STK_CEGT Ledgers | CAXS/LEDGERS/85_AMPEL360_..._circularity-kpis_REGISTRY_IDX_I01-R01_ACTIVE.md | [hash] | PASS/FAIL |
+| STK_CEGT Ledgers | CAXS/LEDGERS/85_AMPEL360_..._esg-reporting_REGISTRY_IDX_I01-R01_ACTIVE.md | [hash] | PASS/FAIL |
+| Evidence | CAXS/REPORTS/validation/release_evidence_pack_template.md | [hash] | PASS/FAIL |
+
+**Total Contract Files:** 31  
+**Files Present:** __/31  
+**Integrity Verified:** __/31
+
+### Contract Manifest Integrity (Closed Chain)
+
+**Contract File List SHA256:** [hash of portal_contract_files_v1.0.md]  
+**Evidence Pack Self-Hash:** [hash of this file after generation]
+
+**Audit Closure:** Evidence pack includes hash of contract manifest, which includes hash of this evidence pack template, creating a closed audit chain that prevents tampering.
+
+## 7. Release Metadata
+```
+
+### Audit Results
+
 **Total DELIVERABLE artifacts scanned:** __  
 **Unique keys evaluated:** __  
 **Collisions detected:** __  

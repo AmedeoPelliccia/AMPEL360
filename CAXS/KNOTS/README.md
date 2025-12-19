@@ -108,13 +108,15 @@ Any new KNOT requires a **standard upgrade + CM approval**.
 
 ---
 
-### K09 — Sustainability and Green Initiatives
+### K09 — Sustainability and Green Initiatives (Circular Economy Governance Node)
 **Path:** `K09/`
 
-**Purpose:** Sustainability baselines, circularity KPIs, green tech evidence, ESG reporting
+**Purpose:** Sustainability baselines, circularity KPIs, green tech evidence, ESG reporting, circular systems design validation
 
-**Primary AoR:** STK_PMO, STK_DAB, STK_CM  
+**Primary AoR:** STK_CEGT, STK_PMO, STK_DAB, STK_CM  
 **Primary Phase:** LC09
+
+**Semantics:** K09 serves as the governance node for circular economy initiatives, bridging sustainability requirements (LC09 Green Aircraft/Baselines) with circularity metrics, ESG compliance, and alternative technology assessments. This KNOT enforces evidence-based validation of circularity targets and social responsibility frameworks.
 
 ---
 
