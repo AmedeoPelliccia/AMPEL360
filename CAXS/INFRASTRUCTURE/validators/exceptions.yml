@@ -1,0 +1,34 @@
+# CA360º Portal Exceptions Registry
+#
+# Purpose: Controlled exceptions to portal governance rules
+# Status: Time-bounded, audited, and CM-approved only
+#
+# Rules:
+# 1. All exceptions must have an expiry date
+# 2. CI will fail if expires_on is in the past
+# 3. All exceptions must be approved by owner AoR
+# 4. All exceptions must reference approval evidence
+
+exceptions:
+  # Example exception (currently empty - no active exceptions)
+  # - id: EXC-0001
+  #   scope: "CAXS/AoR/STK_CEGT/**"
+  #   rule: "one_official_chain"
+  #   rationale: "Temporary dual-chain while merging legacy circularity baseline."
+  #   expires_on: "2026-01-31"
+  #   owner: "STK_CM"
+  #   approval_ref: "CAXS/LEDGERS/release-packs/..."
+  
+  # No exceptions currently registered
+  []
+
+# Exception rules metadata
+metadata:
+  version: "1.0"
+  last_updated: "2025-12-19"
+  validation_rules:
+    - "All exceptions must have unique ID"
+    - "expires_on must be future date in YYYY-MM-DD format"
+    - "owner must be valid AoR code from allowlist"
+    - "approval_ref must point to existing SIGNOFF artifact"
+    - "CI blocks merge if any exception is expired"

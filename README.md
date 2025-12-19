@@ -299,6 +299,7 @@ The **OPT-INS framework** defines six canonical axes for information topology:
 | **STK_AI** | AI / ML Engineering & Assurance | Model registry, AI validation, monitoring, AI governance and assurance |
 | **STK_CY** | Cybersecurity | IAM, ZTA, secure networks, hardening, cyber evidence and controls |
 | **STK_SPACEPORT** | Spaceport / Ground Segment | Spaceport interfaces, off-board infrastructure, range constraints |
+| **STK_CEGT** | Circular Economy and Green Tech | Circular systems, ESG reporting, alternative technologies, sustainability governance, social responsibility |
 
 ### 8.2 Deprecations
 
@@ -367,7 +368,7 @@ The **OPT-INS framework** defines six canonical axes for information topology:
 - **BLOCK**: `^(00|10|20|30|40|50|60|70|80|90)$`
 - **PHASE**: `^LC(0[1-9]|1[0-4])$`
 - **KNOT**: `^K(0[1-9]|1[0-4])(-T\d{3})?$`
-- **AoR**: `^(STK_CM|STK_PMO|STK_SE|STK_DAB|STK_PHM|STK_SAF|STK_CERT|STK_TEST|STK_OPS|STK_MRO|STK_AI|STK_CY|STK_SPACEPORT)$`
+- **AoR**: `^(STK_CM|STK_PMO|STK_SE|STK_DAB|STK_PHM|STK_SAF|STK_CERT|STK_TEST|STK_OPS|STK_MRO|STK_AI|STK_CY|STK_SPACEPORT|STK_CEGT)$`
 - **SUBJECT**: `^[a-z0-9]+(?:-[a-z0-9]+)*$`
 - **CATEGORY**: `^(DELIVERABLE|EVIDENCE|REGISTRY|SIGNOFF|EXPORT_CONTROL|INTERNAL_PRODUCTION)$`
 - **TYPE**: build from allowlist in 9.2.11 (exact match).
@@ -465,6 +466,7 @@ The lifecycle **PHASE** token is one of the following **14 controlled values**. 
 | `STK_AI` | AI/ML engineering & assurance (models, eval, drift/monitoring) |
 | `STK_CY` | Cybersecurity (IAM, hardening, ZTA, cyber evidence) |
 | `STK_SPACEPORT` | Spaceport/ground segment interfaces, constraints, emergency response infra |
+| `STK_CEGT` | Circular economy, ESG reporting, alternative technologies, sustainability governance, social responsibility |
 
 ---
 

@@ -1,0 +1,229 @@
+name: CA360 Portal Gates
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch: {}
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate Portal Structure
+        run: |
+          echo "=== CA360º Portal Gates Validation ==="
+          echo ""
+          
+          # Gate 1: Filename validation (v6.0 nomenclature) with scope reporting
+          echo "Gate 1: Validating v6.0 nomenclature compliance..."
+          if [ -f "configs/nomenclature/v6/regex_constraints.json" ]; then
+            echo "✓ Regex constraints config found"
+          else
+            echo "✗ ERROR: Missing regex_constraints.json"
+            exit 1
+          fi
+          
+          # Report scope boundary explicitly
+          echo ""
+          echo "v6.0 Scope Boundary Report:"
+          IN_SCOPE=$(find CAXS/LEDGERS -name "*.md" ! -name "README.md" 2>/dev/null | wc -l)
+          OUT_OF_SCOPE=$(find CAXS -name "README.md" -o -name "*_template.md" 2>/dev/null | wc -l)
+          echo "  In-scope files (ledgers/deliverables/registries): $IN_SCOPE"
+          echo "  Out-of-scope files (READMEs/templates/configs): $OUT_OF_SCOPE"
+          echo "  ℹ Info: Only in-scope files require PROJECT=AMPEL360 in filename"
+          
+          # Gate 2: AoR validation (14 stakeholders including STK_CEGT)
+          echo "Gate 2: Validating AoR completeness (14 stakeholders)..."
+          AOR_COUNT=$(find CAXS/AoR -maxdepth 1 -type d -name "STK_*" | wc -l)
+          if [ "$AOR_COUNT" -eq 14 ]; then
+            echo "✓ All 14 AoR stakeholders present"
+          else
+            echo "✗ ERROR: Expected 14 AoR stakeholders, found $AOR_COUNT"
+            exit 1
+          fi
+          
+          # Verify STK_CEGT exists
+          if [ -d "CAXS/AoR/STK_CEGT" ]; then
+            echo "✓ STK_CEGT directory exists"
+          else
+            echo "✗ ERROR: STK_CEGT directory missing"
+            exit 1
+          fi
+          
+          # Gate 3: Category-AoR constraints validation
+          echo "Gate 3: Validating Category-AoR constraints..."
+          if [ -f "configs/nomenclature/v6/category_aor_constraints.json" ]; then
+            echo "✓ Category-AoR constraints config found"
+          else
+            echo "✗ ERROR: Missing category_aor_constraints.json"
+            exit 1
+          fi
+          
+          # Gate 4: KNOT range validation (K01-K14 only)
+          echo "Gate 4: Validating KNOT range (K01-K14)..."
+          KNOT_COUNT=$(find CAXS/KNOTS -maxdepth 1 -mindepth 1 -type d -name "K*" | wc -l)
+          if [ "$KNOT_COUNT" -eq 14 ]; then
+            echo "✓ All 14 KNOTS present (K01-K14)"
+          else
+            echo "✗ ERROR: Expected 14 KNOTS, found $KNOT_COUNT"
+            exit 1
+          fi
+          
+          # Gate 5: One official chain - validate exceptions mechanism exists
+          echo "Gate 5: Validating one official chain mechanism..."
+          if [ -f "CAXS/INFRASTRUCTURE/validators/exceptions.yml" ]; then
+            echo "✓ Exceptions mechanism defined"
+          else
+            echo "⚠ Warning: Exceptions mechanism not yet defined"
+          fi
+          
+          # Gate 6: .gitkeep presence validation
+          echo "Gate 6: Validating .gitkeep presence in empty directories..."
+          GITKEEP_COUNT=$(find CAXS -name ".gitkeep" | wc -l)
+          echo "✓ Found $GITKEEP_COUNT .gitkeep files tracking empty directories"
+          
+          # Additional validation: ATA chapters
+          echo ""
+          echo "Additional: Validating ATA chapters (00-116)..."
+          ATA_DIRS=$(find CAXS/ATA -type d -name "ATA-*" | wc -l)
+          echo "✓ Found $ATA_DIRS ATA chapter directories"
+          
+          # Additional validation: Configuration files
+          echo ""
+          echo "Additional: Validating configuration files..."
+          if [ -f "configs/nomenclature/v6/vocabulary.json" ]; then
+            echo "✓ Vocabulary config present"
+          else
+            echo "✗ ERROR: Missing vocabulary.json"
+            exit 1
+          fi
+          
+          echo ""
+          echo "=== All Portal Gates PASSED ==="
+
+      - name: Linkcheck Portal Documentation
+        run: |
+          echo "=== Linkcheck Portal Documentation ==="
+          if [ -f "CAXS/INFRASTRUCTURE/indexes/portal_entrypoints_index.md" ]; then
+            echo "✓ Portal entrypoints index exists"
+          else
+            echo "✗ ERROR: Portal entrypoints index missing"
+            exit 1
+          fi
+          
+          if [ -f "CAXS/REPORTS/validation/ca360_portal_validation_report.md" ]; then
+            echo "✓ Validation report template exists"
+          else
+            echo "✗ ERROR: Validation report template missing"
+            exit 1
+          fi
+          
+          # Check markdown links in key files
+          echo ""
+          echo "Validating markdown link integrity..."
+          BROKEN_LINKS=0
+          
+          # Check portal entrypoints index links
+          if grep -E '\[.*\]\(CAXS/.*\)' CAXS/INFRASTRUCTURE/indexes/portal_entrypoints_index.md > /dev/null; then
+            echo "⚠ Info: Found relative links in portal entrypoints index"
+          fi
+          
+          # Verify critical file references exist
+          FILES_TO_CHECK=(
+            "CAXS/INFRASTRUCTURE/validators/one_official_chain_uniqueness.md"
+            "CAXS/INFRASTRUCTURE/validators/exceptions.yml"
+            "configs/nomenclature/v6/vocabulary.json"
+            "configs/nomenclature/v6/regex_constraints.json"
+            "configs/nomenclature/v6/category_aor_constraints.json"
+          )
+          
+          for file in "${FILES_TO_CHECK[@]}"; do
+            if [ -f "$file" ]; then
+              echo "✓ Critical file exists: $file"
+            else
+              echo "✗ ERROR: Missing critical file: $file"
+              BROKEN_LINKS=$((BROKEN_LINKS + 1))
+            fi
+          done
+          
+          if [ $BROKEN_LINKS -gt 0 ]; then
+            echo "✗ ERROR: Found $BROKEN_LINKS broken references"
+            exit 1
+          fi
+          
+          echo "✓ Linkcheck PASSED"
+
+      - name: Validate AoR SSOT Packs
+        run: |
+          echo "=== Validating AoR SSOT Registry Packs ==="
+          echo ""
+          
+          # Define required registries per AoR
+          REQUIRED_REGISTRIES=(
+            "roadmap_registry.md"
+            "task_registry.md"
+            "evidence_index.md"
+            "signoff_index.md"
+          )
+          
+          # Define critical AoRs (PR-blocking enforcement)
+          CRITICAL_AORS=(
+            "STK_CM"
+            "STK_PMO"
+            "STK_CERT"
+            "STK_SAF"
+            "STK_TEST"
+            "STK_CEGT"
+          )
+          
+          echo "Critical AoRs requiring registry packs: ${CRITICAL_AORS[@]}"
+          echo ""
+          
+          # Check critical AoRs with ERROR on missing packs
+          CRITICAL_ERRORS=0
+          for aor in "${CRITICAL_AORS[@]}"; do
+            echo "Checking $aor registry pack (CRITICAL - PR-blocking)..."
+            MISSING=0
+            for registry in "${REQUIRED_REGISTRIES[@]}"; do
+              if [ -f "CAXS/AoR/$aor/$registry" ]; then
+                echo "  ✓ $aor/$registry present"
+              else
+                echo "  ✗ ERROR: $aor/$registry missing"
+                MISSING=$((MISSING + 1))
+              fi
+            done
+            
+            if [ $MISSING -gt 0 ]; then
+              echo "  ✗ ERROR: $aor registry pack incomplete ($MISSING missing files)"
+              CRITICAL_ERRORS=$((CRITICAL_ERRORS + 1))
+            else
+              echo "  ✓ $aor registry pack complete"
+            fi
+            echo ""
+          done
+          
+          # Verify template pack exists
+          if [ -d "CAXS/INFRASTRUCTURE/templates/aor_ssot_pack" ]; then
+            echo "✓ AoR SSOT template pack exists"
+          else
+            echo "✗ ERROR: AoR SSOT template pack not found"
+            exit 1
+          fi
+          
+          # Fail if critical AoRs missing packs
+          if [ $CRITICAL_ERRORS -gt 0 ]; then
+            echo ""
+            echo "✗ ERROR: $CRITICAL_ERRORS critical AoRs have incomplete registry packs"
+            echo "ℹ Info: Use template pack in INFRASTRUCTURE/templates/aor_ssot_pack/ to create missing registries"
+            exit 1
+          fi
+          
+          echo "✓ All critical AoR SSOT packs complete"

@@ -1,0 +1,255 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "AMPEL360 v6.0 Category-AoR Constraints and Alignment Rules",
+  "version": "6.0",
+  "constraints": {
+    "signoff_aor": [
+      "STK_CM",
+      "STK_CERT"
+    ],
+    "export_control_aor": [
+      "STK_CM",
+      "STK_CERT"
+    ],
+    "teknia_credentials_aor": [
+      "STK_CM",
+      "STK_CERT"
+    ],
+    "cegt_primary_alignment": {
+      "ata_preferred": [
+        "85"
+      ],
+      "phase_preferred": [
+        "LC09"
+      ],
+      "description": "Primary alignment for STK_CEGT - does not block other ATAs/phases"
+    }
+  },
+  "rules": {
+    "CATEGORY_SIGNOFF": {
+      "allowed_aor": [
+        "STK_CM",
+        "STK_CERT"
+      ],
+      "enforcement": "PR-blocking",
+      "rationale": "Formal approvals require CM or CERT authority"
+    },
+    "CATEGORY_EXPORT_CONTROL": {
+      "allowed_aor": [
+        "STK_CM",
+        "STK_CERT"
+      ],
+      "enforcement": "PR-blocking",
+      "rationale": "Export control packages require CM or CERT authority"
+    },
+    "TYPE_CREDENTIALS": {
+      "applicable_types": [
+        "BADGE",
+        "CERT",
+        "LIC"
+      ],
+      "allowed_aor": [
+        "STK_CM",
+        "STK_CERT"
+      ],
+      "enforcement": "PR-blocking",
+      "rationale": "TEKNIA credential issuance restricted to CM or CERT"
+    }
+  },
+  "aor_primary_alignments": {
+    "STK_CM": {
+      "ata_chapters": [
+        "00",
+        "11",
+        "99"
+      ],
+      "phases": [
+        "LC06",
+        "LC10"
+      ]
+    },
+    "STK_PMO": {
+      "ata_chapters": [
+        "00",
+        "01",
+        "02",
+        "03",
+        "04",
+        "05"
+      ],
+      "phases": [
+        "LC06",
+        "LC09",
+        "LC10",
+        "LC14"
+      ]
+    },
+    "STK_SE": {
+      "ata_chapters": [
+        "00",
+        "20",
+        "40",
+        "51"
+      ],
+      "phases": [
+        "LC02",
+        "LC03",
+        "LC04"
+      ]
+    },
+    "STK_DAB": {
+      "ata_chapters": [
+        "42",
+        "46",
+        "90",
+        "91",
+        "92",
+        "93",
+        "94",
+        "95",
+        "96",
+        "97",
+        "98",
+        "99"
+      ],
+      "phases": [
+        "LC01",
+        "LC03",
+        "LC05"
+      ]
+    },
+    "STK_PHM": {
+      "ata_chapters": [
+        "20",
+        "29",
+        "32",
+        "51",
+        "52",
+        "53",
+        "54",
+        "55",
+        "56",
+        "57"
+      ],
+      "phases": [
+        "LC03",
+        "LC04",
+        "LC10",
+        "LC13"
+      ]
+    },
+    "STK_SAF": {
+      "ata_chapters": [
+        "04",
+        "26"
+      ],
+      "phases": [
+        "LC07"
+      ]
+    },
+    "STK_CERT": {
+      "ata_chapters": [],
+      "phases": [
+        "LC08"
+      ],
+      "note": "Certification oversight applies to all chapters"
+    },
+    "STK_TEST": {
+      "ata_chapters": [
+        "100",
+        "101",
+        "102",
+        "103",
+        "104",
+        "105",
+        "106",
+        "107",
+        "108",
+        "109",
+        "110",
+        "111",
+        "112",
+        "113",
+        "114",
+        "115",
+        "116"
+      ],
+      "phases": [
+        "LC05",
+        "LC06"
+      ]
+    },
+    "STK_OPS": {
+      "ata_chapters": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05"
+      ],
+      "phases": [
+        "LC11",
+        "LC12"
+      ]
+    },
+    "STK_MRO": {
+      "ata_chapters": [
+        "05",
+        "12"
+      ],
+      "phases": [
+        "LC12",
+        "LC13"
+      ],
+      "note": "MRO perspective applies to all chapters"
+    },
+    "STK_AI": {
+      "ata_chapters": [
+        "90",
+        "96",
+        "114"
+      ],
+      "phases": [
+        "LC01",
+        "LC03",
+        "LC05"
+      ]
+    },
+    "STK_CY": {
+      "ata_chapters": [
+        "20",
+        "42",
+        "87"
+      ],
+      "phases": [
+        "LC07"
+      ]
+    },
+    "STK_SPACEPORT": {
+      "ata_chapters": [
+        "80",
+        "81",
+        "82",
+        "83",
+        "84",
+        "85",
+        "86",
+        "87",
+        "88",
+        "89"
+      ],
+      "phases": [
+        "LC11"
+      ]
+    },
+    "STK_CEGT": {
+      "ata_chapters": [
+        "85"
+      ],
+      "phases": [
+        "LC09"
+      ],
+      "description": "Circular Economy and Green Tech - ESG reporting, sustainability governance, social responsibility"
+    }
+  }
+}
