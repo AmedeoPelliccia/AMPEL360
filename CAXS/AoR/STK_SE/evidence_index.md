@@ -15,173 +15,95 @@ This index catalogs all evidence artifacts produced by or required from STK_SE a
 
 ## Evidence Catalog
 
-### ATA-21 Environmental Control — SPACET Q10 BASELINE PLUS
+### ATA-21 Environmental Control — SPACET Q10 BASELINE PLUS / ATA21/BLOCK10 (LC02–LC06)
 
-#### LC02: System Requirements Phase
-
-##### E-ATA21-LC02-001: Requirements Document
-- **Evidence Type**: DELIVERABLE/REQ
-- **Purpose**: System-level requirements for Environmental Control System (ECS) hardware
-- **Produced By Task**: K02-T001
-- **Status**: ACTIVE
-- **Link**: `CAXS/ATA/T-AXIS/ATA-21/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_HW_10_LC02_K02_STK_SE__env-control-system-requirements_DELIVERABLE_REQ_I01-R01_ACTIVE.md`
-- **Verification Method**: Review + Inspection
-- **Reviewer(s)**: STK_PHM (thermal/mechanical), STK_SAF (safety), STK_DAB (control systems)
-
-##### E-ATA21-LC02-002: Requirements Traceability Matrix
-- **Evidence Type**: EVIDENCE/TAB
-- **Purpose**: Trace system requirements to mission objectives and design artifacts
-- **Produced By Task**: K02-T001
-- **Status**: PLANNED
-- **Link**: (TBD)
-- **Verification Method**: Analysis
-- **Reviewer(s)**: STK_SE, STK_CM
-
-##### E-ATA21-LC02-003: Interface Coordination Notes
-- **Evidence Type**: EVIDENCE/MIN
-- **Purpose**: Coordination meeting notes with interfacing ATA systems (24, 31, 35, 42)
-- **Produced By Task**: K02-T001
-- **Status**: PLANNED
-- **Link**: (TBD)
-- **Verification Method**: Inspection
-- **Reviewer(s)**: STK_SE, respective ATA owners
-
-#### LC03: Design Models Phase (Planned)
-
-##### E-ATA21-LC03-001: ECS Architecture Model (SysML)
-- **Evidence Type**: DELIVERABLE/ARCH
-- **Purpose**: System architecture definition and subsystem decomposition
-- **Produced By Task**: K03-T001 (planned)
-- **Status**: PLANNED
-- **Link**: (TBD - placeholder for LC03 work)
-- **Verification Method**: Review + Demonstration
-- **Reviewer(s)**: STK_SE, STK_PHM, STK_DAB
-
-##### E-ATA21-LC03-002: Interface Control Documents (ICDs)
-- **Evidence Type**: DELIVERABLE/ICD
-- **Purpose**: Formal interface definitions with ATA-24, ATA-31, ATA-35, ATA-42
-- **Produced By Task**: K03-T001 (planned)
-- **Status**: PLANNED
-- **Link**: (TBD - placeholder for LC03 work)
-- **Verification Method**: Review + Inspection
-- **Reviewer(s)**: STK_SE, interfacing AoRs
-
-##### E-ATA21-LC03-003: Design Review Package
-- **Evidence Type**: EVIDENCE/RPT
-- **Purpose**: Preliminary Design Review (PDR) evidence pack
-- **Produced By Task**: K03-T001 (planned)
-- **Status**: PLANNED
-- **Link**: (TBD - placeholder for LC03 work)
-- **Verification Method**: Review
-- **Reviewer(s)**: STK_SE, STK_PMO, STK_CERT
-
-#### LC04: Engineering Analysis & Calculation Models Phase (Planned)
-
-##### E-ATA21-LC04-001: Thermal Analysis Report
-- **Evidence Type**: EVIDENCE/RPT
-- **Purpose**: Thermal control performance analysis for ECS
-- **Produced By Task**: K04-T001 (planned)
-- **Status**: PLANNED
-- **Link**: (TBD - placeholder for LC04 work)
-- **Verification Method**: Analysis + Test
-- **Reviewer(s)**: STK_PHM, STK_SE
-
-##### E-ATA21-LC04-002: Atmospheric Control Loop Analysis
-- **Evidence Type**: EVIDENCE/RPT
-- **Purpose**: Control stability and performance analysis for cabin atmosphere
-- **Produced By Task**: K04-T002 (planned)
-- **Status**: PLANNED
-- **Link**: (TBD - placeholder for LC04 work)
-- **Verification Method**: Analysis + Simulation
-- **Reviewer(s)**: STK_SE, STK_DAB
-
-##### E-ATA21-LC04-003: FMEA/FMECA Report
-- **Evidence Type**: EVIDENCE/RPT
-- **Purpose**: Failure modes and effects analysis for safety-critical functions
-- **Produced By Task**: K04-T003 (planned)
-- **Status**: PLANNED
-- **Link**: (TBD - placeholder for LC04 work)
-- **Verification Method**: Analysis
-- **Reviewer(s)**: STK_SAF, STK_SE, STK_CERT
-
-#### LC05: Integration Testing & Prototyping Phase (Planned)
-
-##### E-ATA21-LC05-001: Integrated System Test Plan
-- **Evidence Type**: DELIVERABLE/PLAN
-- **Purpose**: Test planning for ECS integrated system validation
-- **Produced By Task**: K05-T001 (planned)
-- **Status**: PLANNED
-- **Link**: (TBD - placeholder for LC05 work)
-- **Verification Method**: Review
-- **Reviewer(s)**: STK_TEST, STK_SE, STK_CERT
-
-##### E-ATA21-LC05-002: Test Procedures
-- **Evidence Type**: DELIVERABLE/CASE
-- **Purpose**: Detailed test procedures for ECS verification
-- **Produced By Task**: K05-T001 (planned)
-- **Status**: PLANNED
-- **Link**: (TBD - placeholder for LC05 work)
-- **Verification Method**: Review + Demonstration
-- **Reviewer(s)**: STK_TEST, STK_SE
-
-##### E-ATA21-LC05-003: Integration Test Results
-- **Evidence Type**: EVIDENCE/RPT
-- **Purpose**: Test execution results and anomaly reports
-- **Produced By Task**: K05-T002 (planned)
-- **Status**: PLANNED
-- **Link**: (TBD - placeholder for LC05 work)
-- **Verification Method**: Test
-- **Reviewer(s)**: STK_TEST, STK_SE, STK_CERT
-
-#### LC06: Quality Phase (Planned)
-
-##### E-ATA21-LC06-001: Requirements Verification Matrix
-- **Evidence Type**: EVIDENCE/TAB
-- **Purpose**: Complete verification closure for all ECS requirements
-- **Produced By Task**: K06-T001 (planned)
-- **Status**: PLANNED
-- **Link**: (TBD - placeholder for LC06 work)
-- **Verification Method**: Inspection
-- **Reviewer(s)**: STK_SE, STK_TEST, STK_CERT
-
-##### E-ATA21-LC06-002: Design Compliance Matrix
-- **Evidence Type**: EVIDENCE/TAB
-- **Purpose**: Demonstrate compliance with design standards and specifications
-- **Produced By Task**: K06-T001 (planned)
-- **Status**: PLANNED
-- **Link**: (TBD - placeholder for LC06 work)
-- **Verification Method**: Inspection
-- **Reviewer(s)**: STK_SE, STK_CM
+| Evidence ID | Phase | Related Task(s) | Artifact | CATEGORY | TYPE | Owner AoR | Status | Link |
+|---|---|---|---|---|---|---|---|---|
+| EV-LC02-001 | LC02 | K02-T001 | ECS System Requirements (anchor deliverable) | DELIVERABLE | REQ | STK_SE | ACTIVE | CAXS/ATA/T-AXIS/ATA-21/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_HW_10_LC02_K02_STK_SE__env-control-system-requirements_DELIVERABLE_REQ_I01-R01_ACTIVE.md |
+| EV-LC02-002 | LC02 | K02-T001 | Requirements ↔ Objectives Trace Matrix (initial) | REGISTRY | TRACE | STK_SE | DRAFT | CAXS/AoR/STK_SE/REGISTRIES/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_10_LC02_K02_STK_SE__ecs-req-trace_REGISTRY_TRACE_I01-R01_DRAFT.csv |
+| EV-LC02-003 | LC02 | K02-T001 | ECS Coordination Notes / Interfaces Record | EVIDENCE | MIN | STK_SE | DRAFT | CAXS/AoR/STK_SE/EVIDENCE/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_10_LC02_K02_STK_SE__ecs-coordination-notes_EVIDENCE_MIN_I01-R01_DRAFT.md |
+| EV-LC03-001 | LC03 | K03-T001 | ECS Architecture Model / Baseline Description | DELIVERABLE | ARCH | STK_SE | DRAFT | CAXS/ATA/T-AXIS/ATA-21/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_HW_10_LC03_K03-T001_STK_SE__ecs-architecture_DELIVERABLE_ARCH_I01-R01_DRAFT.md |
+| EV-LC03-002 | LC03 | K03-T001 | Interface Control Documents (ICD) Index | REGISTRY | IDX | STK_SE | DRAFT | CAXS/AoR/STK_SE/REGISTRIES/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_10_LC03_K03-T001_STK_SE__ecs-icd-index_REGISTRY_IDX_I01-R01_DRAFT.md |
+| EV-LC03-003 | LC03 | K03-T001 | Design Review Package (evidence pack) | EVIDENCE | RPT | STK_SE | DRAFT | CAXS/AoR/STK_SE/EVIDENCE/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_10_LC03_K03-T001_STK_SE__ecs-design-review-pack_EVIDENCE_RPT_I01-R01_DRAFT.md |
+| EV-LC03-004 | LC03 | K03-T001 | Design Review Minutes (if formal) | SIGNOFF | MIN | STK_CM | DRAFT | CAXS/AoR/STK_CM/DECISIONS/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_10_LC03_K03-T001_STK_CM__ecs-design-review-minutes_SIGNOFF_MIN_I01-R01_DRAFT.md |
+| EV-LC04-001 | LC04 | K04-T001 | Thermal Analysis Report (heat rejection envelope) | DELIVERABLE | RPT | STK_PHM | DRAFT | CAXS/ATA/T-AXIS/ATA-21/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_HW_10_LC04_K04-T001_STK_PHM__ecs-thermal-heat-rejection-analysis_DELIVERABLE_RPT_I01-R01_DRAFT.md |
+| EV-LC04-002 | LC04 | K04-T001 | Thermal Model Run Logs + Config Manifest | EVIDENCE | LOG | STK_PHM | DRAFT | CAXS/AoR/STK_PHM/EVIDENCE/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_10_LC04_K04-T001_STK_PHM__ecs-thermal-model-runlogs_EVIDENCE_LOG_I01-R01_DRAFT.md |
+| EV-LC04-003 | LC04 | K04-T002 | Atmospheric Control Loop Analysis Report | DELIVERABLE | RPT | STK_SE | DRAFT | CAXS/ATA/T-AXIS/ATA-21/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_HW_10_LC04_K04-T002_STK_SE__ecs-atmospheric-control-loop-analysis_DELIVERABLE_RPT_I01-R01_DRAFT.md |
+| EV-LC04-004 | LC04 | K04-T002 | Loop Simulation Logs + Parameter Manifest | EVIDENCE | LOG | STK_SE | DRAFT | CAXS/AoR/STK_SE/EVIDENCE/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_10_LC04_K04-T002_STK_SE__ecs-loop-sim-runlogs_EVIDENCE_LOG_I01-R01_DRAFT.md |
+| EV-LC04-005 | LC04 | K08 (gated by K03) | ECS FMEA / FMECA (safety interface evidence) | EVIDENCE | RPT | STK_SAF | DRAFT | CAXS/AoR/STK_SAF/EVIDENCE/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_10_LC04_K08_STK_SAF__ecs-fmeca_EVIDENCE_RPT_I01-R01_DRAFT.md |
+| EV-LC05-001 | LC05 | K05-T001 | ECS Integrated System Test Plan | DELIVERABLE | PLAN | STK_TEST | DRAFT | CAXS/ATA/T-AXIS/ATA-21/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_HW_10_LC05_K05-T001_STK_TEST__ecs-integrated-system-test-plan_DELIVERABLE_PLAN_I01-R01_DRAFT.md |
+| EV-LC05-002 | LC05 | K05-T001 | Test Procedures Index | REGISTRY | IDX | STK_TEST | DRAFT | CAXS/AoR/STK_TEST/REGISTRIES/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_10_LC05_K05-T001_STK_TEST__ecs-test-procedures-index_REGISTRY_IDX_I01-R01_DRAFT.md |
+| EV-LC05-003 | LC05 | K07 | Integration Test Results (run evidence) | EVIDENCE | RPT | STK_TEST | DRAFT | CAXS/AoR/STK_TEST/EVIDENCE/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_10_LC05_K07_STK_TEST__ecs-integration-test-results_EVIDENCE_RPT_I01-R01_DRAFT.md |
+| EV-LC06-001 | LC06 | K07 (drives closure) | Verification Matrix (Req ↔ MoC ↔ Tests/Analysis ↔ Evidence) | REGISTRY | MATRIX | STK_TEST | DRAFT | CAXS/AoR/STK_TEST/REGISTRIES/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_10_LC06_K07_STK_TEST__ecs-verification-matrix_REGISTRY_MATRIX_I01-R01_DRAFT.csv |
+| EV-LC06-002 | LC06 | K01 (compliance closure) | Compliance Matrix (Objectives ↔ Evidence pack readiness) | REGISTRY | MATRIX | STK_CERT | DRAFT | CAXS/AoR/STK_CERT/REGISTRIES/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_10_LC06_K01_STK_CERT__ecs-compliance-matrix_REGISTRY_MATRIX_I01-R01_DRAFT.csv |
 
 ---
 
 ## Evidence Completeness Checklist
 
+### Status Promotion Rules
+
+An evidence artifact can be `STATUS=ACTIVE` if:
+- It is the SSOT in effect (even if incomplete), and
+- Its One-Official-Chain does not collide with another artifact
+
+A node cannot be declared "closed" (release-grade) until:
+- `EV-LC06-001` (Verification Matrix) and `EV-LC06-002` (Compliance Matrix) are at least **ACTIVE** and complete, and
+- All required signoffs are registered
+
+### Evidence Normalization
+
+**Category Guidelines:**
+- **Traceability / compliance matrices** → `CATEGORY=REGISTRY`, `TYPE=TRACE|MATRIX`
+- **Notes / minutes / review packages / logs** → `CATEGORY=EVIDENCE`, `TYPE=MIN|LOG|RPT`
+- **Design review approvals** (if applicable) → `CATEGORY=SIGNOFF`, `TYPE=MIN|DEC`
+
+### Task-to-Evidence Closure Rules
+
+To ensure "Task Registry Summary" and "Evidence Index Summary" are closed-loop:
+
+**K03-T001** must produce at minimum:
+- `DELIVERABLE/ARCH` (architecture)
+- `REGISTRY/IDX` (ICDs index)
+- (optional) `SIGNOFF/MIN` if formal review (routed to **STK_CM**)
+
+**K04-T001 / K04-T002** must have:
+- `DELIVERABLE/RPT` (the analysis result)
+- `EVIDENCE/LOG` (run logs + manifest/config) for reproducibility
+
+**K05-T001** must link:
+- `DELIVERABLE/PLAN` (test plan)
+- `REGISTRY/IDX` (procedures index)
+- When executed: `EVIDENCE/RPT` (results)
+
 ### LC02 (System Requirements) - Current Phase
-- [x] Requirements document created and ACTIVE
-- [ ] Traceability matrix established
-- [ ] Interface coordination documented
+- [x] Requirements document created and ACTIVE (EV-LC02-001)
+- [ ] Traceability matrix established (EV-LC02-002)
+- [ ] Interface coordination documented (EV-LC02-003)
 - [ ] Requirements review completed and signed off
 
 ### LC03 (Design Models) - Planned
-- [ ] Architecture model defined
-- [ ] ICDs established with interfacing systems
-- [ ] PDR evidence pack prepared
+- [ ] Architecture model defined (EV-LC03-001)
+- [ ] ICDs established with interfacing systems (EV-LC03-002)
+- [ ] PDR evidence pack prepared (EV-LC03-003)
+- [ ] Design review minutes signed off (EV-LC03-004)
 
 ### LC04 (Engineering Analysis) - Planned
-- [ ] Thermal analysis completed
-- [ ] Control loop analysis completed
-- [ ] FMEA/FMECA completed and reviewed by STK_SAF
+- [ ] Thermal analysis completed (EV-LC04-001)
+- [ ] Thermal model run logs documented (EV-LC04-002)
+- [ ] Control loop analysis completed (EV-LC04-003)
+- [ ] Loop simulation logs documented (EV-LC04-004)
+- [ ] FMEA/FMECA completed and reviewed by STK_SAF (EV-LC04-005)
 
 ### LC05 (Integration Testing) - Planned
-- [ ] Test plan approved
-- [ ] Test procedures validated
-- [ ] Integration tests executed
+- [ ] Test plan approved (EV-LC05-001)
+- [ ] Test procedures index established (EV-LC05-002)
+- [ ] Integration tests executed (EV-LC05-003)
 - [ ] Anomalies resolved
 
 ### LC06 (Quality) - Planned
-- [ ] All requirements verified
-- [ ] Design compliance demonstrated
+- [ ] All requirements verified (EV-LC06-001)
+- [ ] Design compliance demonstrated (EV-LC06-002)
 - [ ] Quality gates passed
 
 ---
