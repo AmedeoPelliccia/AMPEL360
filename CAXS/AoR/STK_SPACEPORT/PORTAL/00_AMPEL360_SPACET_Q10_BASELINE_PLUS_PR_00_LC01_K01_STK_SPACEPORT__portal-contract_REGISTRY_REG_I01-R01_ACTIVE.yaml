@@ -1,0 +1,220 @@
+# STK_SPACEPORT Portal Contract
+
+**AMPEL360 CA360º — Spaceport / Ground Segment Portal Configuration**
+
+---
+
+## Metadata
+
+- **AoR:** STK_SPACEPORT (Spaceport / Ground Segment)
+- **Program:** SPACET Q10 BASELINE PLUS
+- **Contract Version:** 1.0.0
+- **Maintained By:** spaceport-team@ampel360.org
+- **Last Updated:** 2025-12-19
+- **Status:** ACTIVE
+
+---
+
+## Contract Definition
+
+```yaml
+contract_metadata:
+  aor_id: STK_SPACEPORT
+  contract_version: 1.0.0
+  program: SPACET
+  family: Q10
+  variant: BASELINE
+  version: PLUS
+  maintained_by: spaceport-team@ampel360.org
+  last_updated: 2025-12-19
+
+default_context:
+  filters:
+    opt_ins_axes:
+      - I-INFRASTRUCTURES  # Off-board infrastructure (primary)
+      - O-OPS/ORG          # Operations
+      - T-TECHNOLOGY       # On-board systems (interface)
+    
+    ata_chapters:
+      - 80  # Off-board / Airport / Spaceport Infrastructures
+      - 81  # Off-board Energy / Cryo Services
+      - 82  # Off-board MRO Facilities
+      - 83  # Ground Comms / Data Exchange Infra
+      - 84  # Spaceport Safety / Emergency Response
+      - 85  # Circularity Infra
+      - 86  # Off-board Digital Services Platform
+      - 87  # Identity / Access / Cybersecurity Infra
+      - 88  # GSE Configuration / Asset Management
+      - 89  # Test Rigs / Instrumentation Infra
+    
+    lc_phases:
+      - LC01  # Problem Statement
+      - LC02  # System Requirements
+      - LC03  # Design Models
+      - LC08  # Certification and First Flight
+      - LC11  # Operations
+    
+    knots:
+      - K01  # Problem Definition
+      - K02  # Requirements
+      - K03  # Design
+      - K07  # Validation
+      - K08  # Operations
+    
+    blocks:
+      - 00  # General
+      - 10  # Operational Systems
+    
+    categories:
+      - DELIVERABLE
+      - EVIDENCE
+      - REGISTRY
+    
+    types:
+      - REQ
+      - SPEC
+      - ARCH
+      - PROC
+      - PLAN
+    
+    statuses:
+      - DRAFT
+      - ACTIVE
+      - RELEASED
+
+  slice_selector:
+    program_family_variants:
+      - program: SPACET
+        family: Q10
+        variants: [BASELINE, FLIGHT_TEST, CERT]
+    
+    default_slice:
+      program: SPACET
+      family: Q10
+      variant: BASELINE
+      version: PLUS
+      node: "ATA-80"
+
+features:
+  moscow:
+    must:
+      - F01  # Context Bar
+      - F02  # AoR Dashboard
+      - F03  # Registry-Driven Work Queue
+      - F04  # Kanban / Backlog
+      - F05  # Artifact Generator
+      - F06  # Gates & Validator Console
+      - F07  # Evidence Console
+      - F08  # Signoff Console
+      - F09  # Tool Launchpad
+    
+    should:
+      - F10  # AI Assistant
+      - F12  # Cross-AoR Handshake Panel
+      - F14  # Notification Engine
+    
+    wont:
+      - F19  # Auto-merge / Auto-signoff
+      - F20  # Unbounded external chatbots
+
+  config:
+    F02:
+      enabled: true
+      settings:
+        kpis:
+          - id: open_ground_requirements
+            label: "Open Ground Requirements"
+            source: task_registry
+            filter: {aor: STK_SPACEPORT, status: [DRAFT, ACTIVE]}
+          
+          - id: pending_gse_approvals
+            label: "Pending GSE Approvals"
+            source: signoff_index
+            filter: {aor: STK_SPACEPORT, status: pending}
+          
+          - id: interface_gaps
+            label: "Interface Gaps"
+            source: evidence_index
+            filter: {aor: STK_SPACEPORT, type: ICD, status: missing}
+        
+        refresh_interval: 300
+
+tool_launchpad:
+  tiles:
+    - tool_id: gse-design-tool
+      tool_name: "GSE Design Tool"
+      version: "2024.1"
+      tool_class: "design"
+      owner_aor: STK_SPACEPORT
+      vendor: "internal"
+      
+      launch:
+        channel: web
+        deep_link: "https://gse.ampel360.org/launch"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_SPACEPORT"]
+        exports: ["exports/gse-designs"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["spaceport-engineers"]
+      
+      audit:
+        events: [launch, export]
+
+execution:
+  kanban:
+    enabled: true
+    default_filters:
+      aor: STK_SPACEPORT
+      lc_phase: [LC02, LC03, LC11]
+      status: [DRAFT, ACTIVE]
+  
+  task_wizard:
+    enabled: true
+    templates:
+      - "spaceport-ground-requirements"
+      - "spaceport-gse-specification"
+      - "spaceport-interface-control-document"
+      - "spaceport-emergency-response-plan"
+      - "spaceport-evidence-pack"
+
+backend:
+  validators:
+    - nomenclature-validator
+    - interface-completeness-validator
+  
+  indexers:
+    - artifact-indexer
+    - evidence-indexer
+  
+  trace_services:
+    - traceability-graph
+  
+  notification_rules:
+    - event: gate_failure
+      channels: [portal, email]
+      recipients: ["spaceport-leads"]
+    
+    - event: signoff_request
+      channels: [portal, email]
+      recipients: ["aor-specific"]
+```
+
+---
+
+## Change Log
+
+| Revision | Date | Author | Changes |
+|----------|------|--------|---------|
+| 1.0.0 | 2025-12-19 | STK_SPACEPORT | Initial contract |
+
+---
+
+**END OF DOCUMENT**

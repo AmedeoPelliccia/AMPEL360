@@ -1,0 +1,202 @@
+# STK_OPS Portal Contract
+
+**AMPEL360 CA360º — Operations Portal Configuration**
+
+---
+
+## Metadata
+
+- **AoR:** STK_OPS (Operations)
+- **Program:** SPACET Q10 BASELINE PLUS
+- **Contract Version:** 1.0.0
+- **Maintained By:** ops-team@ampel360.org
+- **Last Updated:** 2025-12-19
+- **Status:** ACTIVE
+
+---
+
+## Contract Definition
+
+```yaml
+contract_metadata:
+  aor_id: STK_OPS
+  contract_version: 1.0.0
+  program: SPACET
+  family: Q10
+  variant: BASELINE
+  version: PLUS
+  maintained_by: ops-team@ampel360.org
+  last_updated: 2025-12-19
+
+default_context:
+  filters:
+    opt_ins_axes:
+      - O-OPS/ORG          # Operations (primary)
+      - T-TECHNOLOGY       # On-board systems
+      - I-INFRASTRUCTURES  # Off-board infrastructure
+    
+    ata_chapters:
+      - 01  # Operations/Organization Policy
+      - 02  # Operations/Organization
+      - 03  # Support Information
+      - 05  # Time Limits / Maintenance Checks
+      - 11  # Placards and Markings
+    
+    lc_phases:
+      - LC08  # Certification and First Flight
+      - LC11  # Operations
+      - LC12  # Support and Services
+    
+    knots:
+      - K07  # Validation
+      - K08  # Operations
+      - K09  # Support
+    
+    blocks:
+      - 00  # General
+      - 10  # Operational Systems
+    
+    categories:
+      - DELIVERABLE
+      - EVIDENCE
+      - REGISTRY
+    
+    types:
+      - POL
+      - PROC
+      - PLAN
+      - MAN
+      - LOG
+    
+    statuses:
+      - DRAFT
+      - ACTIVE
+      - RELEASED
+
+  slice_selector:
+    program_family_variants:
+      - program: SPACET
+        family: Q10
+        variants: [BASELINE, FLIGHT_TEST, CERT, MSN]
+    
+    default_slice:
+      program: SPACET
+      family: Q10
+      variant: BASELINE
+      version: PLUS
+      node: "ATA-01"
+
+features:
+  moscow:
+    must:
+      - F01  # Context Bar
+      - F02  # AoR Dashboard
+      - F03  # Registry-Driven Work Queue
+      - F04  # Kanban / Backlog
+      - F05  # Artifact Generator
+      - F06  # Gates & Validator Console
+      - F07  # Evidence Console
+      - F08  # Signoff Console
+      - F09  # Tool Launchpad
+    
+    should:
+      - F10  # AI Assistant
+      - F14  # Notification Engine
+    
+    wont:
+      - F19  # Auto-merge / Auto-signoff
+      - F20  # Unbounded external chatbots
+
+  config:
+    F02:
+      enabled: true
+      settings:
+        kpis:
+          - id: open_operational_procedures
+            label: "Open Operational Procedures"
+            source: task_registry
+            filter: {aor: STK_OPS, status: [DRAFT, ACTIVE]}
+          
+          - id: pending_ops_approvals
+            label: "Pending Ops Approvals"
+            source: signoff_index
+            filter: {aor: STK_OPS, status: pending}
+        
+        refresh_interval: 300
+
+tool_launchpad:
+  tiles:
+    - tool_id: ops-manual-editor
+      tool_name: "Operations Manual Editor"
+      version: "2024.1"
+      tool_class: "documentation"
+      owner_aor: STK_OPS
+      vendor: "internal"
+      
+      launch:
+        channel: web
+        deep_link: "https://manuals.ampel360.org/launch?aor=STK_OPS"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_OPS"]
+        exports: ["exports/manuals"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["ops-engineers"]
+      
+      audit:
+        events: [launch, export]
+
+execution:
+  kanban:
+    enabled: true
+    default_filters:
+      aor: STK_OPS
+      lc_phase: [LC11]
+      status: [DRAFT, ACTIVE]
+  
+  task_wizard:
+    enabled: true
+    templates:
+      - "ops-conops-concept-of-operations"
+      - "ops-procedure"
+      - "ops-checklist"
+      - "ops-manual"
+      - "ops-evidence-pack"
+
+backend:
+  validators:
+    - nomenclature-validator
+    - procedure-completeness-validator
+  
+  indexers:
+    - artifact-indexer
+    - evidence-indexer
+  
+  notification_rules:
+    - event: gate_failure
+      channels: [portal, email]
+      recipients: ["ops-leads"]
+    
+    - event: signoff_request
+      channels: [portal, email]
+      recipients: ["aor-specific"]
+```
+
+---
+
+## Change Log
+
+| Revision | Date | Author | Changes |
+|----------|------|--------|---------|
+| 1.0.0 | 2025-12-19 | STK_OPS | Initial contract |
+
+---
+
+**END OF DOCUMENT**

@@ -1,0 +1,314 @@
+# STK_DAB Portal Contract
+
+**AMPEL360 CA360º — Digital Applications & Blockchains Portal Configuration**
+
+---
+
+## Metadata
+
+- **AoR:** STK_DAB (Digital Applications & Blockchains)
+- **Program:** SPACET Q10 BASELINE PLUS
+- **Contract Version:** 1.0.0
+- **Maintained By:** dab-team@ampel360.org
+- **Last Updated:** 2025-12-19
+- **Status:** ACTIVE
+
+---
+
+## Contract Definition
+
+```yaml
+contract_metadata:
+  aor_id: STK_DAB
+  contract_version: 1.0.0
+  program: SPACET
+  family: Q10
+  variant: BASELINE
+  version: PLUS
+  maintained_by: dab-team@ampel360.org
+  last_updated: 2025-12-19
+
+default_context:
+  filters:
+    opt_ins_axes:
+      - N-NEURAL_NETWORKS  # AI/ML, schemas, traceability (primary)
+      - T-TECHNOLOGY       # On-board systems
+      - I-INFRASTRUCTURES  # Off-board digital infrastructure
+    
+    ata_chapters:
+      - 42  # Integrated Modular Avionics / Compute Platform
+      - 46  # Information Systems / Data Networks
+      - 86  # Off-board Digital Services Platform
+      - 90  # AI/ML Model Registry
+      - 91  # Data Schemas / Ontologies / SSOT
+      - 92  # Wiring / Connectivity Graphs
+      - 93  # Traceability Graph
+      - 94  # DPP Core
+      - 95  # SBOM / BOM Exports
+      - 96  # AI Governance
+      - 97  # Change Impact Analytics
+      - 98  # Signed Release Packs
+      - 99  # Master Registers
+    
+    lc_phases:
+      - LC01  # Problem Statement / Generation / Prompting Engineering
+      - LC02  # System Requirements
+      - LC03  # Design Models
+      - LC04  # Engineering Analysis
+      - LC05  # Integration Testing
+      - LC10  # Industrialization
+    
+    knots:
+      - K01  # Problem Definition
+      - K02  # Requirements
+      - K03  # Design
+      - K04  # Analysis
+      - K05  # Integration
+      - K06  # Verification
+    
+    blocks:
+      - 00  # General
+      - 20  # Cybersecurity
+      - 30  # Data, Comms and Registry
+      - 90  # Connections & Mapping
+    
+    categories:
+      - DELIVERABLE
+      - EVIDENCE
+      - REGISTRY
+    
+    types:
+      - SPEC
+      - ARCH
+      - SCHEMA
+      - ONTO
+      - TRACE
+      - DPP
+      - SBOM
+      - MANIFEST
+      - REG
+      - CAT
+    
+    statuses:
+      - DRAFT
+      - ACTIVE
+      - RELEASED
+
+  slice_selector:
+    program_family_variants:
+      - program: SPACET
+        family: Q10
+        variants: [BASELINE, FLIGHT_TEST, CERT]
+    
+    default_slice:
+      program: SPACET
+      family: Q10
+      variant: BASELINE
+      version: PLUS
+      node: "ATA-91"
+
+features:
+  moscow:
+    must:
+      - F01  # Context Bar
+      - F02  # AoR Dashboard
+      - F03  # Registry-Driven Work Queue
+      - F04  # Kanban / Backlog
+      - F05  # Artifact Generator
+      - F06  # Gates & Validator Console
+      - F07  # Evidence Console
+      - F08  # Signoff Console
+      - F09  # Tool Launchpad
+    
+    should:
+      - F10  # AI Assistant
+      - F11  # Integrated Communication Threads
+      - F12  # Cross-AoR Handshake Panel
+      - F13  # Trace & Impact Viewer
+      - F14  # Notification Engine
+    
+    could:
+      - F15  # "Start Task" Execution Runner
+      - F17  # Comparative Dashboards
+    
+    wont:
+      - F19  # Auto-merge / Auto-signoff
+      - F20  # Unbounded external chatbots
+
+  config:
+    F02:
+      enabled: true
+      settings:
+        kpis:
+          - id: open_digital_tasks
+            label: "Open Digital Tasks"
+            source: task_registry
+            filter: {aor: STK_DAB, status: [DRAFT, ACTIVE]}
+          
+          - id: schema_validation_errors
+            label: "Schema Validation Errors"
+            source: evidence_index
+            filter: {aor: STK_DAB, type: schema, status: error}
+          
+          - id: traceability_gaps
+            label: "Traceability Gaps"
+            source: trace_graph
+            filter: {aor: STK_DAB, status: incomplete}
+          
+          - id: pending_dab_approvals
+            label: "Pending DAB Approvals"
+            source: signoff_index
+            filter: {aor: STK_DAB, status: pending}
+        
+        refresh_interval: 300
+
+tool_launchpad:
+  tiles:
+    - tool_id: vscode-dab
+      tool_name: "VS Code (DAB)"
+      version: "latest"
+      tool_class: "ide"
+      owner_aor: STK_DAB
+      vendor: "Microsoft"
+      
+      launch:
+        channel: VDI
+        deep_link: "vdi://vscode?profile=dab"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_DAB", "src"]
+        exports: ["exports/code"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["dab-engineers", "software-engineers"]
+      
+      audit:
+        events: [launch, export]
+    
+    - tool_id: jupyter-dab
+      tool_name: "Jupyter Notebook (DAB)"
+      version: "latest"
+      tool_class: "data-science"
+      owner_aor: STK_DAB
+      vendor: "internal"
+      
+      launch:
+        channel: web
+        deep_link: "https://jupyter.ampel360.org/launch?aor=STK_DAB"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_DAB"]
+        exports: ["exports/notebooks"]
+        datasets: ["all"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["dab-engineers"]
+      
+      audit:
+        events: [launch, export]
+    
+    - tool_id: graph-visualizer
+      tool_name: "Traceability Graph Visualizer"
+      version: "2024.1"
+      tool_class: "visualization"
+      owner_aor: STK_DAB
+      vendor: "internal"
+      
+      launch:
+        channel: web
+        deep_link: "https://trace.ampel360.org/launch"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_DAB"]
+        exports: ["exports/trace-graphs"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["dab-engineers"]
+      
+      audit:
+        events: [launch, export]
+
+execution:
+  kanban:
+    enabled: true
+    default_filters:
+      aor: STK_DAB
+      lc_phase: [LC01, LC03, LC05]
+      status: [DRAFT, ACTIVE]
+  
+  task_wizard:
+    enabled: true
+    templates:
+      - "dab-schema-definition"
+      - "dab-ontology-definition"
+      - "dab-traceability-spec"
+      - "dab-dpp-template"
+      - "dab-sbom-export"
+      - "dab-release-manifest"
+      - "dab-evidence-pack"
+
+backend:
+  validators:
+    - nomenclature-validator
+    - schema-validator
+    - traceability-validator
+    - manifest-validator
+  
+  indexers:
+    - artifact-indexer
+    - evidence-indexer
+    - schema-indexer
+    - trace-indexer
+  
+  trace_services:
+    - traceability-graph
+    - impact-analyzer
+    - dependency-checker
+  
+  notification_rules:
+    - event: gate_failure
+      channels: [portal, email]
+      recipients: ["dab-leads"]
+    
+    - event: schema_error
+      channels: [portal, email]
+      recipients: ["dab-leads", "task-owner"]
+    
+    - event: trace_gap
+      channels: [portal]
+      recipients: ["task-owner"]
+    
+    - event: signoff_request
+      channels: [portal, email]
+      recipients: ["aor-specific"]
+```
+
+---
+
+## Change Log
+
+| Revision | Date | Author | Changes |
+|----------|------|--------|---------|
+| 1.0.0 | 2025-12-19 | STK_DAB | Initial contract |
+
+---
+
+**END OF DOCUMENT**

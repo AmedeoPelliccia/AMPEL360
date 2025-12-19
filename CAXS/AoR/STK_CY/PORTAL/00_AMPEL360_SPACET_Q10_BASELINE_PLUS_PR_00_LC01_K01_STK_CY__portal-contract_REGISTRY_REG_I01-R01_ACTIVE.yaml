@@ -1,0 +1,219 @@
+# STK_CY Portal Contract
+
+**AMPEL360 CA360º — Cybersecurity Portal Configuration**
+
+---
+
+## Metadata
+
+- **AoR:** STK_CY (Cybersecurity)
+- **Program:** SPACET Q10 BASELINE PLUS
+- **Contract Version:** 1.0.0
+- **Maintained By:** cyber-team@ampel360.org
+- **Last Updated:** 2025-12-19
+- **Status:** ACTIVE
+
+---
+
+## Contract Definition
+
+```yaml
+contract_metadata:
+  aor_id: STK_CY
+  contract_version: 1.0.0
+  program: SPACET
+  family: Q10
+  variant: BASELINE
+  version: PLUS
+  maintained_by: cyber-team@ampel360.org
+  last_updated: 2025-12-19
+
+default_context:
+  filters:
+    opt_ins_axes:
+      - T-TECHNOLOGY       # On-board systems
+      - I-INFRASTRUCTURES  # Off-board infrastructure
+      - N-NEURAL_NETWORKS  # Digital systems
+    
+    ata_chapters:
+      - 20  # Standard Practices - Airframe (security aspects)
+      - 42  # Integrated Modular Avionics
+      - 46  # Information Systems / Data Networks
+      - 87  # Identity / Access / Cybersecurity Infra
+    
+    lc_phases:
+      - LC01  # Problem Statement
+      - LC02  # System Requirements
+      - LC03  # Design Models
+      - LC05  # Integration Testing
+      - LC07  # Safety and Security
+    
+    knots:
+      - K01  # Problem Definition
+      - K02  # Requirements
+      - K03  # Design
+      - K05  # Integration
+      - K06  # Verification
+    
+    blocks:
+      - 00  # General
+      - 20  # Cybersecurity
+      - 30  # Data, Comms and Registry
+    
+    categories:
+      - DELIVERABLE
+      - EVIDENCE
+      - REGISTRY
+    
+    types:
+      - REQ
+      - SPEC
+      - ARCH
+      - POL
+      - LOG
+      - EVD
+    
+    statuses:
+      - DRAFT
+      - ACTIVE
+      - RELEASED
+
+  slice_selector:
+    program_family_variants:
+      - program: SPACET
+        family: Q10
+        variants: [BASELINE, FLIGHT_TEST, CERT]
+    
+    default_slice:
+      program: SPACET
+      family: Q10
+      variant: BASELINE
+      version: PLUS
+      node: "ATA-87"
+
+features:
+  moscow:
+    must:
+      - F01  # Context Bar
+      - F02  # AoR Dashboard
+      - F03  # Registry-Driven Work Queue
+      - F04  # Kanban / Backlog
+      - F05  # Artifact Generator
+      - F06  # Gates & Validator Console
+      - F07  # Evidence Console
+      - F08  # Signoff Console
+      - F09  # Tool Launchpad
+    
+    should:
+      - F10  # AI Assistant
+      - F13  # Trace & Impact Viewer
+      - F14  # Notification Engine
+    
+    wont:
+      - F19  # Auto-merge / Auto-signoff
+      - F20  # Unbounded external chatbots
+
+  config:
+    F02:
+      enabled: true
+      settings:
+        kpis:
+          - id: open_security_requirements
+            label: "Open Security Requirements"
+            source: task_registry
+            filter: {aor: STK_CY, status: [DRAFT, ACTIVE]}
+          
+          - id: security_vulnerabilities
+            label: "Security Vulnerabilities"
+            source: evidence_index
+            filter: {aor: STK_CY, type: vulnerability, status: open}
+          
+          - id: pending_cyber_reviews
+            label: "Pending Cyber Reviews"
+            source: signoff_index
+            filter: {aor: STK_CY, status: pending}
+        
+        refresh_interval: 300
+
+tool_launchpad:
+  tiles:
+    - tool_id: security-scanner
+      tool_name: "Security Assessment Tool"
+      version: "2024.1"
+      tool_class: "security"
+      owner_aor: STK_CY
+      vendor: "internal"
+      
+      launch:
+        channel: web
+        deep_link: "https://security.ampel360.org/launch"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_CY"]
+        exports: ["exports/security-reports"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["cyber-engineers", "security-analysts"]
+      
+      audit:
+        events: [launch, export]
+
+execution:
+  kanban:
+    enabled: true
+    default_filters:
+      aor: STK_CY
+      lc_phase: [LC02, LC03, LC07]
+      status: [DRAFT, ACTIVE]
+  
+  task_wizard:
+    enabled: true
+    templates:
+      - "cy-security-requirements"
+      - "cy-threat-model"
+      - "cy-security-architecture"
+      - "cy-penetration-test-report"
+      - "cy-evidence-pack"
+
+backend:
+  validators:
+    - nomenclature-validator
+    - security-completeness-validator
+    - threat-coverage-validator
+  
+  indexers:
+    - artifact-indexer
+    - evidence-indexer
+    - vulnerability-indexer
+  
+  notification_rules:
+    - event: gate_failure
+      channels: [portal, email]
+      recipients: ["cyber-leads"]
+    
+    - event: vulnerability_detected
+      channels: [portal, email]
+      recipients: ["cyber-leads", "task-owner"]
+    
+    - event: signoff_request
+      channels: [portal, email]
+      recipients: ["aor-specific"]
+```
+
+---
+
+## Change Log
+
+| Revision | Date | Author | Changes |
+|----------|------|--------|---------|
+| 1.0.0 | 2025-12-19 | STK_CY | Initial contract |
+
+---
+
+**END OF DOCUMENT**

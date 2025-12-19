@@ -1,0 +1,252 @@
+# STK_AI Portal Contract
+
+**AMPEL360 CA360º — AI/ML Engineering & Assurance Portal Configuration**
+
+---
+
+## Metadata
+
+- **AoR:** STK_AI (AI/ML Engineering & Assurance)
+- **Program:** SPACET Q10 BASELINE PLUS
+- **Contract Version:** 1.0.0
+- **Maintained By:** ai-team@ampel360.org
+- **Last Updated:** 2025-12-19
+- **Status:** ACTIVE
+
+---
+
+## Contract Definition
+
+```yaml
+contract_metadata:
+  aor_id: STK_AI
+  contract_version: 1.0.0
+  program: SPACET
+  family: Q10
+  variant: BASELINE
+  version: PLUS
+  maintained_by: ai-team@ampel360.org
+  last_updated: 2025-12-19
+
+default_context:
+  filters:
+    opt_ins_axes:
+      - N-NEURAL_NETWORKS  # AI/ML (primary)
+      - T-TECHNOLOGY       # On-board systems
+      - S-SIM_TEST         # Simulation and test
+    
+    ata_chapters:
+      - 90  # AI/ML Model Registry
+      - 96  # AI Governance
+      - 114 # AI/ML Validation Suites
+    
+    lc_phases:
+      - LC01  # Problem Statement
+      - LC03  # Design Models
+      - LC04  # Engineering Analysis
+      - LC05  # Integration Testing
+      - LC06  # Quality
+    
+    knots:
+      - K01  # Problem Definition
+      - K03  # Design
+      - K04  # Analysis
+      - K05  # Integration
+      - K06  # Verification
+    
+    blocks:
+      - 00  # General
+      - 30  # Data, Comms and Registry
+      - 90  # Connections & Mapping
+    
+    categories:
+      - DELIVERABLE
+      - EVIDENCE
+      - REGISTRY
+    
+    types:
+      - REG
+      - MOD
+      - SPEC
+      - RPT
+      - EVD
+    
+    statuses:
+      - DRAFT
+      - ACTIVE
+      - RELEASED
+
+  slice_selector:
+    program_family_variants:
+      - program: SPACET
+        family: Q10
+        variants: [BASELINE, FLIGHT_TEST]
+    
+    default_slice:
+      program: SPACET
+      family: Q10
+      variant: BASELINE
+      version: PLUS
+      node: "ATA-90"
+
+features:
+  moscow:
+    must:
+      - F01  # Context Bar
+      - F02  # AoR Dashboard
+      - F03  # Registry-Driven Work Queue
+      - F04  # Kanban / Backlog
+      - F05  # Artifact Generator
+      - F06  # Gates & Validator Console
+      - F07  # Evidence Console
+      - F08  # Signoff Console
+      - F09  # Tool Launchpad
+    
+    should:
+      - F10  # AI Assistant
+      - F13  # Trace & Impact Viewer
+      - F14  # Notification Engine
+    
+    could:
+      - F17  # Comparative Dashboards
+    
+    wont:
+      - F19  # Auto-merge / Auto-signoff
+      - F20  # Unbounded external chatbots
+
+  config:
+    F02:
+      enabled: true
+      settings:
+        kpis:
+          - id: active_ml_models
+            label: "Active ML Models"
+            source: task_registry
+            filter: {aor: STK_AI, status: ACTIVE}
+          
+          - id: model_drift_alerts
+            label: "Model Drift Alerts"
+            source: evidence_index
+            filter: {aor: STK_AI, alert_type: drift}
+          
+          - id: pending_ai_validations
+            label: "Pending AI Validations"
+            source: signoff_index
+            filter: {aor: STK_AI, status: pending}
+        
+        refresh_interval: 300
+
+tool_launchpad:
+  tiles:
+    - tool_id: mlflow-server
+      tool_name: "MLflow Model Registry"
+      version: "2.8.0"
+      tool_class: "ml-ops"
+      owner_aor: STK_AI
+      vendor: "open-source"
+      
+      launch:
+        channel: web
+        deep_link: "https://mlflow.ampel360.org/launch"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_AI"]
+        exports: ["exports/ml-models"]
+        datasets: ["all"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["ai-engineers", "ml-engineers"]
+      
+      audit:
+        events: [launch, export]
+    
+    - tool_id: jupyter-ai
+      tool_name: "Jupyter Notebook (AI)"
+      version: "latest"
+      tool_class: "data-science"
+      owner_aor: STK_AI
+      vendor: "internal"
+      
+      launch:
+        channel: web
+        deep_link: "https://jupyter.ampel360.org/launch?aor=STK_AI"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_AI"]
+        exports: ["exports/notebooks"]
+        datasets: ["all"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["ai-engineers"]
+      
+      audit:
+        events: [launch, export]
+
+execution:
+  kanban:
+    enabled: true
+    default_filters:
+      aor: STK_AI
+      lc_phase: [LC03, LC04, LC05]
+      status: [DRAFT, ACTIVE]
+  
+  task_wizard:
+    enabled: true
+    templates:
+      - "ai-model-registry-entry"
+      - "ai-validation-plan"
+      - "ai-drift-monitoring-spec"
+      - "ai-governance-report"
+      - "ai-evidence-pack"
+
+backend:
+  validators:
+    - nomenclature-validator
+    - ai-governance-validator
+    - model-registry-validator
+  
+  indexers:
+    - artifact-indexer
+    - evidence-indexer
+    - model-indexer
+  
+  trace_services:
+    - model-lineage-tracker
+  
+  notification_rules:
+    - event: gate_failure
+      channels: [portal, email]
+      recipients: ["ai-leads"]
+    
+    - event: model_drift_detected
+      channels: [portal, email]
+      recipients: ["ai-leads", "model-owner"]
+    
+    - event: signoff_request
+      channels: [portal, email]
+      recipients: ["aor-specific"]
+```
+
+---
+
+## Change Log
+
+| Revision | Date | Author | Changes |
+|----------|------|--------|---------|
+| 1.0.0 | 2025-12-19 | STK_AI | Initial contract |
+
+---
+
+**END OF DOCUMENT**
