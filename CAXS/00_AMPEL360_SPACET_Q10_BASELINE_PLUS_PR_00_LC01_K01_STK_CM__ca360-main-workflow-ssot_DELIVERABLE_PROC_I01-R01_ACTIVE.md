@@ -93,7 +93,44 @@ Choose:
 
 This resolves the **PGK** slice for the node.
 
+### Step 1.5 — Resolve via CIPP if Certainty Exists (NEW)
+
+**Purpose**: Prevent wasted KNOT work when the answer is already known and routable.
+
+Before instantiating/working a node as uncertain, search the CIPP registry for matching certainty routes:
+
+**Search criteria**:
+1. Match `pgk_scope` + axis/ATA + `interface_contract`
+2. Match `intent_key` (vision/mission/scope/outcome alignment)
+
+**If valid CIPP found**:
+- **Execute via CIPP** (deterministic path)
+- Verify all `target_refs` are RELEASED or ACTIVE
+- Verify all `target_sha256` hashes match actual files
+- Record CIPP usage in execution log
+- **Skip KNOT instantiation** → proceed to execution using CIPP route
+
+**If no valid CIPP found** (or CIPP is invalid):
+- Continue to Step 2 (instantiate ONUP)
+- Open/continue KNOT resolution
+
+**CIPP validity checks**:
+- `target_ref` paths exist in repository
+- `target_sha256` matches actual file hash
+- `target_status ∈ {ACTIVE, RELEASED}`
+- `intent_key` resolves to valid VISION/MISSION/SCOPE/OUTCOME IDs
+- `effectivity` compatible with caller's PGK slice
+
+**References**:
+- **CIPP Registry**: `00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__cipp-registry_REGISTRY_CAT_I01-R01_ACTIVE.md`
+- **CIPP vs KNOT Governance**: `00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__cipp-vs-knot-governance_DELIVERABLE_STD_I01-R01_ACTIVE.md`
+
+---
+
 ### Step 2 — Instantiate / Load the Node Uncertainty Pack (ONUP)
+
+**Note**: This step is reached only if Step 1.5 did not find a valid CIPP route.
+
 For the selected node, ensure the ONUP SSOT set exists (Domain view SSOT):
 
 **Mandatory ONUP artifacts**
@@ -171,6 +208,30 @@ A node (and its governed outputs) can be promoted to `STATUS=RELEASED` only when
 5) Link integrity: critical SSOT links resolve  
 6) Impact resolution: no unresolved **hard-coupled** blockers in the impact matrix  
 7) Signoff present where required (DEC/MIN recorded and linked)
+8) **KNOT → CIPP Promotion** (normative): At least one CIPP minted, unless justified exception
+
+**KNOT → CIPP Promotion Rule**:
+
+A KNOT is "collapsed" only when it yields:
+- A **released artifact chain** (all outputs moved to ACTIVE or RELEASED status)
+- **At least one CIPP** that points to that chain for deterministic reuse
+
+**Promotion steps**:
+1. Identify new stable knowledge produced by KNOT resolution
+2. Create CIPP entry(ies) in CIPP Registry pointing to:
+   - Released artifacts (with sha256 hashes)
+   - Evidence chains
+   - Validated procedures or integration routes
+3. Verify CIPP determinism (all targets exist, hashes match, intent validates)
+4. Record KNOT → CIPP promotion in change log
+
+**Exception**: A KNOT may close without minting a CIPP if justified (e.g., one-time exploration, negative result, no reusable route). Justification must be documented in closure notes.
+
+**References**:
+- **CIPP vs KNOT Governance**: `00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__cipp-vs-knot-governance_DELIVERABLE_STD_I01-R01_ACTIVE.md`
+- **CIPP Registry**: `00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__cipp-registry_REGISTRY_CAT_I01-R01_ACTIVE.md`
+
+---
 
 ### Step 8 — Generate Release Evidence Pack (when releasing a node/baseline)
 When outputs move to RELEASED, generate a compliance-ready evidence bundle (per template):

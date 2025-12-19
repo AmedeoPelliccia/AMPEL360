@@ -265,6 +265,80 @@ Each KNOT definition should include:
 
 ---
 
+### 6.7 CIPP (Certainty Integration Pointers and Paths)
+
+**CIPPs are the complement to KNOTs**: while KNOTs produce new certainty through uncertainty resolution, **CIPPs route execution through known certainty**.
+
+A **CIPP (Certainty Integration Pointer and Path)** is a **programmable, deterministically identifiable object** that binds execution to established knowledge bases:
+- Released baselines
+- Approved standards
+- Validated schemas
+- Certified procedures
+- Known-good integration routes
+
+**Core distinction**:
+
+| Aspect | KNOT | CIPP |
+|--------|------|------|
+| **Nature** | Uncertainty resolution object | Deterministic integration object |
+| **Purpose** | Create certainty | Reuse certainty |
+| **Inputs** | Hypotheses + constraints + tasks | RELEASED/authoritative sources |
+| **Output** | Resolved decision + evidence + (optionally) minted CIPP | Routable pointer/path (stable, machine-checkable) |
+| **Failure mode** | Insufficient evidence / missing signoff | Broken reference / hash mismatch / version incompatibility |
+
+**Promotion rule**: A KNOT is "collapsed" only when it yields (a) a released artifact chain and (b) at least one CIPP that points to that chain for deterministic reuse.
+
+**Two-layer graph model**:
+
+1. **CIPP Graph (Certainty Layer)**: Nodes = CIPPs; edges = deterministic dependencies (requires, implements, exports, consumes). All targets must be RELEASED.
+
+2. **KNOT Graph (Uncertainty Layer)**: Nodes = KNOT states; edges = entanglement and coupling (hard, soft, conditional). Resolution yields CIPPs.
+
+**Workflow integration (Step 1.5)**: Before instantiating a KNOT, check if a valid CIPP exists for the same intent. If yes → execute via CIPP (skip KNOT). If no → proceed with KNOT resolution.
+
+**References**:
+- **CIPP vs KNOT Governance**: `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__cipp-vs-knot-governance_DELIVERABLE_STD_I01-R01_ACTIVE.md`
+- **CIPP Registry**: `CAXS/LEDGERS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__cipp-registry_REGISTRY_CAT_I01-R01_ACTIVE.md`
+- **CIPP Definition Schema**: `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__cipp-definition-schema_DELIVERABLE_SCHEMA_I01-R01_ACTIVE.md`
+- **CIPP-KNOT Graph Model**: `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__cipp-knot-graph-model_DELIVERABLE_SPEC_I01-R01_ACTIVE.md`
+
+---
+
+### 6.8 Intent Alignment (Vision → Mission → Scope → Outcomes)
+
+Both CIPPs and KNOTs must be **directionally aligned** with program intent to prevent accumulating "perfectly-structured work that is directionally wrong."
+
+**Intent Key** (required for all CIPPs and KNOTs):
+
+```yaml
+intent_key:
+  vision_id: VSN-###       # Long-term "north star" (e.g., VSN-001: Zero-Carbon Aviation)
+  mission_id: MSN-###      # Operational mission objective (e.g., MSN-005: Circular Material Recovery)
+  scope_id: SCP-*          # Program boundaries (e.g., SCP-SPACET-Q10-BASELINE-PLUS)
+  pathway_ids: [P01, ...]  # Execution lanes (P01-P05: Design/Implementation/V&V/Ops/Governance)
+  outcome_ids: [OUT-###-###, ...] # Measurable downstream results
+```
+
+**Intent Hash**: `sha256(canonical_json(intent_key + pgk_scope + aor_owner))` — prevents semantic drift.
+
+**SSOT Registries** (intent oracle):
+1. **Vision Registry**: Long-term strategic objectives with time horizons and disallowed directions
+2. **Mission Registry**: Measurable mission objectives with success metrics and constraints
+3. **Scope & Outcome Registry**: Program boundaries and measurable downstream results (DOIs/KPIs)
+
+**CI Gates** (PR-blocking for in-scope artifacts):
+- **Gate A — Intent Reference Validity**: All vision/mission/scope/outcome IDs must exist in SSOT registries and be ACTIVE/RELEASED; intent hash must match computed value
+- **Gate B — CIPP Determinism**: All target refs exist, hashes match, status constraints satisfied, dependencies resolvable
+- **Gate C — Outcome Trace Completeness**: Each outcome must link to evidence hooks and deterministic target chains (CIPPs) or task outputs + evidence (KNOTs)
+
+**References**:
+- **Intent Alignment Policy**: `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__ca360-intent-alignment-policy_DELIVERABLE_STD_I01-R01_ACTIVE.md`
+- **Vision Registry**: `CAXS/LEDGERS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__vision-registry_REGISTRY_IDX_I01-R01_ACTIVE.md`
+- **Mission Registry**: `CAXS/LEDGERS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_PMO__mission-registry_REGISTRY_IDX_I01-R01_ACTIVE.md`
+- **Scope & Outcome Registry**: `CAXS/LEDGERS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__scope-outcome-registry_REGISTRY_IDX_I01-R01_ACTIVE.md`
+
+---
+
 ## 7. OPT-INS Framework
 
 The **OPT-INS framework** defines six canonical axes for information topology:
