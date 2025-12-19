@@ -299,7 +299,7 @@ def generate_comparison_report(
     # Create markdown report
     markdown_report = generate_markdown_report(model_results)
     report_path = output_dir / "comparison_report.md"
-    with open(report_path, "w") as f:
+    with open(report_path, "w", encoding="utf_8") as f:
         f.write(markdown_report)
     print(f"✓ Saved comparison report to {report_path}")
 
