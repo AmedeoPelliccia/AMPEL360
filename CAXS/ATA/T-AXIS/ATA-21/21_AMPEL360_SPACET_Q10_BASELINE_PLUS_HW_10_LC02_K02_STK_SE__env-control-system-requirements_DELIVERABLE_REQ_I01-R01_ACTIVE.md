@@ -170,7 +170,7 @@ The Environmental Control System (ECS) for SPACET Q10 BASELINE PLUS provides:
 
 **REQ-ECS-PERF-003**: The ECS thermal control shall maintain stable equipment temperatures during mission phase transitions.
 
-**REQ-ECS-PERF-004**: The ECS shall demonstrate thermal control response time <10 minutes for 50% heat load changes.
+**REQ-ECS-PERF-004**: The ECS shall demonstrate thermal control response time less than 10 minutes for 50% heat load changes.
 
 ### 5.2 Reliability and Redundancy
 
@@ -222,7 +222,7 @@ The Environmental Control System (ECS) for SPACET Q10 BASELINE PLUS provides:
 
 **REQ-ECS-SAF-001**: The ECS shall maintain cabin environment within human-rated limits per NASA-STD-3001 for all nominal and contingency scenarios.
 
-**REQ-ECS-SAF-002**: The ECS shall prevent rapid decompression events (>10 kPa/s pressure loss) through design and operational procedures.
+**REQ-ECS-SAF-002**: The ECS shall prevent rapid decompression events (greater than 10 kPa/s pressure loss rate) through design and operational procedures.
 
 **REQ-ECS-SAF-003**: The ECS shall provide emergency oxygen supply interface for crew survival in cabin atmosphere loss scenarios.
 
@@ -324,7 +324,7 @@ intent_key:
   mission_id: MSN-003         # Human-rated Space Transport Capability
   scope_id: SCP-SPACET-Q10-BASELINE-PLUS
   pathway_ids: [P01, P02]     # Design & Implementation
-  outcome_ids: [OUT-001-003]  # Crew Safety & Environmental Control Performance
+  outcome_ids: [OUT-001, OUT-002, OUT-003]  # Crew Safety & Environmental Control Performance
 ```
 
 ### 11.2 Upstream Traceability
