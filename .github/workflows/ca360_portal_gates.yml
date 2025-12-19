@@ -424,3 +424,125 @@ jobs:
           
           echo ""
           echo "✓ Gate C: Outcome trace completeness checks passed"
+
+      - name: Gate D - ML Training Pipeline Readiness
+        run: |
+          echo "=== Gate D: ML Training Pipeline Readiness ==="
+          echo ""
+          echo "Validating baseline training pipeline infrastructure..."
+          
+          # Check for ML pipeline structure
+          echo "Checking ML pipeline directory structure..."
+          REQUIRED_DIRS=(
+            "src/ca360_ml"
+            "configs/ml"
+            "data/schemas"
+            "data/manifests"
+            "data/samples"
+          )
+          
+          MISSING_DIRS=0
+          for dir in "${REQUIRED_DIRS[@]}"; do
+            if [ -d "$dir" ]; then
+              echo "  ✓ $dir exists"
+            else
+              echo "  ✗ ERROR: Missing directory $dir"
+              MISSING_DIRS=$((MISSING_DIRS + 1))
+            fi
+          done
+          
+          if [ $MISSING_DIRS -gt 0 ]; then
+            echo ""
+            echo "✗ ERROR: $MISSING_DIRS required directories missing"
+            exit 1
+          fi
+          
+          # Check for core ML pipeline files
+          echo ""
+          echo "Checking ML pipeline core files..."
+          REQUIRED_FILES=(
+            "pyproject.toml"
+            "src/ca360_ml/__init__.py"
+            "src/ca360_ml/cli.py"
+            "src/ca360_ml/data.py"
+            "src/ca360_ml/train.py"
+            "src/ca360_ml/eval.py"
+            "src/ca360_ml/reproducibility.py"
+            "src/ca360_ml/package.py"
+          )
+          
+          MISSING_FILES=0
+          for file in "${REQUIRED_FILES[@]}"; do
+            if [ -f "$file" ]; then
+              echo "  ✓ $file exists"
+            else
+              echo "  ✗ ERROR: Missing file $file"
+              MISSING_FILES=$((MISSING_FILES + 1))
+            fi
+          done
+          
+          if [ $MISSING_FILES -gt 0 ]; then
+            echo ""
+            echo "✗ ERROR: $MISSING_FILES required files missing"
+            exit 1
+          fi
+          
+          # Check for schemas
+          echo ""
+          echo "Checking schema definitions..."
+          if [ -f "data/schemas/provenance.schema.json" ]; then
+            echo "  ✓ Provenance schema defined"
+          else
+            echo "  ✗ ERROR: Missing provenance.schema.json"
+            exit 1
+          fi
+          
+          if [ -f "data/schemas/dataset.schema.json" ]; then
+            echo "  ✓ Dataset schema defined"
+          else
+            echo "  ✗ ERROR: Missing dataset.schema.json"
+            exit 1
+          fi
+          
+          # Check for baseline configuration
+          echo ""
+          echo "Checking baseline configurations..."
+          if [ -f "configs/ml/baseline.yaml" ]; then
+            echo "  ✓ Baseline configuration present"
+          else
+            echo "  ✗ ERROR: Missing baseline.yaml"
+            exit 1
+          fi
+          
+          # Check for dataset manifest
+          echo ""
+          echo "Checking dataset manifests..."
+          MANIFEST_COUNT=$(find data/manifests -name "*.json" 2>/dev/null | wc -l)
+          if [ "$MANIFEST_COUNT" -gt 0 ]; then
+            echo "  ✓ Found $MANIFEST_COUNT dataset manifest(s)"
+          else
+            echo "  ✗ ERROR: No dataset manifests found"
+            exit 1
+          fi
+          
+          # Check for CI sample data
+          echo ""
+          echo "Checking CI sample data..."
+          if [ -f "data/samples/ci_sample.csv" ]; then
+            echo "  ✓ CI sample dataset present"
+          else
+            echo "  ✗ ERROR: Missing ci_sample.csv"
+            exit 1
+          fi
+          
+          # Check for train_eval workflow
+          echo ""
+          echo "Checking training workflow..."
+          if [ -f ".github/workflows/train_eval.yml" ]; then
+            echo "  ✓ Train+Eval workflow defined"
+          else
+            echo "  ⚠ Warning: train_eval.yml workflow not found"
+          fi
+          
+          echo ""
+          echo "✓ Gate D: ML Training Pipeline infrastructure complete"

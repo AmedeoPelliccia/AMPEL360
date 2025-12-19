@@ -1,0 +1,27 @@
+# Baseline Configuration
+# Combines dataset, training, and evaluation configs for baseline model
+
+baseline:
+  name: "spacet_q10_baseline"
+  description: "Baseline model for SPACET Q10 ATA21 dataset"
+  
+  # Reference to component configs
+  dataset_config: "configs/ml/dataset.yaml"
+  training_config: "configs/ml/train.yaml"
+  evaluation_config: "configs/ml/eval.yaml"
+  
+  # Dataset reference
+  dataset_manifest: "data/manifests/ds_spacet_q10_ata21_v1.0.0.json"
+  
+  # Run configuration
+  run:
+    seed: 42
+    deterministic: true
+    use_sample: false  # Set to true for CI
+    sample_path: "data/samples/ci_sample.csv"
+  
+  # Output configuration
+  output:
+    run_dir: "runs"
+    model_registry_dir: "models/registry"
+    reports_dir: "reports/latest"

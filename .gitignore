@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# ML Pipeline artifacts
+runs/
+models/registry/
+*.joblib
+*.pkl
+*.h5
+*.onnx
+
+# Reports (except templates)
+reports/latest/
+
+# Dataset files (except samples and manifests)
+data/**/*.csv
+data/**/*.parquet
+data/**/*.arrow
+!data/samples/*.csv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# DVC (if used)
+.dvc/cache/
+
+# Environment files
+.env
+.env.local

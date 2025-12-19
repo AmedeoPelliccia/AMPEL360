@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DatasetManifest",
+  "description": "Versioned dataset manifest for reproducible ML pipelines",
+  "type": "object",
+  "required": [
+    "dataset_name",
+    "dataset_version",
+    "schema_version",
+    "files",
+    "splits",
+    "provenance"
+  ],
+  "properties": {
+    "dataset_name": {
+      "type": "string",
+      "description": "Name of the dataset"
+    },
+    "dataset_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of the dataset"
+    },
+    "schema_version": {
+      "type": "string",
+      "description": "Version of the dataset schema"
+    },
+    "files": {
+      "type": "array",
+      "description": "List of files in this dataset",
+      "items": {
+        "type": "object",
+        "required": ["path", "size_bytes", "sha256"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Relative path to the file"
+          },
+          "size_bytes": {
+            "type": "integer",
+            "description": "File size in bytes"
+          },
+          "sha256": {
+            "type": "string",
+            "description": "SHA256 hash of the file"
+          }
+        }
+      }
+    },
+    "splits": {
+      "type": "object",
+      "description": "Dataset splits configuration",
+      "properties": {
+        "train": {"type": "object"},
+        "val": {"type": "object"},
+        "test": {"type": "object"},
+        "split_seed": {"type": "integer"}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "description": "Dataset provenance information",
+      "required": ["source", "extract_date"],
+      "properties": {
+        "source": {
+          "type": "string",
+          "description": "Source of the dataset"
+        },
+        "extract_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Date the dataset was extracted/created"
+        },
+        "license": {
+          "type": "string",
+          "description": "Dataset license"
+        },
+        "generator_git_sha": {
+          "type": "string",
+          "description": "Git SHA of the data generation code"
+        }
+      }
+    },
+    "statistics": {
+      "type": "object",
+      "description": "Dataset statistics",
+      "properties": {
+        "total_rows": {"type": "integer"},
+        "feature_ranges": {"type": "object"},
+        "class_distribution": {"type": "object"}
+      }
+    }
+  }
+}

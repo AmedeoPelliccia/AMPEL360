@@ -1,0 +1,44 @@
+{
+  "dataset_name": "spacet_q10_ata21",
+  "dataset_version": "1.0.0",
+  "schema_version": "1.0",
+  "files": [
+    {
+      "path": "data/samples/ci_sample.csv",
+      "size_bytes": 1024,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "splits": {
+    "train": {
+      "ratio": 0.7,
+      "rows": 70
+    },
+    "val": {
+      "ratio": 0.15,
+      "rows": 15
+    },
+    "test": {
+      "ratio": 0.15,
+      "rows": 15
+    },
+    "split_seed": 42
+  },
+  "provenance": {
+    "source": "SPACET Q10 ATA21 synthetic data",
+    "extract_date": "2025-01-01",
+    "license": "Internal",
+    "generator_git_sha": "initial"
+  },
+  "statistics": {
+    "total_rows": 100,
+    "feature_ranges": {
+      "feature1": {"min": 0, "max": 100},
+      "feature2": {"min": 0, "max": 1}
+    },
+    "class_distribution": {
+      "class_0": 50,
+      "class_1": 50
+    }
+  }
+}

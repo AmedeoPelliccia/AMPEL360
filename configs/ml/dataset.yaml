@@ -1,0 +1,27 @@
+# Dataset Configuration
+# Configuration for dataset loading and preprocessing
+
+dataset:
+  name: "spacet_q10_ata21"
+  version: "1.0.0"
+  
+  # Data paths (relative to project root)
+  data_dir: "data"
+  manifest_path: "data/manifests/ds_spacet_q10_ata21_v1.0.0.json"
+  
+  # Loading configuration
+  format: "csv"
+  encoding: "utf-8"
+  
+  # Preprocessing
+  preprocessing:
+    normalize: true
+    handle_missing: "drop"
+    feature_selection: "auto"
+  
+  # Splits
+  splits:
+    train: 0.7
+    val: 0.15
+    test: 0.15
+    split_seed: 42
