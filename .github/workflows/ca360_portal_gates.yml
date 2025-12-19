@@ -605,7 +605,7 @@ jobs:
             exit 1
           fi
           
-          ENTITLEMENT_COUNT=$(tail -n +2 "CAXS/INFRASTRUCTURE/access/entitlement_matrix.csv" | wc -l)
+          ENTITLEMENT_COUNT=$(tail -n +2 "CAXS/INFRASTRUCTURE/access/entitlement_matrix.csv" | grep -c .)
           if [ "$ENTITLEMENT_COUNT" -gt 0 ]; then
             echo "  ✓ Found $ENTITLEMENT_COUNT entitlement mappings"
           else
