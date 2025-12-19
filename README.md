@@ -151,7 +151,7 @@ This portal model provides:
 
 ---
 
-## 6. KNOTS — Knowledge Nets and Ontology as Tasking Strategy
+## 6. KNOTS — Knowledge Nets and Ontology as Tasking Strategy (Knowledge Network Ontogenesis)
 
 **KNOTS** (Knowledge Nets and Ontology as Tasking Strategy) is the AMPEL360 CAXS method for turning **design thinking** into **certifiable, repeatable agentic work**, expressed as **SysML-consumable task structures** and enforced by governance gates.
 
