@@ -11,7 +11,41 @@ This index catalogues evidence artifacts produced by STK_CEGT stakeholder, inclu
 
 ## Evidence Artifacts
 
-Currently no evidence artifacts. Evidence will be indexed here as work progresses.
+### EV-CEGT-001: CO₂ Loop Power Support Interface Specification
+
+```yaml
+evidence_id: EV-CEGT-001
+artifact_name: "CO₂ Loop Power Support Interface Specification"
+artifact_path: "CAXS/ATA/T-AXIS/ATA-21/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_HW_10_LC02_K02_STK_CEGT__co2-loop-power-support-interfaces_DELIVERABLE_SPEC_I01-R01_DRAFT.md"
+category: DELIVERABLE
+type: SPEC
+related_to:
+  task_id: K02-T010
+status: DRAFT
+created_date: 2025-12-19
+trace_links:
+  - requirement: "REQ-ECS-PWR-BIDIR-001, REQ-ECS-PWR-RT-001, REQ-ECS-PWR-MODE-001, REQ-ECS-PWR-CLAIM-001"
+  - design: "Bidirectional power interface, thermal interface, operational modes"
+  - verification: "LC06 verification matrix - power support claim boundary"
+```
+
+### EV-CEGT-002: CO₂ Loop Energy Balance Analysis
+
+```yaml
+evidence_id: EV-CEGT-002
+artifact_name: "CO₂ Loop Energy Balance Analysis Report"
+artifact_path: "CAXS/ATA/T-AXIS/ATA-21/21_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_10_LC04_K04-T010_STK_CEGT__co2-loop-energy-balance_DELIVERABLE_RPT_I01-R01_DRAFT.md"
+category: DELIVERABLE
+type: REPORT
+related_to:
+  task_id: K04-T010
+status: DRAFT
+created_date: 2025-12-19
+trace_links:
+  - requirement: "REQ-ECS-PWR-RT-001, REQ-ECS-PWR-CLAIM-001"
+  - design: "Energy storage function, round-trip efficiency"
+  - verification: "LC06 verification matrix - energy storage claim"
+```
 
 ## Evidence Categories
 
