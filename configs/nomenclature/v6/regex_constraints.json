@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "AMPEL360 v6.0 Nomenclature Regex Constraints",
+  "version": "6.0",
+  "canonical_format": "[ATA]_[PROJECT]_[PROGRAM]_[FAMILY]_[VARIANT]_[VERSION]_[MODEL]_[BLOCK]_[PHASE]_[KNOT]_[AoR]__[SUBJECT]_[CATEGORY]_[TYPE]_[ISSUE-REV]_[STATUS].[EXT]",
+  "constraints": {
+    "ATA": "^(0[0-9]|[1-9][0-9]|1[01][0-6])$",
+    "PROJECT": "^AMPEL360$",
+    "PROGRAM": "^(AIRT|SPACET)$",
+    "FAMILY": "^(Q100|Q200LR|Q10|QHABITAT)$",
+    "VARIANT": "^(GEN|BASELINE|FLIGHT_TEST|CERT|MSN|CUST)$",
+    "VERSION": "^(PLUS|PLUSULTRA)$",
+    "MODEL": "^(BB|HW|SW|PR)$",
+    "BLOCK": "^(00|10|20|30|40|50|60|70|80|90)$",
+    "PHASE": "^LC(0[1-9]|1[0-4])$",
+    "KNOT": "^K(0[1-9]|1[0-4])(-T\\d{3})?$",
+    "AoR": "^(STK_CM|STK_PMO|STK_SE|STK_DAB|STK_PHM|STK_SAF|STK_CERT|STK_TEST|STK_OPS|STK_MRO|STK_AI|STK_CY|STK_SPACEPORT|STK_CEGT)$",
+    "SUBJECT": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+    "CATEGORY": "^(DELIVERABLE|EVIDENCE|REGISTRY|SIGNOFF|EXPORT_CONTROL|INTERNAL_PRODUCTION)$",
+    "ISSUE-REV": "^I(0[1-9]|[1-9][0-9])-R(0[1-9]|[1-9][0-9])$",
+    "STATUS": "^(DRAFT|ACTIVE|RELEASED|SUPERSEDED|OBSOLETE)$"
+  },
+  "notes": {
+    "double_underscore": "Mandatory separator __ before SUBJECT",
+    "knot_suffix": "Optional task suffix -T### for KNOT field",
+    "ata_range": "ATA 00-116 only"
+  }
+}

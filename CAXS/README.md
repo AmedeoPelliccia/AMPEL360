@@ -270,9 +270,10 @@ All artifacts in CAXS follow the **v6.0 nomenclature standard**:
 ```
 
 **Key rules:**
+- **PROJECT field is mandatory** (always AMPEL360)
 - Double-underscore `__` is mandatory before SUBJECT
 - No KNOT outside K01..K14 may appear anywhere in filename
-- AoR must be one allowlisted STK token
+- AoR must be one allowlisted STK token (including STK_CEGT)
 - BLOCK is domain segmentation, not lifecycle (LC stays in PHASE)
 
 ---

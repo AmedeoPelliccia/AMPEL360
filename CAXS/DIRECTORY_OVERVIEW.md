@@ -371,15 +371,20 @@ All artifacts follow the canonical format:
 [ATA]_[PROJECT]_[PROGRAM]_[FAMILY]_[VARIANT]_[VERSION]_[MODEL]_[BLOCK]_[PHASE]_[KNOT]_[AoR]__[SUBJECT]_[CATEGORY]_[TYPE]_[ISSUE-REV]_[STATUS].[EXT]
 ```
 
+**Key requirements:**
+- **PROJECT field is mandatory** (always AMPEL360)
+- Directories may omit PROJECT for simplicity, but filenames must not
+
 **Key mappings:**
 - **ATA** → ATA/ directory
+- **PROJECT** → AMPEL360 (fixed)
 - **PROGRAM/FAMILY** → PROGRAMS/ directory
 - **VARIANT** → VARIANTS/ context
 - **MODEL** → MODELS/ category
 - **BLOCK** → BLOCKS/ segmentation
 - **PHASE** → LIFECYCLE/ phase
 - **KNOT** → KNOTS/ process node
-- **AoR** → AoR/ stakeholder
+- **AoR** → AoR/ stakeholder (14 including STK_CEGT)
 - **CATEGORY** → CATEGORIES/ intent
 
 ---
@@ -387,25 +392,32 @@ All artifacts follow the canonical format:
 ## Governance Summary
 
 - **Configuration-controlled elements:**
-  - AoR codes (13 fixed)
+  - AoR codes (14 fixed - including STK_CEGT)
   - KNOT IDs (K01-K14 only)
   - Lifecycle phases (LC01-LC14 only)
   - OPT-INS axes (6 fixed)
   - ATA chapters (00-116 range)
   - PROGRAM/FAMILY matrix
+  - PROJECT (AMPEL360 fixed)
   
 - **Validator-enforced:**
-  - v6.0 nomenclature compliance
-  - Category-AoR constraints
-  - KNOT allowlist
-  - ATA range
-  - Phase codes
+  - v6.0 nomenclature compliance (includes PROJECT field)
+  - Category-AoR constraints (SIGNOFF/EXPORT_CONTROL → STK_CM or STK_CERT)
+  - KNOT allowlist (K01-K14 only)
+  - ATA range (00-116)
+  - Phase codes (LC01-LC14)
+  - One official chain rule (DELIVERABLE category)
   
 - **Ledger-tracked:**
-  - All artifacts registered
-  - All trace links recorded
+  - All artifacts registered in knowledge-ledger
+  - All trace links recorded in traceability-graph
   - All evidence bundled
   - All releases signed
+  
+- **Configuration files (new):**
+  - configs/nomenclature/v6/vocabulary.json
+  - configs/nomenclature/v6/regex_constraints.json
+  - configs/nomenclature/v6/category_aor_constraints.json
 
 ---
 

@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "AMPEL360 v6.0 Nomenclature Controlled Vocabulary",
+  "version": "6.0",
+  "aor": [
+    "STK_CM",
+    "STK_PMO",
+    "STK_SE",
+    "STK_DAB",
+    "STK_PHM",
+    "STK_SAF",
+    "STK_CERT",
+    "STK_TEST",
+    "STK_OPS",
+    "STK_MRO",
+    "STK_AI",
+    "STK_CY",
+    "STK_SPACEPORT",
+    "STK_CEGT"
+  ],
+  "project": [
+    "AMPEL360"
+  ],
+  "program": [
+    "AIRT",
+    "SPACET"
+  ],
+  "family": [
+    "Q100",
+    "Q200LR",
+    "Q10",
+    "QHABITAT"
+  ],
+  "variant": [
+    "GEN",
+    "BASELINE",
+    "FLIGHT_TEST",
+    "CERT",
+    "MSN",
+    "CUST"
+  ],
+  "version": [
+    "PLUS",
+    "PLUSULTRA"
+  ],
+  "model": [
+    "BB",
+    "HW",
+    "SW",
+    "PR"
+  ],
+  "block": [
+    "00",
+    "10",
+    "20",
+    "30",
+    "40",
+    "50",
+    "60",
+    "70",
+    "80",
+    "90"
+  ],
+  "phase": [
+    "LC01",
+    "LC02",
+    "LC03",
+    "LC04",
+    "LC05",
+    "LC06",
+    "LC07",
+    "LC08",
+    "LC09",
+    "LC10",
+    "LC11",
+    "LC12",
+    "LC13",
+    "LC14"
+  ],
+  "knot": [
+    "K01",
+    "K02",
+    "K03",
+    "K04",
+    "K05",
+    "K06",
+    "K07",
+    "K08",
+    "K09",
+    "K10",
+    "K11",
+    "K12",
+    "K13",
+    "K14"
+  ],
+  "category": [
+    "DELIVERABLE",
+    "EVIDENCE",
+    "REGISTRY",
+    "SIGNOFF",
+    "EXPORT_CONTROL",
+    "INTERNAL_PRODUCTION"
+  ],
+  "status": [
+    "DRAFT",
+    "ACTIVE",
+    "RELEASED",
+    "SUPERSEDED",
+    "OBSOLETE"
+  ]
+}
