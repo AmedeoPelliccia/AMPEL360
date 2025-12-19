@@ -546,3 +546,184 @@ jobs:
           
           echo ""
           echo "✓ Gate D: ML Training Pipeline infrastructure complete"
+
+      - name: Gate E - TALF (Tool Access & Licensing Fabric) Validation
+        run: |
+          echo "=== Gate E: TALF Validation ==="
+          echo ""
+          echo "Validating Tool Access & Licensing Fabric infrastructure..."
+          
+          # Check for TALF infrastructure catalogs
+          echo "Checking TALF infrastructure catalogs..."
+          REQUIRED_TALF_FILES=(
+            "CAXS/INFRASTRUCTURE/access/tool_catalog.yaml"
+            "CAXS/INFRASTRUCTURE/access/entitlement_matrix.csv"
+            "CAXS/INFRASTRUCTURE/access/license_events_registry.md"
+          )
+          
+          MISSING_TALF_FILES=0
+          for file in "${REQUIRED_TALF_FILES[@]}"; do
+            if [ -f "$file" ]; then
+              echo "  ✓ $file exists"
+            else
+              echo "  ✗ ERROR: Missing TALF infrastructure file $file"
+              MISSING_TALF_FILES=$((MISSING_TALF_FILES + 1))
+            fi
+          done
+          
+          if [ $MISSING_TALF_FILES -gt 0 ]; then
+            echo ""
+            echo "✗ ERROR: $MISSING_TALF_FILES required TALF files missing"
+            exit 1
+          fi
+          
+          # Validate tool_catalog.yaml structure
+          echo ""
+          echo "Validating tool_catalog.yaml structure..."
+          if grep -q "tools:" "CAXS/INFRASTRUCTURE/access/tool_catalog.yaml"; then
+            echo "  ✓ tool_catalog.yaml has tools section"
+          else
+            echo "  ✗ ERROR: tool_catalog.yaml missing tools section"
+            exit 1
+          fi
+          
+          if grep -q "tool_id:" "CAXS/INFRASTRUCTURE/access/tool_catalog.yaml"; then
+            TOOL_COUNT=$(grep -c "tool_id:" "CAXS/INFRASTRUCTURE/access/tool_catalog.yaml" || true)
+            echo "  ✓ Found $TOOL_COUNT tool definitions"
+          else
+            echo "  ✗ ERROR: No tool_id entries found in tool_catalog.yaml"
+            exit 1
+          fi
+          
+          # Validate entitlement_matrix.csv structure
+          echo ""
+          echo "Validating entitlement_matrix.csv structure..."
+          if head -1 "CAXS/INFRASTRUCTURE/access/entitlement_matrix.csv" | grep -q "tool_id,entitlement_group"; then
+            echo "  ✓ entitlement_matrix.csv has correct header"
+          else
+            echo "  ✗ ERROR: entitlement_matrix.csv missing correct header"
+            exit 1
+          fi
+          
+          ENTITLEMENT_COUNT=$(tail -n +2 "CAXS/INFRASTRUCTURE/access/entitlement_matrix.csv" | grep -c .)
+          if [ "$ENTITLEMENT_COUNT" -gt 0 ]; then
+            echo "  ✓ Found $ENTITLEMENT_COUNT entitlement mappings"
+          else
+            echo "  ✗ ERROR: No entitlement mappings found"
+            exit 1
+          fi
+          
+          # Cross-validate: check that tool_ids in entitlement_matrix exist in tool_catalog
+          echo ""
+          echo "Cross-validating tool_ids between catalog and entitlement matrix..."
+          INVALID_TOOLS=0
+          while IFS=',' read -r tool_id rest; do
+            if [ "$tool_id" != "tool_id" ]; then
+              if grep -q "tool_id: $tool_id" "CAXS/INFRASTRUCTURE/access/tool_catalog.yaml"; then
+                echo "  ✓ tool_id '$tool_id' exists in catalog"
+              else
+                echo "  ✗ ERROR: tool_id '$tool_id' in entitlement_matrix not found in catalog"
+                INVALID_TOOLS=$((INVALID_TOOLS + 1))
+              fi
+            fi
+          done < "CAXS/INFRASTRUCTURE/access/entitlement_matrix.csv"
+          
+          if [ $INVALID_TOOLS -gt 0 ]; then
+            echo ""
+            echo "✗ ERROR: $INVALID_TOOLS invalid tool_id references found"
+            exit 1
+          fi
+          
+          # Check for PHM PORTAL structure
+          echo ""
+          echo "Checking PHM PORTAL structure..."
+          PHM_PORTAL_DIRS=(
+            "CAXS/AoR/STK_PHM/PORTAL"
+            "CAXS/AoR/STK_PHM/PORTAL/DELIVERABLES"
+            "CAXS/AoR/STK_PHM/PORTAL/REGISTRIES"
+            "CAXS/AoR/STK_PHM/PORTAL/LINKS"
+          )
+          
+          MISSING_PHM_DIRS=0
+          for dir in "${PHM_PORTAL_DIRS[@]}"; do
+            if [ -d "$dir" ]; then
+              echo "  ✓ $dir exists"
+            else
+              echo "  ⚠ Warning: $dir not found (optional for other AoRs)"
+              MISSING_PHM_DIRS=$((MISSING_PHM_DIRS + 1))
+            fi
+          done
+          
+          # Check for PHM TALF deliverable
+          echo ""
+          echo "Checking PHM TALF deliverable..."
+          if [ -f "CAXS/AoR/STK_PHM/PORTAL/DELIVERABLES/00_AMPEL360_SPACET_Q10_GEN_PLUS_PR_00_LC01_K01_STK_PHM__talf-tool-access-licensing-fabric_DELIVERABLE_PROC_I01-R01_DRAFT.md" ]; then
+            echo "  ✓ PHM TALF deliverable exists"
+          else
+            echo "  ⚠ Warning: PHM TALF deliverable not found"
+          fi
+          
+          # Check for PHM PORTAL registries
+          echo ""
+          echo "Checking PHM PORTAL registries..."
+          PHM_PORTAL_REGISTRIES=(
+            "CAXS/AoR/STK_PHM/PORTAL/REGISTRIES/task_registry.md"
+            "CAXS/AoR/STK_PHM/PORTAL/REGISTRIES/roadmap_registry.md"
+            "CAXS/AoR/STK_PHM/PORTAL/REGISTRIES/evidence_index.md"
+            "CAXS/AoR/STK_PHM/PORTAL/REGISTRIES/signoff_index.md"
+          )
+          
+          for registry in "${PHM_PORTAL_REGISTRIES[@]}"; do
+            if [ -f "$registry" ]; then
+              echo "  ✓ $(basename $registry) exists"
+            else
+              echo "  ⚠ Warning: $(basename $registry) not found"
+            fi
+          done
+          
+          # Validate license_events_registry structure
+          echo ""
+          echo "Validating license_events_registry structure..."
+          if grep -q "Event Types" "CAXS/INFRASTRUCTURE/access/license_events_registry.md"; then
+            echo "  ✓ license_events_registry has Event Types section"
+          else
+            echo "  ⚠ Warning: license_events_registry missing Event Types section"
+          fi
+          
+          if grep -q "Event Schema" "CAXS/INFRASTRUCTURE/access/license_events_registry.md"; then
+            echo "  ✓ license_events_registry has Event Schema section"
+          else
+            echo "  ⚠ Warning: license_events_registry missing Event Schema section"
+          fi
+          
+          # Check for required fields in tool_catalog
+          echo ""
+          echo "Validating required fields in tool_catalog..."
+          REQUIRED_FIELDS=(
+            "tool_class"
+            "display_name"
+            "delivery_channel"
+            "licensing"
+            "access"
+            "workspace"
+            "preflight_checks"
+          )
+          
+          MISSING_FIELDS=0
+          for field in "${REQUIRED_FIELDS[@]}"; do
+            if grep -q "$field:" "CAXS/INFRASTRUCTURE/access/tool_catalog.yaml"; then
+              echo "  ✓ Field '$field' found in catalog"
+            else
+              echo "  ✗ ERROR: Required field '$field' missing from catalog"
+              MISSING_FIELDS=$((MISSING_FIELDS + 1))
+            fi
+          done
+          
+          if [ $MISSING_FIELDS -gt 0 ]; then
+            echo ""
+            echo "✗ ERROR: $MISSING_FIELDS required fields missing from tool_catalog"
+            exit 1
+          fi
+          
+          echo ""
+          echo "✓ Gate E: TALF validation complete"

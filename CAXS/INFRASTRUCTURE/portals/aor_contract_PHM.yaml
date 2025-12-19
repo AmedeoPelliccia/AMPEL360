@@ -1,0 +1,387 @@
+# AoR Portal Contract (APC) - PHM
+# Area of Responsibility: Performance, Health & Monitoring
+# Version: 1.0
+# Status: ACTIVE
+# Last Updated: 2025-12-19
+
+aor:
+  id: "PHM"
+  name: "Physical Hardware and Mechanical Engineering"
+  full_name: "STK_PHM"
+  description: "Physical hardware design, mechanical engineering, thermal/structural analysis, and mechanical systems integration."
+  owner: "STK_PHM"
+  stakeholder_type: "Physical & Mechanical Engineering"
+  
+entrypoints:
+  primary:
+    - path: "CAXS/LIFECYCLE/LC04-Engineering-Analysis/"
+      description: "Primary execution phase for PHM analysis activities"
+      access_pattern: "lifecycle_driven"
+    - path: "CAXS/REGISTRY/MONITORING/"
+      description: "Monitoring and diagnostics registry"
+      access_pattern: "query_driven"
+    - path: "CAXS/REGISTRY/EVIDENCE/"
+      description: "Analysis evidence and reports registry"
+      access_pattern: "query_driven"
+  
+  secondary:
+    - path: "CAXS/AoR/STK_PHM/"
+      description: "AoR SSOT registries and deliverables"
+      access_pattern: "governance_driven"
+    - path: "CAXS/AoR/STK_PHM/PORTAL/"
+      description: "PHM portal-specific structure (TALF, tool access)"
+      access_pattern: "portal_driven"
+
+visibility:
+  filters:
+    optin_axis: ["T", "S", "I", "N", "P", "O"]
+    ata: ["00..116"]
+    lifecycle: ["LC02", "LC03", "LC04", "LC05", "LC06"]
+    knots: ["K03", "K04", "K05", "K07"]
+    categories: ["DELIVERABLE", "EVIDENCE", "REGISTRY"]
+    status: ["DRAFT", "ACTIVE", "RELEASED"]
+  
+  scope_notes: |
+    PHM visibility spans physical hardware design, mechanical systems, thermal/structural analysis,
+    and mechanical integration. Primary execution in LC04 (Engineering Analysis), with evidence
+    consumed at LC05/LC06. Cross-cutting concerns include thermal interfaces (T-axis),
+    structural loads (S-axis), mechanical interfaces (I-axis), and physical integration (P-axis).
+
+interfaces:
+  communicate_with:
+    - aor: "SE"
+      aor_full: "STK_SE"
+      description: "Systems Engineering - requirements derivation and validation"
+      objects: ["THERMAL_REQUIREMENTS", "PERFORMANCE_BUDGETS"]
+      handshake: "PHM validates derived constraints; SE baselines them"
+      triggers: ["REQ_UPDATE", "DESIGN_UPDATE"]
+      criticality: "high"
+      
+    - aor: "TEST"
+      aor_full: "STK_TEST"
+      description: "Test Engineering - instrumentation and validation planning"
+      objects: ["INSTRUMENTATION_PLAN", "TEST_DATA"]
+      handshake: "Analysis informs instrumentation and pass/fail thresholds"
+      triggers: ["TEST_READINESS"]
+      criticality: "high"
+      
+    - aor: "CERT"
+      aor_full: "STK_CERT"
+      description: "Certification - analysis acceptance as means of compliance"
+      objects: ["ANALYSIS_REPORTS_AS_MOC"]
+      handshake: "Analysis accepted as MoC where allowed"
+      triggers: ["LC06_GATE"]
+      criticality: "critical"
+      
+    - aor: "CM"
+      aor_full: "STK_CM"
+      description: "Configuration Management - baseline control and release"
+      objects: ["ANALYSIS_BASELINES", "EVIDENCE_PACKAGES"]
+      handshake: "PHM delivers evidence packs; CM validates and baselines"
+      triggers: ["BASELINE_UPDATE", "RELEASE_GATE"]
+      criticality: "high"
+      
+    - aor: "CY"
+      aor_full: "STK_CY"
+      description: "Cybersecurity - export control and data classification"
+      objects: ["ANALYSIS_DATA_CLASSIFICATION"]
+      handshake: "PHM identifies ITAR/EAR content; CY validates compliance"
+      triggers: ["EXPORT_REQUEST", "DATA_SHARING"]
+      criticality: "medium"
+
+produce:
+  outputs:
+    - output_id: "MECHANICAL_DESIGN_SPECIFICATION"
+      category: "DELIVERABLE"
+      type: "SPEC"
+      path_pattern: "CAXS/**/LC03/**_*_DELIVERABLE_SPEC_*.md"
+      description: "Detailed mechanical design specifications and drawings"
+      definition_of_done:
+        - "Complete dimensional specifications and tolerances"
+        - "Material specifications and properties"
+        - "Assembly and integration requirements"
+        - "Interface control documents (ICDs)"
+      requires_validation:
+        - aor: "SE"
+          evidence: ["design_review_acceptance"]
+          gates: ["LC03"]
+          ci_checks: ["link_integrity", "completeness"]
+    
+    - output_id: "THERMAL_ENVELOPE_REPORT"
+      category: "EVIDENCE"
+      type: "RPT"
+      path_pattern: "CAXS/**/LC04/**_*_EVIDENCE_RPT_*.md"
+      description: "Thermal analysis reports with envelope definitions and constraints"
+      definition_of_done:
+        - "States assumptions, models, results, sensitivities"
+        - "Defines constraints for ICD and verification"
+        - "Includes traceability to thermal requirements"
+        - "Sensitivity analysis for key parameters"
+      requires_validation:
+        - aor: "CERT"
+          evidence: ["moc_acceptance_record"]
+          gates: ["LC06"]
+          ci_checks: ["link_integrity", "trace_completeness"]
+      
+    - output_id: "STRUCTURAL_ANALYSIS_REPORT"
+      category: "EVIDENCE"
+      type: "RPT"
+      path_pattern: "CAXS/**/LC04/**_*_EVIDENCE_RPT_*.md"
+      description: "Structural analysis including FEA results and load paths"
+      definition_of_done:
+        - "Defines structural loads and load paths"
+        - "FEA mesh convergence demonstrated"
+        - "Safety margins documented"
+        - "Critical stress locations identified"
+      requires_validation:
+        - aor: "CERT"
+          evidence: ["moc_acceptance_record"]
+          gates: ["LC06"]
+          ci_checks: ["link_integrity", "trace_completeness"]
+    
+    - output_id: "MECHANICAL_INTEGRATION_PLAN"
+      category: "DELIVERABLE"
+      type: "PROC"
+      path_pattern: "CAXS/**/LC04/**_*_DELIVERABLE_PROC_*.md"
+      description: "Mechanical integration strategy and assembly procedures"
+      definition_of_done:
+        - "Assembly sequence defined"
+        - "Tooling and fixturing requirements specified"
+        - "Integration verification checkpoints identified"
+        - "Risk mitigation for mechanical interfaces"
+      requires_validation:
+        - aor: "TEST"
+          evidence: ["integration_plan_acceptance"]
+          gates: ["LC05"]
+          ci_checks: ["link_integrity"]
+      
+    - output_id: "PERFORMANCE_MONITORING_PLAN"
+      category: "DELIVERABLE"
+      type: "PROC"
+      path_pattern: "CAXS/**/LC04/**_*_DELIVERABLE_PROC_*.md"
+      description: "Monitoring strategy and instrumentation requirements"
+      definition_of_done:
+        - "Identifies critical parameters to monitor"
+        - "Defines alarm thresholds and response procedures"
+        - "Specifies instrumentation requirements"
+        - "Links to TEST interface for validation"
+      requires_validation:
+        - aor: "TEST"
+          evidence: ["instrumentation_plan_acceptance"]
+          gates: ["LC05"]
+          ci_checks: ["link_integrity"]
+      
+    - output_id: "PHM_EVIDENCE_INDEX"
+      category: "REGISTRY"
+      type: "INDEX"
+      path_pattern: "CAXS/AoR/STK_PHM/**/evidence_index.md"
+      description: "Master index of all PHM analysis evidence"
+      definition_of_done:
+        - "All analysis reports indexed"
+        - "Traceability links validated"
+        - "Hash values recorded for integrity"
+        - "Evidence status tracked (DRAFT/ACTIVE/RELEASED)"
+      requires_validation:
+        - aor: "CM"
+          evidence: ["baseline_acceptance"]
+          gates: ["LC03", "LC06"]
+          ci_checks: ["index_integrity", "hash_validation"]
+
+tools:
+  must_find:
+    - tool_id: "analysis_template"
+      location: "CAXS/INFRASTRUCTURE/templates/"
+      description: "Standard analysis report template"
+      io:
+        input: ["requirements", "design_data", "constraints"]
+        output: ["analysis_report", "derived_constraints"]
+      format: "markdown"
+      
+    - tool_id: "catia-v5-vdi"
+      location: "CAXS/INFRASTRUCTURE/access/tool_catalog.yaml"
+      description: "CAD tool for geometry and design analysis"
+      io:
+        input: ["design_models", "material_properties"]
+        output: ["geometry_exports", "mass_properties"]
+      talf_governed: true
+      
+    - tool_id: "ansys-hpc-solver"
+      location: "CAXS/INFRASTRUCTURE/access/tool_catalog.yaml"
+      description: "FEA solver for structural and thermal analysis"
+      io:
+        input: ["geometry", "boundary_conditions", "material_properties"]
+        output: ["fea_results", "stress_plots", "thermal_maps"]
+      talf_governed: true
+      
+    - tool_id: "matlab-vdi-analysis"
+      location: "CAXS/INFRASTRUCTURE/access/tool_catalog.yaml"
+      description: "Numerical analysis and post-processing"
+      io:
+        input: ["test_data", "simulation_results", "requirements"]
+        output: ["analysis_plots", "performance_metrics", "derived_requirements"]
+      talf_governed: true
+      
+    - tool_id: "python-jupyter-container"
+      location: "CAXS/INFRASTRUCTURE/access/tool_catalog.yaml"
+      description: "Data analysis and visualization notebooks"
+      io:
+        input: ["datasets", "analysis_scripts"]
+        output: ["notebooks", "visualizations", "reports"]
+      talf_governed: true
+
+publish:
+  destinations:
+    - name: "analysis_exports"
+      path: "CAXS/EXPORTS/ANALYSIS/"
+      description: "Published analysis outputs for cross-AoR consumption"
+      formats: ["md", "pdf"]
+      manifest: "CAXS/EXPORTS/analysis_manifest.json"
+      integrity: ["sha256"]
+      retention: "7_years"
+      access_control: "aor_restricted"
+      
+    - name: "evidence_packages"
+      path: "CAXS/LEDGERS/evidence-packages/"
+      description: "Evidence packages for LC gates"
+      formats: ["md", "json"]
+      manifest: "CAXS/LEDGERS/evidence-packages/manifest.json"
+      integrity: ["sha256", "signature"]
+      retention: "permanent"
+      access_control: "cm_controlled"
+      
+    - name: "monitoring_registry"
+      path: "CAXS/REGISTRY/MONITORING/"
+      description: "Published monitoring plans and diagnostics"
+      formats: ["md", "yaml"]
+      manifest: "CAXS/REGISTRY/MONITORING/manifest.json"
+      integrity: ["sha256"]
+      retention: "operational_lifetime"
+      access_control: "ops_visible"
+
+workqueue:
+  sources:
+    - "Impact matrix items with thermal coupling severity>=3"
+    - "Impact matrix items with structural coupling severity>=3"
+    - "Evidence missing for LC06 MoC"
+    - "Open analysis action items from design reviews"
+    - "Requirements with unvalidated derived constraints"
+  
+  kpis:
+    - name: "analysis_coverage"
+      description: "Percentage of critical components with completed analysis"
+      target: ">=95%"
+      measurement: "count(completed_analyses) / count(critical_components)"
+      
+    - name: "rework_rate"
+      description: "Percentage of analyses requiring significant rework"
+      target: "<=10%"
+      measurement: "count(reworked_analyses) / count(total_analyses)"
+      
+    - name: "open_high_risk_items"
+      description: "Number of unresolved high-risk analysis findings"
+      target: "0"
+      measurement: "count(findings WHERE risk=high AND status=open)"
+      
+    - name: "moc_acceptance_rate"
+      description: "Percentage of analyses accepted as MoC by CERT"
+      target: ">=80%"
+      measurement: "count(accepted_moc) / count(submitted_moc)"
+      
+    - name: "evidence_timeliness"
+      description: "Percentage of evidence delivered on-schedule for gates"
+      target: ">=90%"
+      measurement: "count(on_time_deliveries) / count(total_deliveries)"
+  
+  prioritization:
+    - criteria: "LC gate proximity"
+      weight: 0.4
+    - criteria: "Risk severity"
+      weight: 0.3
+    - criteria: "Cross-AoR dependencies"
+      weight: 0.2
+    - criteria: "Resource availability"
+      weight: 0.1
+
+governance:
+  approval_authority:
+    - role: "STK_PHM Lead"
+      scope: "All PHM deliverables and evidence"
+      gates: ["LC04", "LC05", "LC06"]
+      
+    - role: "STK_CM"
+      scope: "Baseline and release approval"
+      gates: ["LC03", "LC06"]
+      
+    - role: "STK_CERT"
+      scope: "MoC acceptance"
+      gates: ["LC06"]
+  
+  review_cycles:
+    - phase: "LC02"
+      frequency: "monthly"
+      focus: "Requirements validation and analysis planning"
+      
+    - phase: "LC03"
+      frequency: "bi-weekly"
+      focus: "Preliminary analysis results and constraint derivation"
+      
+    - phase: "LC04"
+      frequency: "weekly"
+      focus: "Detailed analysis execution and evidence generation"
+      
+    - phase: "LC05"
+      frequency: "bi-weekly"
+      focus: "Test correlation and model validation"
+      
+    - phase: "LC06"
+      frequency: "monthly"
+      focus: "Final evidence packages and MoC acceptance"
+
+ci_validation:
+  gates:
+    - gate_id: "TALF_VALIDATION"
+      workflow: ".github/workflows/ca360_portal_gates.yml"
+      gate_name: "Gate E"
+      validates:
+        - "Tool references exist in tool_catalog.yaml"
+        - "Entitlements mapped in entitlement_matrix.csv"
+        - "Licensing metadata complete for PHM tools"
+        - "PHM PORTAL structure integrity"
+      
+    - gate_id: "EVIDENCE_INTEGRITY"
+      workflow: ".github/workflows/ca360_portal_gates.yml"
+      gate_name: "Gate C"
+      validates:
+        - "Evidence index completeness"
+        - "Traceability links valid"
+        - "Hash values present"
+        - "Status field populated"
+      
+    - gate_id: "INTERFACE_VALIDATION"
+      workflow: ".github/workflows/ca360_portal_gates.yml"
+      gate_name: "Gate A"
+      validates:
+        - "SE interface objects referenced correctly"
+        - "TEST handshake triggers defined"
+        - "CERT MoC acceptance paths valid"
+        - "Cross-AoR dependencies tracked"
+
+metadata:
+  version: "1.0"
+  schema_version: "apc_v1.0"
+  created_date: "2025-12-19"
+  last_updated: "2025-12-19"
+  status: "ACTIVE"
+  owner: "STK_PHM"
+  reviewers: ["STK_CM", "STK_DAB", "STK_CERT"]
+  related_contracts:
+    - "aor_contract_SE.yaml"
+    - "aor_contract_TEST.yaml"
+    - "aor_contract_CERT.yaml"
+  related_deliverables:
+    - "CAXS/AoR/STK_PHM/PORTAL/DELIVERABLES/00_AMPEL360_SPACET_Q10_GEN_PLUS_PR_00_LC01_K01_STK_PHM__talf-tool-access-licensing-fabric_DELIVERABLE_PROC_I01-R01_DRAFT.md"
+  related_registries:
+    - "CAXS/AoR/STK_PHM/PORTAL/REGISTRIES/task_registry.md"
+    - "CAXS/AoR/STK_PHM/PORTAL/REGISTRIES/roadmap_registry.md"
+    - "CAXS/AoR/STK_PHM/PORTAL/REGISTRIES/evidence_index.md"
+    - "CAXS/AoR/STK_PHM/PORTAL/REGISTRIES/signoff_index.md"
