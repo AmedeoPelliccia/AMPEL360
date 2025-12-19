@@ -61,6 +61,10 @@ PROGRAMS/<program>/<family>/ → VARIANT → AoR/KNOT → work
 
 ## Infrastructure Locations (Deterministic Contract)
 
+### Portal Governance Documents
+- **Main Workflow SSOT:** `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__ca360-main-workflow-ssot_DELIVERABLE_PROC_I01-R01_ACTIVE.md`
+- **RC Protocol:** `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__ca360-portal-rc-protocol_DELIVERABLE_PROC_I01-R01_ACTIVE.md`
+
 ### Configuration Files
 - `configs/nomenclature/v6/vocabulary.json`
 - `configs/nomenclature/v6/regex_constraints.json`
@@ -70,6 +74,8 @@ PROGRAMS/<program>/<family>/ → VARIANT → AoR/KNOT → work
 - **Validators:** `INFRASTRUCTURE/validators/`
 - **Schemas:** `INFRASTRUCTURE/schemas/`
 - **Templates:** `INFRASTRUCTURE/templates/`
+  - `aor_ssot_pack/` - AoR registry templates
+  - `onup_pack/` - Node Uncertainty Pack templates
 - **Indexes:** `INFRASTRUCTURE/indexes/`
 - **Reports:** `REPORTS/validation/`
 

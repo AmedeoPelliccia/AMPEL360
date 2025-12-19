@@ -1,0 +1,2 @@
+node_id,axis,ata,block,phase,program,family,variant,version,model,primary_aor,producer_aor,reviewer_aor,acceptor_aor,signoff_required,signoff_aor,interfaces,notes
+{{NODE_ID}},{{AXIS}},{{ATA}},{{BLOCK}},{{PHASE}},{{PROGRAM}},{{FAMILY}},{{VARIANT}},{{VERSION}},{{MODEL}},{{PRIMARY_AOR}},"{{PRODUCER_AORS}}","{{REVIEWER_AORS}}","{{ACCEPTOR_AORS}}",{{SIGNOFF_REQUIRED}},{{SIGNOFF_AOR}},"{{INTERFACES}}",{{NOTES}}

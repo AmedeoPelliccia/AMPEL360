@@ -1,0 +1,3 @@
+source_axis,source_ata,source_block,source_phase,source_knot,decision_or_uncertainty,impacted_axis,impacted_ata,impacted_block,impacted_phase,impacted_knot,coupling_type,impact_mode,severity,likelihood,risk_score,requires_signoff,signoff_aor,required_evidence,linked_tasks,notes
+{{AXIS}},{{ATA}},{{BLOCK}},{{PHASE}},{{KNOT}},{{UNCERTAINTY}},T,{{IMP_ATA}},{{IMP_BLOCK}},{{IMP_PHASE}},{{IMP_KNOT}},hard,requirements,4,3,12,true,STK_CERT,"{{EVIDENCE}}","{{TASKS}}",{{NOTES}}
+{{AXIS}},{{ATA}},{{BLOCK}},{{PHASE}},{{KNOT}},{{UNCERTAINTY}},S,{{IMP_ATA}},{{IMP_BLOCK}},{{IMP_PHASE}},{{IMP_KNOT}},soft,vv,3,2,6,false,,"{{EVIDENCE}}","{{TASKS}}",{{NOTES}}

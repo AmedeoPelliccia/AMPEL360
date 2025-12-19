@@ -1,0 +1,3 @@
+roadmap_id,node_id,axis,ata,block,phase,program,family,variant,version,model,owner_aor,objective,pathway,phase_start,phase_target,key_deliverables,key_evidence,gates,success_metric,status,notes
+RM-001,{{NODE_ID}},{{AXIS}},{{ATA}},{{BLOCK}},{{PHASE}},{{PROGRAM}},{{FAMILY}},{{VARIANT}},{{VERSION}},{{MODEL}},{{PRIMARY_AOR}},Define baseline and acceptance criteria,P01,LC01,LC02,{{DELIVERABLES}},{{EVIDENCE}},Gate-REQ;Gate-MoC,Acceptance criteria approved,ACTIVE,{{NOTES}}
+RM-002,{{NODE_ID}},{{AXIS}},{{ATA}},{{BLOCK}},{{PHASE}},{{PROGRAM}},{{FAMILY}},{{VARIANT}},{{VERSION}},{{MODEL}},{{PRIMARY_AOR}},Execute build/integration and capture evidence,P03,LC02,LC04,{{DELIVERABLES}},{{EVIDENCE}},Gate-INT;Gate-TRACE,Evidence reproducible and complete,PLANNED,{{NOTES}}
