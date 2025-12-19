@@ -267,5 +267,241 @@ def package(run_id: Optional[str], last_run: bool):
 cli.add_command(eval_gate, name="gate")
 
 
+# ============================================================================
+# Enhanced Features Commands
+# ============================================================================
+
+@cli.command()
+@click.option("--model-path", type=click.Path(exists=True), required=True, help="Path to trained model")
+@click.option("--n-features", type=int, required=True, help="Number of input features")
+@click.option("--output", type=click.Path(), required=True, help="Output path for ONNX model")
+def export_onnx(model_path: str, n_features: int, output: str):
+    """Export trained model to ONNX format."""
+    try:
+        from .onnx_export import export_sklearn_to_onnx, validate_onnx_model
+        import joblib
+    except ImportError:
+        click.echo("❌ ONNX dependencies not installed. Install with: pip install ca360-ml[onnx]", err=True)
+        raise click.Abort()
+    
+    click.echo("=== Exporting model to ONNX ===")
+    
+    # Load model
+    model = joblib.load(model_path)
+    
+    # Export to ONNX
+    onnx_path = export_sklearn_to_onnx(
+        model,
+        n_features=n_features,
+        output_path=Path(output)
+    )
+    
+    if onnx_path:
+        # Validate
+        if validate_onnx_model(onnx_path):
+            click.echo(f"✓ Model exported and validated: {onnx_path}")
+        else:
+            click.echo("⚠ Model exported but validation failed", err=True)
+    else:
+        click.echo("❌ Export failed", err=True)
+        raise click.Abort()
+
+
+@cli.command()
+@click.option("--config", type=click.Path(exists=True), required=True, help="Training configuration")
+@click.option("--dataset-manifest", type=click.Path(exists=True), required=True, help="Dataset manifest")
+@click.option("--n-trials", type=int, default=50, help="Number of tuning trials")
+@click.option("--use-sample", is_flag=True, help="Use sample dataset")
+def tune(config: str, dataset_manifest: str, n_trials: int, use_sample: bool):
+    """Tune hyperparameters with Optuna."""
+    try:
+        from .hyperparameter_tuning import tune_random_forest
+    except ImportError:
+        click.echo("❌ Tuning dependencies not installed. Install with: pip install ca360-ml[tuning]", err=True)
+        raise click.Abort()
+    
+    click.echo("=== Hyperparameter Tuning ===")
+    click.echo(f"Trials: {n_trials}")
+    
+    # Load configuration and dataset
+    full_config = load_config(Path(config))
+    manifest_path = Path(dataset_manifest)
+    
+    sample_path = None
+    if use_sample:
+        sample_path = Path(full_config.get("baseline", {}).get("run", {}).get("sample_path", "data/samples/ci_sample.csv"))
+    
+    df, manifest = load_dataset_from_manifest(manifest_path, use_sample, sample_path)
+    X_train, X_val, X_test, y_train, y_val, y_test = split_dataset(df, manifest)
+    
+    # Run tuning
+    results = tune_random_forest(X_train, y_train, n_trials=n_trials)
+    
+    # Save results
+    tuning_dir = Path("runs/tuning")
+    tuning_dir.mkdir(parents=True, exist_ok=True)
+    
+    results_path = tuning_dir / f"tuning_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.json"
+    with open(results_path, "w") as f:
+        json.dump(results, f, indent=2)
+    
+    click.echo(f"\n✓ Tuning complete. Results saved to: {results_path}")
+
+
+@cli.command()
+@click.option("--config", type=click.Path(exists=True), required=True, help="Training configuration")
+@click.option("--dataset-manifest", type=click.Path(exists=True), required=True, help="Dataset manifest")
+@click.option("--n-folds", type=int, default=5, help="Number of CV folds")
+@click.option("--use-sample", is_flag=True, help="Use sample dataset")
+def cross_validate(config: str, dataset_manifest: str, n_folds: int, use_sample: bool):
+    """Perform cross-validation."""
+    try:
+        from .cross_validation import perform_k_fold_cv
+        from .train import create_model
+    except ImportError:
+        click.echo("❌ Dependencies not installed", err=True)
+        raise click.Abort()
+    
+    click.echo("=== Cross-Validation ===")
+    click.echo(f"Folds: {n_folds}")
+    
+    # Load configuration and dataset
+    full_config = load_config(Path(config))
+    manifest_path = Path(dataset_manifest)
+    
+    sample_path = None
+    if use_sample:
+        sample_path = Path(full_config.get("baseline", {}).get("run", {}).get("sample_path", "data/samples/ci_sample.csv"))
+    
+    df, manifest = load_dataset_from_manifest(manifest_path, use_sample, sample_path)
+    X_train, _, _, y_train, _, _ = split_dataset(df, manifest)
+    
+    # Create model
+    training_config = full_config.get("training", {})
+    model_type = training_config.get("model_type", "sklearn_random_forest")
+    hyperparameters = training_config.get("hyperparameters", {})
+    model = create_model(model_type, hyperparameters)
+    
+    # Run CV
+    results = perform_k_fold_cv(model, X_train, y_train, n_folds=n_folds)
+    
+    # Save results
+    cv_dir = Path("runs/cv")
+    cv_dir.mkdir(parents=True, exist_ok=True)
+    
+    from .cross_validation import save_cv_results
+    results_path = cv_dir / f"cv_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.json"
+    save_cv_results(results, results_path)
+    
+    click.echo(f"\n✓ Cross-validation complete")
+
+
+@cli.command()
+@click.option("--run-ids", multiple=True, required=True, help="Run IDs to compare")
+@click.option("--output-dir", type=click.Path(), default="reports/comparison", help="Output directory")
+def compare(run_ids: tuple, output_dir: str):
+    """Compare multiple model runs."""
+    try:
+        from .model_comparison import generate_comparison_report
+    except ImportError:
+        click.echo("❌ Comparison dependencies not installed. Install with: pip install ca360-ml[all]", err=True)
+        raise click.Abort()
+    
+    click.echo("=== Model Comparison ===")
+    click.echo(f"Comparing {len(run_ids)} models")
+    
+    model_results = {}
+    
+    for run_id in run_ids:
+        run_dir = Path("runs") / run_id
+        if not run_dir.exists():
+            click.echo(f"⚠ Run not found: {run_id}")
+            continue
+        
+        # Load metrics
+        metrics_path = run_dir / "metrics.json"
+        if metrics_path.exists():
+            with open(metrics_path) as f:
+                metrics = json.load(f)
+            
+            # Load training metadata
+            metadata_path = run_dir / "training_metadata.json"
+            training_time = None
+            if metadata_path.exists():
+                with open(metadata_path) as f:
+                    metadata = json.load(f)
+                    training_time = metadata.get("training_time_seconds")
+            
+            model_results[run_id] = {
+                "metrics": metrics,
+                "training_time": training_time
+            }
+    
+    if not model_results:
+        click.echo("❌ No valid runs found to compare", err=True)
+        raise click.Abort()
+    
+    # Generate report
+    output_path = Path(output_dir)
+    generate_comparison_report(model_results, output_path)
+    
+    click.echo(f"\n✓ Comparison report generated: {output_path}")
+
+
+@cli.group()
+def mlflow():
+    """MLflow integration commands."""
+    pass
+
+
+@mlflow.command(name="track")
+@click.option("--run-id", type=str, required=True, help="Run ID to track in MLflow")
+@click.option("--tracking-uri", type=str, help="MLflow tracking URI")
+@click.option("--experiment-name", type=str, default="ca360_ml", help="Experiment name")
+def mlflow_track(run_id: str, tracking_uri: Optional[str], experiment_name: str):
+    """Track a run in MLflow."""
+    try:
+        from .mlflow_integration import track_training_run
+        import joblib
+    except ImportError:
+        click.echo("❌ MLflow not installed. Install with: pip install ca360-ml[mlflow]", err=True)
+        raise click.Abort()
+    
+    run_dir = Path("runs") / run_id
+    if not run_dir.exists():
+        click.echo(f"❌ Run not found: {run_dir}", err=True)
+        raise click.Abort()
+    
+    click.echo(f"=== Tracking run in MLflow: {run_id} ===")
+    
+    # Load artifacts
+    with open(run_dir / "config_resolved.json") as f:
+        config = json.load(f)
+    
+    with open(run_dir / "metrics.json") as f:
+        metrics = json.load(f)
+    
+    with open(run_dir / "provenance.json") as f:
+        provenance = json.load(f)
+    
+    model = joblib.load(run_dir / "model.joblib")
+    
+    # Track in MLflow
+    mlflow_run_id = track_training_run(
+        run_name=run_id,
+        config=config,
+        metrics=metrics,
+        model=model,
+        provenance=provenance,
+        tracking_uri=tracking_uri
+    )
+    
+    click.echo(f"✓ Tracked in MLflow with run ID: {mlflow_run_id}")
+
+
+# Register MLflow group
+cli.add_command(mlflow)
+
+
 if __name__ == "__main__":
     cli()
