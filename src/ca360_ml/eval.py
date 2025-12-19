@@ -263,7 +263,7 @@ def generate_report(
     """
     report_path = run_dir / "report.md"
     
-    with open(report_path, "w") as f:
+    with open(report_path, "w", encoding="utf_8") as f:
         f.write("# Evaluation Report\n\n")
         f.write(f"**Run ID:** {run_dir.name}\n\n")
         
