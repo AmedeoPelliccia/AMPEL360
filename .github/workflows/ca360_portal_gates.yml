@@ -837,7 +837,8 @@ jobs:
                   fi
                 done
               else
-                echo "    ⚠ Warning: Tool catalog not found, skipping tool validation"
+                echo "    ✗ ERROR: Tool catalog not found - required for tool validation"
+                INVALID_CONTRACTS=$((INVALID_CONTRACTS + 1))
               fi
               
             else

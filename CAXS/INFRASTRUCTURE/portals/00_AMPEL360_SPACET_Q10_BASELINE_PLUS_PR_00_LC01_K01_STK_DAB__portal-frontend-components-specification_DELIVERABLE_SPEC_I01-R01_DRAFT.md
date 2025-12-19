@@ -412,13 +412,17 @@ Tool tiles with preflight checks for SSO, entitlements, licenses, and compute pr
 
 ### 3.1 Frontend Framework
 
-**Recommended:** React 18+ or Vue 3+
+**Recommended (Primary):** React 18+
+
+**Alternative (If justified by AoR-specific needs):** Vue 3+
 
 **Rationale:**
 - Component-based architecture
 - Strong ecosystem
 - Good performance
 - Wide adoption
+
+**Note:** While React is the primary recommendation for consistency across AoR implementations, AoRs with specific technical requirements may justify alternatives. Any deviation from the primary framework must be approved by the Portal Steering Committee to ensure integration and maintenance feasibility.
 
 ### 3.2 State Management
 

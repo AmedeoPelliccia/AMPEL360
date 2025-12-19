@@ -59,11 +59,13 @@ The **TALF Service** (Tool Access & Licensing Fabric) is the backend service res
 
 ### 2.2 Data Sources
 
-- **Tool Catalog:** `CAXS/INFRASTRUCTURE/access/tool_catalog.yaml`
-- **Entitlement Matrix:** `CAXS/INFRASTRUCTURE/access/entitlement_matrix.csv`
-- **License Events Registry:** `CAXS/INFRASTRUCTURE/access/license_events_registry.md`
-- **User Identity Service:** SSO/IAM integration
-- **Compute Resource Manager:** HPC/VDI infrastructure
+**Note:** All data source files listed below exist and are validated by Gate E (TALF Validation) in the CI workflow.
+
+- **Tool Catalog:** `CAXS/INFRASTRUCTURE/access/tool_catalog.yaml` ✓ (Verified by CI)
+- **Entitlement Matrix:** `CAXS/INFRASTRUCTURE/access/entitlement_matrix.csv` ✓ (Verified by CI)
+- **License Events Registry:** `CAXS/INFRASTRUCTURE/access/license_events_registry.md` ✓ (Verified by CI)
+- **User Identity Service:** SSO/IAM integration (External)
+- **Compute Resource Manager:** HPC/VDI infrastructure (External)
 
 ---
 
