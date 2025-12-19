@@ -217,7 +217,7 @@ class DVCManager:
                 check=True,
                 capture_output=True
             )
-            print(f"✓ Checked out DVC data")
+            print("✓ Checked out DVC data")
             return True
         except subprocess.CalledProcessError as e:
             print(f"✗ Failed to checkout: {e.stderr.decode()}")
