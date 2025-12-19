@@ -1,0 +1,17 @@
+tool_id,entitlement_group,aor,role,access_level,granted_date,notes
+catia-v5-vdi,eng_cad_users,STK_PHM,CAD_Designer,full,2025-01-01,Standard CAD access for PHM designers
+catia-v5-vdi,phm_design_team,STK_PHM,Senior_Designer,full,2025-01-01,PHM team CAD access
+catia-v6-vdi,eng_cad_users,STK_PHM,CAD_Designer,full,2025-01-01,Advanced CAD access for PHM designers
+catia-v6-vdi,phm_design_team,STK_PHM,Senior_Designer,full,2025-01-01,PHM team advanced CAD access
+ansys-hpc-solver,eng_cae_users,STK_PHM,CAE_Analyst,full,2025-01-01,Structural analysis access for PHM
+ansys-hpc-solver,phm_analysis_team,STK_PHM,Senior_Analyst,full,2025-01-01,PHM team solver access
+nastran-hpc-solver,eng_cae_users,STK_PHM,CAE_Analyst,full,2025-01-01,Nastran solver access for PHM
+nastran-hpc-solver,phm_analysis_team,STK_PHM,Senior_Analyst,full,2025-01-01,PHM team Nastran access
+matlab-vdi-analysis,eng_analysis_users,STK_PHM,Analysis_Engineer,full,2025-01-01,MATLAB access for PHM analysis
+matlab-vdi-analysis,phm_analysis_team,STK_PHM,Senior_Analyst,full,2025-01-01,PHM team MATLAB access
+python-jupyter-container,eng_analysis_users,STK_PHM,Analysis_Engineer,full,2025-01-01,Python notebooks for PHM analysis
+python-jupyter-container,phm_analysis_team,STK_PHM,Senior_Analyst,full,2025-01-01,PHM team Python notebooks
+python-jupyter-container,data_science_team,STK_AI,Data_Scientist,full,2025-01-01,Data science Python access
+python-jupyter-vdi,eng_analysis_users,STK_PHM,Analysis_Engineer,full,2025-01-01,Python VDI for PHM analysis
+python-jupyter-vdi,phm_analysis_team,STK_PHM,Senior_Analyst,full,2025-01-01,PHM team Python VDI
+python-jupyter-vdi,data_science_team,STK_AI,Data_Scientist,full,2025-01-01,Data science Python VDI access
