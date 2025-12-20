@@ -1,0 +1,94 @@
+Code,Name,Description,Category,Parent_Category,Status,Last_Updated,Example_Usage
+ATA-00,GENERAL,General information and program governance,ATA_Chapter,,ACTIVE,2025-12-20,00_AMPEL360_SPACET_...
+ATA-11,Placards and Markings,Documentation and labeling standards,ATA_Chapter,,ACTIVE,2025-12-20,11_AMPEL360_SPACET_...
+ATA-21,Air Conditioning,Environmental control systems,ATA_Chapter,,ACTIVE,2025-12-20,21_AMPEL360_SPACET_...
+ATA-30,Data Comms and Registry,Data management and communication systems,ATA_Chapter,,ACTIVE,2025-12-20,30_AMPEL360_SPACET_...
+ATA-49,Airborne Auxiliary Power,APU and auxiliary power systems,ATA_Chapter,,ACTIVE,2025-12-20,49_AMPEL360_SPACET_...
+ATA-91,Data Schemas / Ontologies,Data models and ontology definitions,ATA_Chapter,,ACTIVE,2025-12-20,91_AMPEL360_SPACET_...
+ATA-93,Traceability Graph,Traceability and relationship mappings,ATA_Chapter,,ACTIVE,2025-12-20,93_AMPEL360_SPACET_...
+ATA-94,DPP Core,Digital Product Passport core functionality,ATA_Chapter,,ACTIVE,2025-12-20,94_AMPEL360_SPACET_...
+ATA-95,SBOM / BOM Exports,Software and hardware bill of materials,ATA_Chapter,,ACTIVE,2025-12-20,95_AMPEL360_SPACET_...
+ATA-98,Signed Release Packs,Signed release packages and distributions,ATA_Chapter,,ACTIVE,2025-12-20,98_AMPEL360_SPACET_...
+ATA-99,Master Registers,Master data registers and catalogs,ATA_Chapter,,ACTIVE,2025-12-20,99_AMPEL360_SPACET_...
+STK_CM,Configuration Management,Baseline change control releases,AoR,,ACTIVE,2025-12-20,STK_CM owner_aor
+STK_PMO,Program Management Office,Planning reporting coordination,AoR,,ACTIVE,2025-12-20,STK_PMO owner_aor
+STK_SE,Systems Engineering,Requirements architecture interfaces,AoR,,ACTIVE,2025-12-20,STK_SE owner_aor
+STK_SAF,Safety & Security,Safety security hazard analysis,AoR,,ACTIVE,2025-12-20,STK_SAF owner_aor
+STK_CERT,Certification,Compliance audit authority liaison,AoR,,ACTIVE,2025-12-20,STK_CERT owner_aor
+STK_DAB,Digital Applications & Blockchains,Data governance digital services,AoR,,ACTIVE,2025-12-20,STK_DAB owner_aor
+STK_PHM,Prognostics & Health Management,Health monitoring predictive analytics,AoR,,ACTIVE,2025-12-20,STK_PHM owner_aor
+STK_TEST,Testing,Verification validation test execution,AoR,,ACTIVE,2025-12-20,STK_TEST owner_aor
+STK_OPS,Operations,Operational procedures and support,AoR,,ACTIVE,2025-12-20,STK_OPS owner_aor
+STK_MRO,Maintenance Repair Overhaul,Maintenance procedures and execution,AoR,,ACTIVE,2025-12-20,STK_MRO owner_aor
+STK_CY,Cybersecurity,Cybersecurity governance and controls,AoR,,ACTIVE,2025-12-20,STK_CY owner_aor
+STK_CEGT,Circular Economy & Green Tech,Sustainability and circularity,AoR,,ACTIVE,2025-12-20,STK_CEGT owner_aor
+STK_SPACEPORT,Spaceport,Ground operations launch facilities,AoR,,ACTIVE,2025-12-20,STK_SPACEPORT owner_aor
+STK_AI,Artificial Intelligence,AI systems and governance,AoR,,ACTIVE,2025-12-20,STK_AI owner_aor
+LC01,Problem Statement / Generation,Initial problem definition and prompting,Lifecycle_Phase,,ACTIVE,2025-12-20,LC01 in filename
+LC02,Requirements,Requirements definition and analysis,Lifecycle_Phase,,ACTIVE,2025-12-20,LC02 in filename
+LC03,Design,Detailed design and specification,Lifecycle_Phase,,ACTIVE,2025-12-20,LC03 in filename
+LC04,Development,Implementation and coding,Lifecycle_Phase,,ACTIVE,2025-12-20,LC04 in filename
+LC05,Integration,Component integration,Lifecycle_Phase,,ACTIVE,2025-12-20,LC05 in filename
+LC06,Verification / Quality,Testing and quality assurance,Lifecycle_Phase,,ACTIVE,2025-12-20,LC06 in filename
+LC07,Deployment,Production deployment,Lifecycle_Phase,,ACTIVE,2025-12-20,LC07 in filename
+LC08,Operations,Operational use and support,Lifecycle_Phase,,ACTIVE,2025-12-20,LC08 in filename
+LC09,Maintenance,Maintenance and updates,Lifecycle_Phase,,ACTIVE,2025-12-20,LC09 in filename
+LC10,Industrialization / CM,Configuration management serialization,Lifecycle_Phase,,ACTIVE,2025-12-20,LC10 in filename
+K00,Portal Entry,Entry point and navigation hub,Knot,,ACTIVE,2025-12-20,K00 in filename
+K01,Standards,Nomenclature policies templates,Knot,,ACTIVE,2025-12-20,K01 in filename
+K02,Problem Definition,Problem statement and scoping,Knot,,ACTIVE,2025-12-20,K02 in filename
+K03,Integration,Component integration processes,Knot,,ACTIVE,2025-12-20,K03 in filename
+K04,Change Control Gate,Change approval and impact analysis,Knot,,ACTIVE,2025-12-20,K04 in filename
+K05,Task Execution,Task definition and execution,Knot,,ACTIVE,2025-12-20,K05 in filename
+K06,Baseline Release Gate,Release validation and freeze,Knot,,ACTIVE,2025-12-20,K06 in filename
+K07,Completion,Task completion and closure,Knot,,ACTIVE,2025-12-20,K07 in filename
+K08,Certification,Certification processes and evidence,Knot,,ACTIVE,2025-12-20,K08 in filename
+K09,Validation,Verification and validation activities,Knot,,ACTIVE,2025-12-20,K09 in filename
+K10,Audit Gate,Audit preparation and traceability,Knot,,ACTIVE,2025-12-20,K10 in filename
+K14,Notification,Event notification and escalation,Knot,,ACTIVE,2025-12-20,K14 in filename
+DRAFT,Draft,Work in progress not released,Status,,ACTIVE,2025-12-20,STATUS in filename
+ACTIVE,Active,Currently in use approved,Status,,ACTIVE,2025-12-20,STATUS in filename
+RELEASED,Released,Formally released baseline,Status,,ACTIVE,2025-12-20,STATUS in filename
+SUPERSEDED,Superseded,Replaced by newer version,Status,,ACTIVE,2025-12-20,STATUS in filename
+OBSOLETE,Obsolete,No longer valid or used,Status,,ACTIVE,2025-12-20,STATUS in filename
+DELIVERABLE,Deliverable,Primary engineering deliverable,Category,,ACTIVE,2025-12-20,CATEGORY in filename
+REGISTRY,Registry,Structured data registry,Category,,ACTIVE,2025-12-20,CATEGORY in filename
+SIGNOFF,Signoff,Approval and signoff records,Category,,ACTIVE,2025-12-20,CATEGORY in filename
+EXPORT_CONTROL,Export Control,Export-controlled content,Category,,ACTIVE,2025-12-20,CATEGORY in filename
+EVIDENCE,Evidence,Verification and validation evidence,Category,,ACTIVE,2025-12-20,CATEGORY in filename
+TEMPLATE,Template,Reusable artifact template,Category,,ACTIVE,2025-12-20,CATEGORY in filename
+SPEC,Specification,Technical specification document,Type,DELIVERABLE,ACTIVE,2025-12-20,TYPE in filename
+STANDARD,Standard,Standard or normative document,Type,DELIVERABLE,ACTIVE,2025-12-20,TYPE in filename
+STD,Standard (alt),Standard alternative naming,Type,DELIVERABLE,ACTIVE,2025-12-20,TYPE in filename
+POLICY,Policy,Policy document,Type,DELIVERABLE,ACTIVE,2025-12-20,TYPE in filename
+POL,Policy (alt),Policy alternative naming,Type,DELIVERABLE,ACTIVE,2025-12-20,TYPE in filename
+PROC,Procedure,Procedure or process document,Type,DELIVERABLE,ACTIVE,2025-12-20,TYPE in filename
+TEMPLATE,Template,Artifact template,Type,TEMPLATE,ACTIVE,2025-12-20,TYPE in filename
+REG,Register,Structured data register,Type,REGISTRY,ACTIVE,2025-12-20,TYPE in filename
+REGISTER,Register (alt),Register alternative naming,Type,REGISTRY,ACTIVE,2025-12-20,TYPE in filename
+CATALOG,Catalog,Catalog or index,Type,REGISTRY,ACTIVE,2025-12-20,TYPE in filename
+CAT,Catalog (alt),Catalog short form,Type,REGISTRY,ACTIVE,2025-12-20,TYPE in filename
+INDEX,Index,Index document,Type,REGISTRY,ACTIVE,2025-12-20,TYPE in filename
+IDX,Index (alt),Index short form,Type,REGISTRY,ACTIVE,2025-12-20,TYPE in filename
+SCHEMA,Schema,Data schema definition,Type,REGISTRY,ACTIVE,2025-12-20,TYPE in filename
+VOCAB,Vocabulary,Controlled vocabulary,Type,REGISTRY,ACTIVE,2025-12-20,TYPE in filename
+MATRIX,Matrix,Matrix or mapping table,Type,REGISTRY,ACTIVE,2025-12-20,TYPE in filename
+TAB,Tabular,Tabular data,Type,REGISTRY,ACTIVE,2025-12-20,TYPE in filename
+RULESET,Ruleset,Validation or enforcement rules,Type,DELIVERABLE,ACTIVE,2025-12-20,TYPE in filename
+CONFIG,Configuration,Configuration file,Type,DELIVERABLE,ACTIVE,2025-12-20,TYPE in filename
+MANIFEST,Manifest,Manifest or bill of materials,Type,REGISTRY,ACTIVE,2025-12-20,TYPE in filename
+CHECKLIST,Checklist,Checklist or verification list,Type,DELIVERABLE,ACTIVE,2025-12-20,TYPE in filename
+OVERVIEW,Overview,Overview or summary document,Type,DELIVERABLE,ACTIVE,2025-12-20,TYPE in filename
+AMPEL360,AMPEL360,AMPEL360 program identifier,Program,,ACTIVE,2025-12-20,Program field
+SPACET,SPACET,Space Transport program family,Family,,ACTIVE,2025-12-20,Family field
+AIRT,AIRT,Air Transport program family,Family,,ACTIVE,2025-12-20,Family field
+Q10,Q10,Q10 aircraft/system variant,Variant,,ACTIVE,2025-12-20,Variant field
+Q100,Q100,Q100 aircraft/system variant,Variant,,ACTIVE,2025-12-20,Variant field
+GEN,Generation,Generation phase initial development,Version_Stream,,ACTIVE,2025-12-20,Version field
+BASELINE,Baseline,Baseline configuration,Version_Stream,,ACTIVE,2025-12-20,Version field
+PLUS,Plus,Enhanced or Plus variant,Version_Stream,,ACTIVE,2025-12-20,Version field
+CERT,Certification,Certification variant,Version_Stream,,ACTIVE,2025-12-20,Version field
+GENERATION,Generation,Generation development phase,Phase,,ACTIVE,2025-12-20,Phase field
+PR,Program,Program general phase,Phase,,ACTIVE,2025-12-20,Phase field
+HW,Hardware,Hardware development phase,Phase,,ACTIVE,2025-12-20,Phase field
+SW,Software,Software development phase,Phase,,ACTIVE,2025-12-20,Phase field

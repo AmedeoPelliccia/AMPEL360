@@ -1,0 +1,514 @@
+# Enforcement Rules — Validation and Compliance Rules
+
+# Schema: enforcement-rules-v1.0.0.yaml
+# Owner: STK_CM
+# Version: v1.0.0
+# Last Updated: 2025-12-20
+# Status: ACTIVE
+
+---
+metadata:
+  name: "AMPEL360 K01 Standards Enforcement Rules"
+  version: "v1.0.0"
+  owner: "STK_CM"
+  last_updated: "2025-12-20"
+  standard_version: "v6.0"
+  description: "Executable validation rules for nomenclature, schema, and integrity enforcement"
+
+---
+# 1. Nomenclature Validation Rules
+nomenclature:
+  description: "Rules for validating file names and identifiers against nomenclature standard v6.0"
+  
+  # 1.1 Filename Pattern Validation
+  filename_pattern:
+    enabled: true
+    severity: ERROR
+    rule: "Filename must match the complete nomenclature pattern"
+    pattern: '^(\d{2})_(AMPEL360)_(SPACET|AIRT)_(Q10|Q100)_(BASELINE|PLUS|GEN|CERT)_(GENERATION|PR|HW|SW)_(\d{2})_(LC\d{2})_(K\d{2})_(STK_[A-Z]+)__([a-z0-9-]+)_(DELIVERABLE|REGISTRY|SIGNOFF|EXPORT_CONTROL|EVIDENCE|TEMPLATE)_(SPEC|STANDARD|STD|POLICY|POL|PROC|TEMPLATE|REG|REGISTER|CATALOG|CAT|INDEX|IDX|SCHEMA|VOCAB|MATRIX|TAB|RULESET|CONFIG|MANIFEST|CHECKLIST|OVERVIEW)_(I\d{2}-R\d{2})_(DRAFT|ACTIVE|RELEASED|SUPERSEDED|OBSOLETE)\.(md|csv|yaml|yml|json)$'
+    examples:
+      - "00_AMPEL360_SPACET_Q10_PLUS_GENERATION_PR_00_LC01_K01_STK_CM__Standards_Pack_DELIVERABLE_SPEC_I01-R01_ACTIVE.md"
+      - "00_AMPEL360_SPACET_Q10_PLUS_GENERATION_PR_00_LC01_K01_STK_CM__Schema_Registry_REGISTRY_REGISTER_I01-R01_ACTIVE.csv"
+    
+  # 1.2 Field Validation
+  field_validation:
+    enabled: true
+    severity: ERROR
+    rules:
+      - field: "ata"
+        rule: "ATA chapter must be 2-digit code"
+        pattern: '^\d{2}$'
+        vocabulary_ref: "Controlled_Vocabularies:ATA_Chapter"
+      
+      - field: "program"
+        rule: "Program must be AMPEL360"
+        pattern: '^AMPEL360$'
+      
+      - field: "family"
+        rule: "Family must be from controlled vocabulary"
+        pattern: '^(SPACET|AIRT)$'
+        vocabulary_ref: "Controlled_Vocabularies:Family"
+      
+      - field: "variant"
+        rule: "Variant must be from controlled vocabulary"
+        pattern: '^(Q10|Q100)$'
+        vocabulary_ref: "Controlled_Vocabularies:Variant"
+      
+      - field: "version"
+        rule: "Version stream must be from controlled vocabulary"
+        pattern: '^(BASELINE|PLUS|GEN|CERT)$'
+        vocabulary_ref: "Controlled_Vocabularies:Version_Stream"
+      
+      - field: "phase"
+        rule: "Phase must be from controlled vocabulary"
+        pattern: '^(GENERATION|PR|HW|SW)$'
+        vocabulary_ref: "Controlled_Vocabularies:Phase"
+      
+      - field: "lifecycle"
+        rule: "Lifecycle must be LC followed by 2 digits"
+        pattern: '^LC\d{2}$'
+        vocabulary_ref: "Controlled_Vocabularies:Lifecycle_Phase"
+      
+      - field: "knot"
+        rule: "Knot must be K followed by 2 digits"
+        pattern: '^K\d{2}$'
+        vocabulary_ref: "Controlled_Vocabularies:Knot"
+      
+      - field: "aor"
+        rule: "AoR must be STK_ followed by uppercase letters"
+        pattern: '^STK_[A-Z]+$'
+        vocabulary_ref: "Controlled_Vocabularies:AoR"
+      
+      - field: "artifact_name"
+        rule: "Artifact name must be lowercase with hyphens"
+        pattern: '^[a-z0-9-]+$'
+      
+      - field: "category"
+        rule: "Category must be from controlled vocabulary"
+        pattern: '^(DELIVERABLE|REGISTRY|SIGNOFF|EXPORT_CONTROL|EVIDENCE|TEMPLATE)$'
+        vocabulary_ref: "Controlled_Vocabularies:Category"
+      
+      - field: "type"
+        rule: "Type must be from controlled vocabulary"
+        pattern: '^(SPEC|STANDARD|STD|POLICY|POL|PROC|TEMPLATE|REG|REGISTER|CATALOG|CAT|INDEX|IDX|SCHEMA|VOCAB|MATRIX|TAB|RULESET|CONFIG|MANIFEST|CHECKLIST|OVERVIEW)$'
+        vocabulary_ref: "Controlled_Vocabularies:Type"
+      
+      - field: "issue"
+        rule: "Issue must be I followed by 2 digits"
+        pattern: '^I\d{2}$'
+      
+      - field: "revision"
+        rule: "Revision must be R followed by 2 digits"
+        pattern: '^R\d{2}$'
+      
+      - field: "status"
+        rule: "Status must be from controlled vocabulary"
+        pattern: '^(DRAFT|ACTIVE|RELEASED|SUPERSEDED|OBSOLETE)$'
+        vocabulary_ref: "Controlled_Vocabularies:Status"
+
+  # 1.3 Consistency Validation
+  consistency:
+    enabled: true
+    severity: ERROR
+    rules:
+      - rule: "Filename must match document_id in front matter"
+        check: "filename_matches_document_id"
+        description: "For Markdown files, document_id field must match filename (without extension)"
+      
+      - rule: "File extension must match type"
+        check: "extension_matches_type"
+        mappings:
+          - types: ["SPEC", "STANDARD", "STD", "POLICY", "POL", "PROC", "TEMPLATE", "CHECKLIST", "OVERVIEW", "CATALOG", "CAT", "INDEX", "IDX"]
+            extensions: [".md"]
+          - types: ["REG", "REGISTER", "VOCAB", "MATRIX", "TAB"]
+            extensions: [".csv"]
+          - types: ["SCHEMA", "MANIFEST"]
+            extensions: [".json", ".yaml", ".yml"]
+          - types: ["RULESET", "CONFIG"]
+            extensions: [".yaml", ".yml", ".json"]
+
+---
+# 2. Schema Validation Rules
+schema:
+  description: "Rules for validating artifact structure against registered schemas"
+  
+  # 2.1 Markdown Front Matter Validation
+  markdown_frontmatter:
+    enabled: true
+    severity: ERROR
+    rule: "All Markdown documents must have valid YAML front matter"
+    mandatory_fields:
+      - "document_id"
+      - "title"
+      - "ata"
+      - "owner_aor"
+      - "category"
+      - "type"
+      - "status"
+      - "issue_rev"
+    optional_fields:
+      - "program"
+      - "family"
+      - "variant"
+      - "version"
+      - "phase"
+      - "lifecycle"
+      - "knot"
+      - "last_updated"
+      - "description"
+      - "interfaces"
+      - "scope"
+    validation:
+      - field: "document_id"
+        rule: "Must match filename pattern"
+      - field: "issue_rev"
+        rule: "Must match Issue-Revision pattern I##-R##"
+        pattern: '^I\d{2}-R\d{2}$'
+      - field: "last_updated"
+        rule: "Must be valid date in YYYY-MM-DD format"
+        pattern: '^\d{4}-\d{2}-\d{2}$'
+
+  # 2.2 CSV Structure Validation
+  csv_structure:
+    enabled: true
+    severity: ERROR
+    rules:
+      - rule: "CSV must have header row"
+        check: "has_header_row"
+      
+      - rule: "CSV must not have empty columns"
+        check: "no_empty_columns"
+        severity: WARNING
+      
+      - rule: "CSV must have consistent row length"
+        check: "consistent_row_length"
+      
+      - rule: "CSV must use standard date format"
+        check: "date_format"
+        format: "YYYY-MM-DD"
+        fields: ["Last_Updated", "Date_Created", "Date_Modified"]
+
+  # 2.3 JSON/YAML Schema Validation
+  json_yaml_schema:
+    enabled: true
+    severity: ERROR
+    rule: "JSON/YAML files must reference and validate against registered schema"
+    schema_reference:
+      json: "$schema field required"
+      yaml: "# Schema: comment required"
+    validation:
+      - rule: "Must validate against referenced schema"
+        check: "schema_validation"
+        schema_registry: "00_AMPEL360_SPACET_Q10_PLUS_GENERATION_PR_00_LC01_K01_STK_CM__Schema_Registry_REGISTRY_REGISTER_I01-R01_ACTIVE.csv"
+
+---
+# 3. Uniqueness Validation Rules
+uniqueness:
+  description: "Rules for ensuring unique identifiers across the baseline"
+  
+  # 3.1 Document ID Uniqueness
+  document_id:
+    enabled: true
+    severity: ERROR
+    rule: "No duplicate document_id values across baseline"
+    scope: "program_baseline"
+    check: "unique_document_ids"
+    
+  # 3.2 Filename Uniqueness
+  filename:
+    enabled: true
+    severity: ERROR
+    rule: "No duplicate filenames (case-insensitive)"
+    scope: "program_baseline"
+    check: "unique_filenames"
+    case_sensitive: false
+  
+  # 3.3 Registry Key Uniqueness
+  registry_keys:
+    enabled: true
+    severity: ERROR
+    rule: "No duplicate keys within a registry"
+    scope: "per_registry"
+    check: "unique_registry_keys"
+    key_field: "First column of CSV or 'id' field"
+  
+  # 3.4 Asset ID Uniqueness
+  asset_ids:
+    enabled: true
+    severity: ERROR
+    rule: "No duplicate asset identifiers"
+    scope: "program_baseline"
+    pattern: '^\d{2}-[A-Z]+-\d+$'
+    check: "unique_asset_ids"
+
+---
+# 4. Integrity Validation Rules
+integrity:
+  description: "Rules for ensuring baseline integrity and consistency"
+  
+  # 4.1 Referential Integrity
+  referential_integrity:
+    enabled: true
+    severity: ERROR
+    rules:
+      - rule: "All internal references must resolve"
+        check: "references_resolve"
+        description: "Links to other documents, registry entries must exist"
+      
+      - rule: "All schema references must exist in Schema Registry"
+        check: "schema_refs_valid"
+        registry: "00_AMPEL360_SPACET_Q10_PLUS_GENERATION_PR_00_LC01_K01_STK_CM__Schema_Registry_REGISTRY_REGISTER_I01-R01_ACTIVE.csv"
+      
+      - rule: "All vocabulary references must exist in Controlled Vocabularies"
+        check: "vocab_refs_valid"
+        registry: "00_AMPEL360_SPACET_Q10_PLUS_GENERATION_PR_00_LC01_K01_STK_CM__Controlled_Vocabularies_REGISTRY_VOCAB_I01-R01_ACTIVE.csv"
+  
+  # 4.2 Version Compatibility
+  version_compatibility:
+    enabled: true
+    severity: WARNING
+    rules:
+      - rule: "Artifacts with same Issue must be backward compatible"
+        check: "issue_compatibility"
+      
+      - rule: "Dependencies must specify minimum required version"
+        check: "version_dependencies"
+        severity: INFO
+  
+  # 4.3 Hash Integrity
+  hash_integrity:
+    enabled: true
+    severity: ERROR
+    rules:
+      - rule: "Hashes must match actual file hashes"
+        check: "hash_verification"
+        algorithm: "SHA256"
+        fields: ["sha256", "hash", "checksum"]
+      
+      - rule: "Baseline manifest hashes must be current"
+        check: "manifest_hash_integrity"
+        scope: "baseline_manifests"
+
+---
+# 5. Gate-Specific Validation Rules
+gates:
+  description: "Validation rules specific to governance gates"
+  
+  # 5.1 K01 Standards Gate
+  K01:
+    description: "Standards validation gate"
+    gates:
+      K01-G1:
+        name: "Nomenclature Validation"
+        priority: "MUST"
+        validators:
+          - "nomenclature.filename_pattern"
+          - "nomenclature.field_validation"
+          - "nomenclature.consistency"
+          - "uniqueness.filename"
+          - "uniqueness.document_id"
+      
+      K01-G2:
+        name: "Schema Validation"
+        priority: "MUST"
+        validators:
+          - "schema.markdown_frontmatter"
+          - "schema.csv_structure"
+          - "schema.json_yaml_schema"
+          - "integrity.referential_integrity"
+  
+  # 5.2 K04 Change Control Gate
+  K04:
+    description: "Change control validation gate"
+    gates:
+      K04-G1:
+        name: "Impact Analysis Complete"
+        priority: "MUST"
+        validators:
+          - "schema.json_yaml_schema"  # Impact analysis schema
+          - "integrity.referential_integrity"
+      
+      K04-G2:
+        name: "Approval Obtained"
+        priority: "MUST"
+        validators:
+          - "schema.json_yaml_schema"  # Approval matrix schema
+          - "integrity.referential_integrity"
+  
+  # 5.3 K06 Baseline Release Gate
+  K06:
+    description: "Baseline release validation gate"
+    gates:
+      K06-G1:
+        name: "Nomenclature Compliance"
+        priority: "MUST"
+        validators:
+          - "nomenclature.filename_pattern"
+          - "nomenclature.field_validation"
+          - "nomenclature.consistency"
+      
+      K06-G2:
+        name: "Uniqueness Check"
+        priority: "MUST"
+        validators:
+          - "uniqueness.document_id"
+          - "uniqueness.filename"
+          - "uniqueness.registry_keys"
+          - "uniqueness.asset_ids"
+      
+      K06-G3:
+        name: "Baseline Integrity"
+        priority: "MUST"
+        validators:
+          - "integrity.referential_integrity"
+          - "integrity.hash_integrity"
+          - "schema.json_yaml_schema"  # Baseline manifest schema
+      
+      K06-G4:
+        name: "CI Validation Pass"
+        priority: "MUST"
+        validators:
+          - "schema.json_yaml_schema"  # CI validation schema
+  
+  # 5.4 K10 Audit Gate
+  K10:
+    description: "Audit readiness validation gate"
+    gates:
+      K10-G1:
+        name: "Traceability Complete"
+        priority: "MUST"
+        validators:
+          - "schema.json_yaml_schema"  # Traceability matrix schema
+          - "integrity.referential_integrity"
+      
+      K10-G2:
+        name: "Evidence Closure"
+        priority: "MUST"
+        validators:
+          - "schema.json_yaml_schema"  # Evidence index schema
+          - "integrity.hash_integrity"
+      
+      K10-G3:
+        name: "Signoff Obtained"
+        priority: "MUST"
+        validators:
+          - "schema.json_yaml_schema"  # Signoff record schema
+      
+      K10-G4:
+        name: "CERT Clearance"
+        priority: "MUST"
+        validators:
+          - "schema.json_yaml_schema"  # CERT clearance schema
+
+---
+# 6. Severity and Handling
+severity:
+  description: "Severity levels and handling rules"
+  
+  levels:
+    ERROR:
+      description: "Blocking violation - must be fixed before approval"
+      action: "BLOCK"
+      requires_fix: true
+      allows_waiver: false
+      escalation: "immediate"
+    
+    WARNING:
+      description: "Non-blocking violation - should be fixed, can be waived"
+      action: "WARN"
+      requires_fix: false
+      allows_waiver: true
+      escalation: "24_hours"
+    
+    INFO:
+      description: "Informational - suggestion only"
+      action: "LOG"
+      requires_fix: false
+      allows_waiver: true
+      escalation: "none"
+  
+  waiver_process:
+    enabled: true
+    description: "Exception waiver process for WARNING severity violations"
+    steps:
+      - "Document rationale in exception request"
+      - "Perform impact analysis"
+      - "Obtain STK_CM approval"
+      - "Record waiver in audit trail"
+      - "Set expiration date and remediation plan"
+    approval_authority: "STK_CM"
+    max_duration: "90_days"
+    audit_trail: true
+
+---
+# 7. CI/CD Integration
+ci_integration:
+  description: "Integration points for CI/CD pipelines"
+  
+  pre_commit_hooks:
+    enabled: true
+    validators:
+      - "nomenclature.filename_pattern"
+      - "schema.markdown_frontmatter"
+    action: "WARN"
+  
+  pull_request_checks:
+    enabled: true
+    blocking: true
+    validators:
+      - "nomenclature.*"
+      - "schema.*"
+      - "uniqueness.*"
+    action: "BLOCK"
+  
+  release_validation:
+    enabled: true
+    blocking: true
+    validators:
+      - "nomenclature.*"
+      - "schema.*"
+      - "uniqueness.*"
+      - "integrity.*"
+    action: "BLOCK"
+  
+  baseline_validation:
+    enabled: true
+    blocking: true
+    validators:
+      - "gates.K06.*"
+      - "gates.K10.*"
+    action: "BLOCK"
+
+---
+# 8. Reporting
+reporting:
+  description: "Validation report generation"
+  
+  output_formats:
+    machine_readable:
+      - format: "JSON"
+        schema: "schemas/nomenclature-report-v1.0.0.json"
+      - format: "YAML"
+        schema: "schemas/nomenclature-report-v1.0.0.yaml"
+    
+    human_readable:
+      - format: "Markdown"
+        template: "templates/validation-report.md"
+      - format: "HTML"
+        template: "templates/validation-report.html"
+  
+  report_sections:
+    - section: "Summary"
+      content: "Pass/fail status, violation counts by severity"
+    
+    - section: "Violations"
+      content: "Detailed list of violations with rule, severity, location, fix hints"
+    
+    - section: "Recommendations"
+      content: "Suggested remediation actions"
+    
+    - section: "Waivers"
+      content: "Active waivers and expiration dates"
+
+---
+# End of Enforcement Rules

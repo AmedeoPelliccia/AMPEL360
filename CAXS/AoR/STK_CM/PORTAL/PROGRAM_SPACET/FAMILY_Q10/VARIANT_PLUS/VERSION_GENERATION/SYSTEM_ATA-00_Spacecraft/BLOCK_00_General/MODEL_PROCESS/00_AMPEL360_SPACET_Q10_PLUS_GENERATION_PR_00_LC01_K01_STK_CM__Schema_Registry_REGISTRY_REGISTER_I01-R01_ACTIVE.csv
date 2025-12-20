@@ -1,0 +1,26 @@
+Schema_ID,Schema_Name,Schema_Version,Schema_Type,Description,Applicability,File_Format,Validation_Required,Owner_AoR,Status,Last_Updated,Schema_Location
+SCHEMA-001,Baseline Manifest Schema,v1.0.0,JSON Schema,Schema for baseline release package manifests,K06 Baseline Release Gate,JSON,MUST,STK_CM,ACTIVE,2025-12-20,schemas/baseline-manifest-v1.0.0.json
+SCHEMA-002,Change Request Schema,v1.0.0,JSON Schema,Schema for change request records,K04 Change Control Gate,JSON,MUST,STK_CM,ACTIVE,2025-12-20,schemas/change-request-v1.0.0.json
+SCHEMA-003,Impact Analysis Schema,v1.0.0,JSON Schema,Schema for impact analysis reports,K04 Change Control Gate,JSON,MUST,STK_CM,ACTIVE,2025-12-20,schemas/impact-analysis-v1.0.0.json
+SCHEMA-004,Evidence Index Schema,v1.0.0,JSON Schema,Schema for evidence indexing,K10 Audit Gate,JSON,MUST,STK_CM,ACTIVE,2025-12-20,schemas/evidence-index-v1.0.0.json
+SCHEMA-005,Traceability Matrix Schema,v1.0.0,JSON Schema,Schema for traceability matrices,K10 Audit Gate,JSON,MUST,STK_CM,ACTIVE,2025-12-20,schemas/traceability-matrix-v1.0.0.json
+SCHEMA-006,Signoff Record Schema,v1.0.0,JSON Schema,Schema for approval and signoff records,K04/K06/K10 Gates,JSON,MUST,STK_CM,ACTIVE,2025-12-20,schemas/signoff-record-v1.0.0.json
+SCHEMA-007,Nomenclature Report Schema,v1.0.0,JSON Schema,Schema for nomenclature validation reports,K01 Standards Gate,JSON,MUST,STK_CM,ACTIVE,2025-12-20,schemas/nomenclature-report-v1.0.0.json
+SCHEMA-008,CI Validation Schema,v1.0.0,JSON Schema,Schema for CI validation results,K06 Baseline Release Gate,JSON,MUST,STK_CM,ACTIVE,2025-12-20,schemas/ci-validation-v1.0.0.json
+SCHEMA-009,Registry Entry Schema,v1.0.0,JSON Schema,Generic schema for registry entries,All registries,JSON,SHOULD,STK_CM,ACTIVE,2025-12-20,schemas/registry-entry-v1.0.0.json
+SCHEMA-010,CERT Clearance Schema,v1.0.0,JSON Schema,Schema for CERT clearance records,K10 Audit Gate,JSON,MUST,STK_CERT,ACTIVE,2025-12-20,schemas/cert-clearance-v1.0.0.json
+SCHEMA-011,Approval Matrix Schema,v1.0.0,YAML Schema,Schema for approval workflow matrices,K04 Change Control Gate,YAML,MUST,STK_CM,ACTIVE,2025-12-20,schemas/approval-matrix-v1.0.0.yaml
+SCHEMA-012,BRP Template Schema,v1.0.0,JSON Schema,Schema for Baseline Release Package structure,K06 Baseline Release Gate,JSON,MUST,STK_CM,ACTIVE,2025-12-20,schemas/brp-template-v1.0.0.json
+SCHEMA-013,Audit Pack Schema,v1.0.0,JSON Schema,Schema for audit pack structure,K10 Audit Gate,JSON,MUST,STK_CM,ACTIVE,2025-12-20,schemas/audit-pack-v1.0.0.json
+SCHEMA-014,Task Registry Schema,v1.0.0,JSON Schema,Schema for task definitions,All knots,JSON,SHOULD,STK_PMO,ACTIVE,2025-12-20,schemas/task-registry-v1.0.0.json
+SCHEMA-015,Interface Definition Schema,v1.0.0,JSON Schema,Schema for cross-ATA interface definitions,K04 Change Control Gate,JSON,SHOULD,STK_SE,ACTIVE,2025-12-20,schemas/interface-definition-v1.0.0.json
+SCHEMA-016,Risk Assessment Schema,v1.0.0,JSON Schema,Schema for safety/security risk assessments,K04 Change Control Gate,JSON,SHOULD,STK_SAF,ACTIVE,2025-12-20,schemas/risk-assessment-v1.0.0.json
+SCHEMA-017,KPI Definition Schema,v1.0.0,JSON Schema,Schema for KPI definitions and tracking,Dashboard features,JSON,SHOULD,STK_PMO,ACTIVE,2025-12-20,schemas/kpi-definition-v1.0.0.json
+SCHEMA-018,Document Metadata Schema,v6.0.0,YAML Schema,Schema for Markdown front matter,All Markdown documents,YAML,MUST,STK_CM,ACTIVE,2025-12-20,schemas/document-metadata-v6.0.0.yaml
+SCHEMA-019,CSV Register Schema,v1.0.0,Schema Definition,Generic structure for CSV registries,All CSV registries,CSV,SHOULD,STK_CM,ACTIVE,2025-12-20,schemas/csv-register-v1.0.0.md
+SCHEMA-020,Configuration Item Schema,v1.0.0,JSON Schema,Schema for configuration item records,Baseline management,JSON,MUST,STK_CM,ACTIVE,2025-12-20,schemas/config-item-v1.0.0.json
+SCHEMA-021,Decision Record Schema,v1.0.0,JSON Schema,Schema for decision log entries,Decision management,JSON,SHOULD,STK_CM,ACTIVE,2025-12-20,schemas/decision-record-v1.0.0.json
+SCHEMA-022,Exception Request Schema,v1.0.0,JSON Schema,Schema for exception/deviation requests,Exception management,JSON,MUST,STK_CM,ACTIVE,2025-12-20,schemas/exception-request-v1.0.0.json
+SCHEMA-023,Release Notes Schema,v1.0.0,JSON Schema,Schema for release notes structure,K06 Baseline Release Gate,JSON,SHOULD,STK_CM,ACTIVE,2025-12-20,schemas/release-notes-v1.0.0.json
+SCHEMA-024,Notification Event Schema,v1.0.0,JSON Schema,Schema for notification events,K14 Notification,JSON,MUST,STK_CM,ACTIVE,2025-12-20,schemas/notification-event-v1.0.0.json
+SCHEMA-025,Portal Contract Schema,v2.4.0,YAML Schema,Schema for AoR portal contracts,Portal configuration,YAML,MUST,STK_DAB,ACTIVE,2025-12-20,schemas/portal-contract-v2.4.0.yaml
