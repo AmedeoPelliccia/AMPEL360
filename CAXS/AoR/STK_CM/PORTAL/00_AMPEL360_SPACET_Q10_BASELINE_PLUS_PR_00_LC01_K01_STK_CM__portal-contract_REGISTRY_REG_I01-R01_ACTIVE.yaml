@@ -10,7 +10,7 @@
 - **AoR:** STK_CM (Configuration Management)
 - **ATA Scope:** 00 — GENERAL
 - **Program:** SPACET Q10 BASELINE PLUS
-- **Contract Version:** 2.2.0
+- **Contract Version:** 2.3.0
 - **Maintained By:** cm-team@ampel360.org
 - **Last Updated:** 2025-12-20
 - **Status:** ACTIVE
@@ -135,7 +135,7 @@ Tarjetas accionables + estado del baseline
 contract_metadata:
   aor_id: STK_CM
   ata_scope: "00"  # ATA 00 — GENERAL
-  contract_version: 2.2.0
+  contract_version: 2.3.0
   program: SPACET
   family: Q10
   variant: BASELINE
@@ -1332,18 +1332,120 @@ knot_mapping:
   K06:
     name: "Baseline Release Gate"
     description: "Release candidate, evidencias CI, manifiesto"
+    purpose: "Validar y congelar (freeze) un release candidate del baseline del programa"
+    
+    guarantees:
+      - "Cumple estándares (nomenclatura y reglas)"
+      - "Es consistente y reproducible"
+      - "Está validado por CI"
+      - "Queda listo para empaquetado y distribución controlada"
+    
     objects:
       - "release_candidate"
       - "ci_evidences"
       - "brp_manifest"
       - "validation_results"
+      - "nomenclature_report"
+      - "uniqueness_report"
+      - "integrity_report"
+      - "ci_summary"
+      - "release_notes"
+      - "freeze_reference"
+    
     outputs:
-      - "BRP 'Releaseable'"
+      - type: "BRP 'Releaseable' (Baseline Release Package)"
+        description: "Paquete formal de release candidate"
+        includes:
+          - "Manifest del baseline (contenido, versiones, hashes)"
+          - "Release notes"
+          - "Evidencias de validación (reports)"
+          - "Estado frozen (immutable tag / lock reference)"
+    
     gates:
-      - "nomenclature_compliance"
-      - "uniqueness_check"
-      - "baseline_integrity"
-      - "ci_validation_pass"
+      K06-G1:
+        name: "Nomenclature Compliance"
+        priority: "MUST"
+        objective: "Asegurar que el release candidate cumple la convención de nombres y vocabularios"
+        minimum_checks:
+          - "Ejecución completa del validador de nomenclatura sobre el scope del baseline"
+          - "Cero violaciones FAIL; violaciones WARN solo si están justificadas y aceptadas por política (waiver trazado)"
+          - "Coherencia nombre ↔ metadata interna (front-matter) donde aplique"
+        output_format:
+          files:
+            - "nomenclature_report.json"
+            - "nomenclature_report.md"
+          linked_to: "BRP"
+      
+      K06-G2:
+        name: "Uniqueness Check"
+        priority: "MUST"
+        objective: "Prevenir colisiones de identidad en el baseline"
+        minimum_checks:
+          - "IDs únicos (document_id / asset_id / registry keys) dentro del baseline"
+          - "Rutas y nombres únicos (sin duplicados por case-sensitivity)"
+          - "Hashes/anchors: no duplicados inesperados (dedup controlado) y ausencia de ghost references"
+          - "Verificación de no-reutilización de identificadores retirados si aplica política"
+        output_format:
+          files:
+            - "uniqueness_report.json"
+          includes: "Lista de colisiones (si existen) con remedios propuestos"
+      
+      K06-G3:
+        name: "Baseline Integrity"
+        priority: "MUST"
+        objective: "Asegurar integridad interna y trazabilidad"
+        minimum_checks:
+          completeness: "Baseline incluye todos los artefactos obligatorios (manifests, registers, indexes)"
+          referential_integrity: "Enlaces internos, referencias a registros, cross-links resolubles (sin dangling refs)"
+          compatibility: "Consistencia de versiones (estándar vs artefactos), compatibilidad de esquemas (sin breaking no declarado)"
+          reproducibility: "BRP puede reconstruirse desde commits/tags referenciados (build determinista)"
+        output_format:
+          files:
+            - "integrity_report.json"
+            - "baseline_manifest.json (firmado con hash)"
+          evidence: "Baseline manifest como evidencia principal"
+      
+      K06-G4:
+        name: "CI Validation Pass"
+        priority: "MUST"
+        objective: "Asegurar que el release candidate pasa el conjunto oficial de pipelines"
+        minimum_checks:
+          - "Todos los pipelines requeridos en scope → PASS (sin jobs en rojo)"
+          - "Artefactos CI adjuntos al BRP (logs resumidos, reports, outputs)"
+          - "Si hubo retries, deben quedar registrados con rationale (para auditoría)"
+        output_format:
+          files:
+            - "ci_summary.json"
+          includes: "Enlaces a runs + bundle de reports"
+    
+    freeze_locking:
+      description: "Acción de cierre de K06 tras PASS en todos los gates"
+      actions:
+        - "Crear Freeze Reference (tag/release candidate ID)"
+        - "Publicar BRP 'Releaseable'"
+      brp_contents:
+        - "Manifest + checksums"
+        - "Reports de gates"
+        - "Release notes"
+        - "Immutability statement (qué se congeló y bajo qué reglas)"
+    
+    minimum_evidence:
+      brp_releaseable_includes:
+        - "baseline_manifest.json (contenido, versiones, hashes, scope)"
+        - "nomenclature_report.json|md"
+        - "uniqueness_report.json"
+        - "integrity_report.json"
+        - "ci_summary.json + referencias a ejecuciones CI"
+        - "release_notes.md (derivado de CRs integrados)"
+    
+    definition_of_done:
+      criteria:
+        - "K06-G1 PASS (nomenclatura)"
+        - "K06-G2 PASS (unicidad)"
+        - "K06-G3 PASS (integridad)"
+        - "K06-G4 PASS (CI)"
+        - "Existe freeze reference auditable que fija el contenido"
+    
     owner: STK_CM
     workflow_stages:
       - "candidate_build"
@@ -1424,6 +1526,7 @@ publishing:
 | 2.0.0 | 2025-12-20 | STK_CM | Enhanced for ATA 00 scope with comprehensive portal contract specification including: Views, Communication matrix, Outputs, Tools, Validation, Publishing, MoSCoW backlog (25 features), Portal-aware AI Assistants (6 assistants), Knot mapping (K01/K04/K06/K10), Backend service integrations |
 | 2.1.0 | 2025-12-20 | STK_CM | Formalized K01 Standards as operational contract block with detailed gate specifications (K01-G1 Nomenclature Validation, K01-G2 Schema Validation), minimum artifacts, and Definition of Done criteria |
 | 2.2.0 | 2025-12-20 | STK_CM | Formalized K04 Change Control Gate as operational contract block with detailed gate specifications (K04-G1 Impact Analysis Complete, K04-G2 Approval Obtained, K04-G3 Cross-ATA Clearance), approval rules, entry/exit criteria, and Definition of Done |
+| 2.3.0 | 2025-12-20 | STK_CM | Formalized K06 Baseline Release Gate as operational contract block with detailed gate specifications (K06-G1 Nomenclature Compliance, K06-G2 Uniqueness Check, K06-G3 Baseline Integrity, K06-G4 CI Validation Pass), freeze/locking process, minimum evidence for BRP, and Definition of Done |
 
 ---
 
