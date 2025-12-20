@@ -65,13 +65,13 @@ nomenclature:
         vocabulary_ref: "Controlled_Vocabularies:Phase"
       
       - field: "lifecycle"
-        rule: "Lifecycle must be LC followed by 2 digits"
-        pattern: '^LC\d{2}$'
+        rule: "Lifecycle must be LC followed by 2 digits (01-14)"
+        pattern: '^LC(0[1-9]|1[0-4])$'
         vocabulary_ref: "Controlled_Vocabularies:Lifecycle_Phase"
       
       - field: "knot"
-        rule: "Knot must be K followed by 2 digits"
-        pattern: '^K\d{2}$'
+        rule: "Knot must be K followed by 2 digits (00-14)"
+        pattern: '^K(0[0-9]|1[0-4])$'
         vocabulary_ref: "Controlled_Vocabularies:Knot"
       
       - field: "aor"

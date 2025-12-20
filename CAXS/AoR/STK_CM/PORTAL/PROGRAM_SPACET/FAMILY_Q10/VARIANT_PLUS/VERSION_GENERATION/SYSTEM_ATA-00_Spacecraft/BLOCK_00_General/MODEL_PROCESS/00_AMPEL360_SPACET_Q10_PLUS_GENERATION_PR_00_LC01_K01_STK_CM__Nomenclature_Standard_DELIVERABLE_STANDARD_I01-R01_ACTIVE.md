@@ -191,33 +191,42 @@ ATA chapters follow the ATA 100 standard specification. Key codes for this progr
 
 | Code | Phase | Description |
 |------|-------|-------------|
-| `LC01` | Problem Statement / Generation | Initial problem definition and prompting |
-| `LC02` | Requirements | Requirements definition and analysis |
-| `LC03` | Design | Detailed design and specification |
-| `LC04` | Development | Implementation and coding |
-| `LC05` | Integration | Component integration |
-| `LC06` | Verification / Quality | Testing and quality assurance |
-| `LC07` | Deployment | Production deployment |
-| `LC08` | Operations | Operational use |
-| `LC09` | Maintenance | Maintenance and updates |
-| `LC10` | Industrialization / CM | Configuration management, serialization |
+| `LC01` | Problem Statement / Generation / Prompting Engineering | Problem framing, ideation, NKU generation pathways, prompting engineering baselines, initial scope statements |
+| `LC02` | System Requirements | Requirement capture, allocation, traceability seeding, acceptance criteria definition |
+| `LC03` | Design Models | Architecture + design models (SysML, design baselines, interface modeling) |
+| `LC04` | Engineering Analysis & Calculation Models | Analyses, calculation models, trade studies, margins, model validation artifacts |
+| `LC05` | Integration Testing & Prototyping (V&V / V6V) | Prototyping, integration campaigns, SIL/HIL/PIL, closure evidence production |
+| `LC06` | Quality | QMS artifacts, process quality, audits, nonconformance management, quality gates |
+| `LC07` | Safety and Security | Safety case, hazard controls, cybersecurity assurance objectives and evidence |
+| `LC08` | Certification and First Flight | Certification planning/execution, authority-facing packs, first-flight/mission readiness evidence |
+| `LC09` | Green Aircraft / Baselines | Sustainability baselines, circularity KPIs, green tech evidence, ESG reporting baselines |
+| `LC10` | Industrialization / Serialization / Production Plan / CM | Industrial planning, production readiness, configuration baselines, manufacturing interfaces |
+| `LC11` | Operations | ConOps, procedures, readiness, operational baselines, mission operations control |
+| `LC12` | Support and Services | Customer support, service processes, service tooling, support documentation |
+| `LC13` | MRO and Sustainment | Maintenance programs, manuals, sustainment evidence, reliability/PHM integration |
+| `LC14` | Retirement Management and Circularity | End-of-life, retirement procedures, recycling/return flows, circularity closure |
 
 ### 3.4 Knot Identifiers
 
 | Code | Name | Purpose |
 |------|------|---------|
 | `K00` | Portal Entry | Entry point and navigation |
-| `K01` | Standards | Nomenclature, policies, templates |
-| `K02` | Problem Definition | Problem statement and scoping |
-| `K03` | Integration | Component integration |
+| `K01` | Standards | Nomenclature, policies, templates, enforcement rules |
+| `K02` | Reserved | Reserved for context-specific use (see AXIS definitions) |
+| `K03` | Reserved | Reserved for context-specific use (see AXIS definitions) |
 | `K04` | Change Control Gate | Change approval and impact analysis |
-| `K05` | Task Execution | Task definition and execution |
+| `K05` | Reserved | Reserved for context-specific use (see AXIS definitions) |
 | `K06` | Baseline Release Gate | Release validation and freeze |
-| `K07` | Completion | Task completion and closure |
-| `K08` | Certification | Certification processes |
-| `K09` | Validation | Verification and validation |
+| `K07` | Reserved | Reserved for context-specific use (see AXIS definitions) |
+| `K08` | Reserved | Reserved for context-specific use (see AXIS definitions) |
+| `K09` | Reserved | Reserved for context-specific use (see AXIS definitions) |
 | `K10` | Audit Gate | Audit preparation and traceability |
-| `K14` | Notification | Event notification and escalation |
+| `K11` | Reserved | Reserved for context-specific use (see AXIS definitions) |
+| `K12` | Reserved | Reserved for context-specific use (see AXIS definitions) |
+| `K13` | Reserved | Reserved for context-specific use (see AXIS definitions) |
+| `K14` | Reserved | Reserved for context-specific use (see AXIS definitions) |
+
+**Note:** KNOT meanings vary by AXIS context (P-PROGRAM, O-OPERATIONS, T-TECHNOLOGY, I-INFRASTRUCTURE, N-NEURAL, S-SIMULATION). The definitions above reflect the STK_CM Configuration Management context. Refer to AXIS-specific KNOT documents for complete definitions.
 
 ### 3.5 Program/Family/Variant Codes
 

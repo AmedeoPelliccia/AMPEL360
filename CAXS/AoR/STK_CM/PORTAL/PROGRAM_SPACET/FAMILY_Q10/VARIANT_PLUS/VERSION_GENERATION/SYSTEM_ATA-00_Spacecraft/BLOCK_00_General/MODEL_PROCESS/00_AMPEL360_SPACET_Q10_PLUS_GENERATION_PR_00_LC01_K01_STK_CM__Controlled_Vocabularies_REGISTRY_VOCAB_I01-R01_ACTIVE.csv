@@ -24,28 +24,35 @@ STK_CY,Cybersecurity,Cybersecurity governance and controls,AoR,,ACTIVE,2025-12-2
 STK_CEGT,Circular Economy & Green Tech,Sustainability and circularity,AoR,,ACTIVE,2025-12-20,STK_CEGT owner_aor
 STK_SPACEPORT,Spaceport,Ground operations launch facilities,AoR,,ACTIVE,2025-12-20,STK_SPACEPORT owner_aor
 STK_AI,Artificial Intelligence,AI systems and governance,AoR,,ACTIVE,2025-12-20,STK_AI owner_aor
-LC01,Problem Statement / Generation,Initial problem definition and prompting,Lifecycle_Phase,,ACTIVE,2025-12-20,LC01 in filename
-LC02,Requirements,Requirements definition and analysis,Lifecycle_Phase,,ACTIVE,2025-12-20,LC02 in filename
-LC03,Design,Detailed design and specification,Lifecycle_Phase,,ACTIVE,2025-12-20,LC03 in filename
-LC04,Development,Implementation and coding,Lifecycle_Phase,,ACTIVE,2025-12-20,LC04 in filename
-LC05,Integration,Component integration,Lifecycle_Phase,,ACTIVE,2025-12-20,LC05 in filename
-LC06,Verification / Quality,Testing and quality assurance,Lifecycle_Phase,,ACTIVE,2025-12-20,LC06 in filename
-LC07,Deployment,Production deployment,Lifecycle_Phase,,ACTIVE,2025-12-20,LC07 in filename
-LC08,Operations,Operational use and support,Lifecycle_Phase,,ACTIVE,2025-12-20,LC08 in filename
-LC09,Maintenance,Maintenance and updates,Lifecycle_Phase,,ACTIVE,2025-12-20,LC09 in filename
-LC10,Industrialization / CM,Configuration management serialization,Lifecycle_Phase,,ACTIVE,2025-12-20,LC10 in filename
+LC01,Problem Statement / Generation / Prompting Engineering,Problem framing ideation NKU generation pathways prompting engineering baselines initial scope statements,Lifecycle_Phase,,ACTIVE,2025-12-20,LC01 in filename
+LC02,System Requirements,Requirement capture allocation traceability seeding acceptance criteria definition,Lifecycle_Phase,,ACTIVE,2025-12-20,LC02 in filename
+LC03,Design Models,Architecture + design models (SysML design baselines interface modeling),Lifecycle_Phase,,ACTIVE,2025-12-20,LC03 in filename
+LC04,Engineering Analysis & Calculation Models,Analyses calculation models trade studies margins model validation artifacts,Lifecycle_Phase,,ACTIVE,2025-12-20,LC04 in filename
+LC05,Integration Testing & Prototyping (V&V / V6V),Prototyping integration campaigns SIL/HIL/PIL closure evidence production,Lifecycle_Phase,,ACTIVE,2025-12-20,LC05 in filename
+LC06,Quality,QMS artifacts process quality audits nonconformance management quality gates,Lifecycle_Phase,,ACTIVE,2025-12-20,LC06 in filename
+LC07,Safety and Security,Safety case hazard controls cybersecurity assurance objectives and evidence,Lifecycle_Phase,,ACTIVE,2025-12-20,LC07 in filename
+LC08,Certification and First Flight,Certification planning/execution authority-facing packs first-flight/mission readiness evidence,Lifecycle_Phase,,ACTIVE,2025-12-20,LC08 in filename
+LC09,Green Aircraft / Baselines,Sustainability baselines circularity KPIs green tech evidence ESG reporting baselines,Lifecycle_Phase,,ACTIVE,2025-12-20,LC09 in filename
+LC10,Industrialization / Serialization / Production Plan / CM,Industrial planning production readiness configuration baselines manufacturing interfaces,Lifecycle_Phase,,ACTIVE,2025-12-20,LC10 in filename
+LC11,Operations,ConOps procedures readiness operational baselines mission operations control,Lifecycle_Phase,,ACTIVE,2025-12-20,LC11 in filename
+LC12,Support and Services,Customer support service processes service tooling support documentation,Lifecycle_Phase,,ACTIVE,2025-12-20,LC12 in filename
+LC13,MRO and Sustainment,Maintenance programs manuals sustainment evidence reliability/PHM integration,Lifecycle_Phase,,ACTIVE,2025-12-20,LC13 in filename
+LC14,Retirement Management and Circularity,End-of-life retirement procedures recycling/return flows circularity closure,Lifecycle_Phase,,ACTIVE,2025-12-20,LC14 in filename
 K00,Portal Entry,Entry point and navigation hub,Knot,,ACTIVE,2025-12-20,K00 in filename
-K01,Standards,Nomenclature policies templates,Knot,,ACTIVE,2025-12-20,K01 in filename
-K02,Problem Definition,Problem statement and scoping,Knot,,ACTIVE,2025-12-20,K02 in filename
-K03,Integration,Component integration processes,Knot,,ACTIVE,2025-12-20,K03 in filename
+K01,Standards,Nomenclature policies templates enforcement rules,Knot,,ACTIVE,2025-12-20,K01 in filename
+K02,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K02 in filename
+K03,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K03 in filename
 K04,Change Control Gate,Change approval and impact analysis,Knot,,ACTIVE,2025-12-20,K04 in filename
-K05,Task Execution,Task definition and execution,Knot,,ACTIVE,2025-12-20,K05 in filename
+K05,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K05 in filename
 K06,Baseline Release Gate,Release validation and freeze,Knot,,ACTIVE,2025-12-20,K06 in filename
-K07,Completion,Task completion and closure,Knot,,ACTIVE,2025-12-20,K07 in filename
-K08,Certification,Certification processes and evidence,Knot,,ACTIVE,2025-12-20,K08 in filename
-K09,Validation,Verification and validation activities,Knot,,ACTIVE,2025-12-20,K09 in filename
+K07,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K07 in filename
+K08,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K08 in filename
+K09,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K09 in filename
 K10,Audit Gate,Audit preparation and traceability,Knot,,ACTIVE,2025-12-20,K10 in filename
-K14,Notification,Event notification and escalation,Knot,,ACTIVE,2025-12-20,K14 in filename
+K11,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K11 in filename
+K12,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K12 in filename
+K13,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K13 in filename
+K14,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K14 in filename
 DRAFT,Draft,Work in progress not released,Status,,ACTIVE,2025-12-20,STATUS in filename
 ACTIVE,Active,Currently in use approved,Status,,ACTIVE,2025-12-20,STATUS in filename
 RELEASED,Released,Formally released baseline,Status,,ACTIVE,2025-12-20,STATUS in filename
