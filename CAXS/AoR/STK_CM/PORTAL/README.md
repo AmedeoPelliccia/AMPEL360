@@ -24,7 +24,7 @@ The STK_CM Portal serves as the **ATA 00 entry point** for Configuration Managem
 
 **File:** `00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__portal-contract_REGISTRY_REG_I01-R01_ACTIVE.yaml`
 
-**Version:** 2.0.0  
+**Version:** 2.4.0  
 **Status:** ACTIVE  
 **Last Updated:** 2025-12-20
 
@@ -210,7 +210,7 @@ All tools configured with TALF (Tool Access & Licensing Fabric) integration for 
 ```
 STK_CM/PORTAL/
 ├── 00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__portal-contract_REGISTRY_REG_I01-R01_ACTIVE.yaml
-│   └── Portal contract (v2.0.0) — Complete portal configuration for ATA 00
+│   └── Portal contract (v2.4.0) — Complete portal configuration for ATA 00
 ├── 00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__portal-feature-register_REGISTRY_REG_I01-R01_ACTIVE.csv
 │   └── Feature register — Tabular view of 39 features with MoSCoW, owners, dependencies, knots
 ├── README.md

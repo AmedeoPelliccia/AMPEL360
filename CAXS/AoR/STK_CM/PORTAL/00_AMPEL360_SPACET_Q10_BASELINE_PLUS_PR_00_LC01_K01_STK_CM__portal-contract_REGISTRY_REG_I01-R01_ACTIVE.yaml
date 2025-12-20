@@ -1666,7 +1666,7 @@ publishing:
 | Revision | Date | Author | Changes |
 |----------|------|--------|---------|
 | 1.0.0 | 2025-12-19 | STK_CM | Initial contract |
-| 2.0.0 | 2025-12-20 | STK_CM | Enhanced for ATA 00 scope with comprehensive portal contract specification including: Views, Communication matrix, Outputs, Tools, Validation, Publishing, MoSCoW backlog (25 features), Portal-aware AI Assistants (6 assistants), Knot mapping (K01/K04/K06/K10), Backend service integrations |
+| 2.0.0 | 2025-12-20 | STK_CM | Enhanced for ATA 00 scope with comprehensive portal contract specification including: Views, Communication matrix, Outputs, Tools, Validation, Publishing, MoSCoW backlog (39 features), Portal-aware AI Assistants (6 assistants), Knot mapping (K01/K04/K06/K10), Backend service integrations |
 | 2.1.0 | 2025-12-20 | STK_CM | Formalized K01 Standards as operational contract block with detailed gate specifications (K01-G1 Nomenclature Validation, K01-G2 Schema Validation), minimum artifacts, and Definition of Done criteria |
 | 2.2.0 | 2025-12-20 | STK_CM | Formalized K04 Change Control Gate as operational contract block with detailed gate specifications (K04-G1 Impact Analysis Complete, K04-G2 Approval Obtained, K04-G3 Cross-ATA Clearance), approval rules, entry/exit criteria, and Definition of Done |
 | 2.3.0 | 2025-12-20 | STK_CM | Formalized K06 Baseline Release Gate as operational contract block with detailed gate specifications (K06-G1 Nomenclature Compliance, K06-G2 Uniqueness Check, K06-G3 Baseline Integrity, K06-G4 CI Validation Pass), freeze/locking process, minimum evidence for BRP, and Definition of Done |

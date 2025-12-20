@@ -10,7 +10,7 @@
 
 Successfully implemented a comprehensive portal contract enhancement for STK_CM (Configuration Management) as the ATA 00 — GENERAL entry point, as specified in the problem statement. The implementation includes:
 
-- **Portal contract enhancement** from v1.0.0 to v2.0.0 (969 new lines)
+- **Portal contract enhancement** from v1.0.0 to v2.4.0 (969 new lines in v2.0.0 + additional knot formalizations in v2.1.0-v2.4.0)
 - **Feature register** with 39 features organized by MoSCoW priority
 - **Portal documentation** (README) with complete specifications
 - **6 portal-aware AI assistants** with cross-AoR coordination
@@ -28,7 +28,7 @@ All requirements from the problem statement have been addressed.
 
 **File:** `CAXS/AoR/STK_CM/PORTAL/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_CM__portal-contract_REGISTRY_REG_I01-R01_ACTIVE.yaml`
 
-**Version:** 2.0.0 (enhanced from 1.0.0)  
+**Version:** 2.4.0 (enhanced from 1.0.0)  
 **Size:** 1,322 lines (from ~400 lines)  
 **Changes:** +969 lines  
 **Validation:** ✅ YAML syntax valid
