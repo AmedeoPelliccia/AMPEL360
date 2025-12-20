@@ -10,7 +10,7 @@
 - **AoR:** STK_CM (Configuration Management)
 - **ATA Scope:** 00 — GENERAL
 - **Program:** SPACET Q10 BASELINE PLUS
-- **Contract Version:** 2.1.0
+- **Contract Version:** 2.2.0
 - **Maintained By:** cm-team@ampel360.org
 - **Last Updated:** 2025-12-20
 - **Status:** ACTIVE
@@ -135,7 +135,7 @@ Tarjetas accionables + estado del baseline
 contract_metadata:
   aor_id: STK_CM
   ata_scope: "00"  # ATA 00 — GENERAL
-  contract_version: 2.1.0
+  contract_version: 2.2.0
   program: SPACET
   family: Q10
   variant: BASELINE
@@ -1219,16 +1219,109 @@ knot_mapping:
   K04:
     name: "Change Control Gate"
     description: "CR with impact + approvals required"
+    purpose: "Aprobar cambios para su integración controlada en el baseline del programa"
+    
+    guarantees:
+      - "Trazabilidad de decisión"
+      - "Análisis de impacto completo"
+      - "Aprobaciones y clearance cross-ATA conforme a dependencias"
+    
     objects:
       - "change_request"
       - "impact_analysis"
       - "approval_records"
+      - "clearance_matrix"
+      - "evidence_plan"
+      - "rollback_plan"
+    
     outputs:
-      - "CR 'Approved for integration'"
+      - type: "CR 'Approved for integration'"
+        description: "Estado formal del CR que habilita integración"
+        enables:
+          - "Creación/actualización de branch de integración"
+          - "Ejecución de gates posteriores (K06/K10) según aplique"
+          - "Inclusión en release candidate"
+    
     gates:
-      - "impact_analysis_complete"
-      - "approval_obtained"
-      - "cross_ata_clearance"
+      K04-G1:
+        name: "Impact Analysis Complete"
+        priority: "MUST"
+        objective: "No se integra nada sin entender impacto y evidencias requeridas"
+        minimum_content:
+          - name: "Scope"
+            description: "Artefactos afectados (paths/IDs), tipo de cambio"
+          - name: "Cross-ATA impact"
+            description: "Lista de ATAs touched y ATA interfaced afectados (incluye acoplamientos)"
+          - name: "Impact mode"
+            description: "Requirements/design/interface/verification/data governance"
+          - name: "Risk screen"
+            description: "Severidad/probabilidad preliminar + si dispara SAF/CERT"
+          - name: "Evidence plan"
+            description: "Qué evidencias serán necesarias para K06/K10 (por AoR)"
+          - name: "Rollback plan"
+            description: "Condición de reversión y owner"
+        output_format:
+          machine_readable: "JSON"
+          human_readable: "MD"
+          linked_to: "CR"
+      
+      K04-G2:
+        name: "Approval Obtained"
+        priority: "MUST"
+        objective: "Asegurar decisión y accountability"
+        approval_rules:
+          always_required:
+            - "STK_CM"
+          conditional:
+            - condition: "Afecta requisitos/arquitectura/ICDs/interfaces"
+              approver: "STK_SE"
+            - condition: "Afecta safety/security o cambia assumptions de riesgo"
+              approver: "STK_SAF"
+            - condition: "Afecta compliance/evidencia/cert baselines"
+              approver: "STK_CERT"
+            - condition: "Impacta hitos/plan/recursos (impacto programático)"
+              approver: "STK_PMO"
+            - condition: "Cambia esquemas, registros, linaje, retención, calidad"
+              approver: "STK_DAB"
+        approval_requirements:
+          - "Firma/registro auditable (quién/cuándo/rol/condición)"
+          - "Comentario obligatorio si hay desviación o excepción"
+        output_format:
+          type: "Approval record (append-only)"
+          updates: "Estado CR actualizado"
+      
+      K04-G3:
+        name: "Cross-ATA Clearance"
+        priority: "MUST"
+        objective: "Evitar integraciones que rompan coherencia entre ATAs o sus interfaces"
+        minimum_checks:
+          - "Interfaces cross-ATA afectadas están identificadas"
+          - "Existe owner responsable por cada interfaz afectada (SE/CM según tipo)"
+          - "No hay open blockers en ATAs impactados (pendencias críticas, gate fail previo)"
+          - "Impacto indirecto explícito como cleared/acknowledged"
+        output_format:
+          type: "Clearance matrix por ATA"
+          values: ["Cleared", "Cleared-with-conditions", "Blocked"]
+          includes: "Rationale"
+    
+    minimum_evidence:
+      entry_criteria:
+        - "CR con clasificación y alcance"
+        - "Impact analysis inicial + lista ATA interfaced"
+        - "Lista de aprobadores requerida (derivada del impacto)"
+      exit_criteria:
+        - "Impact report final + clearance matrix"
+        - "Approval records completos"
+        - "CR en estado 'Approved for integration'"
+        - "Listo para K06 cuando aplique"
+    
+    definition_of_done:
+      criteria:
+        - "K04-G1 PASS (impacto completo y consistente)"
+        - "K04-G2 PASS (aprobaciones exigibles obtenidas)"
+        - "K04-G3 PASS (clearance cross-ATA no bloqueante)"
+        - "Trazabilidad auditable (IDs, timestamps, owners, evidencias enlazadas)"
+    
     owner: STK_CM
     workflow_stages:
       - "triage"
@@ -1330,6 +1423,7 @@ publishing:
 | 1.0.0 | 2025-12-19 | STK_CM | Initial contract |
 | 2.0.0 | 2025-12-20 | STK_CM | Enhanced for ATA 00 scope with comprehensive portal contract specification including: Views, Communication matrix, Outputs, Tools, Validation, Publishing, MoSCoW backlog (25 features), Portal-aware AI Assistants (6 assistants), Knot mapping (K01/K04/K06/K10), Backend service integrations |
 | 2.1.0 | 2025-12-20 | STK_CM | Formalized K01 Standards as operational contract block with detailed gate specifications (K01-G1 Nomenclature Validation, K01-G2 Schema Validation), minimum artifacts, and Definition of Done criteria |
+| 2.2.0 | 2025-12-20 | STK_CM | Formalized K04 Change Control Gate as operational contract block with detailed gate specifications (K04-G1 Impact Analysis Complete, K04-G2 Approval Obtained, K04-G3 Cross-ATA Clearance), approval rules, entry/exit criteria, and Definition of Done |
 
 ---
 
