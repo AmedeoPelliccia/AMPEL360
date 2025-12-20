@@ -10,7 +10,7 @@
 - **AoR:** STK_CM (Configuration Management)
 - **ATA Scope:** 00 — GENERAL
 - **Program:** SPACET Q10 BASELINE PLUS
-- **Contract Version:** 2.3.0
+- **Contract Version:** 2.4.0
 - **Maintained By:** cm-team@ampel360.org
 - **Last Updated:** 2025-12-20
 - **Status:** ACTIVE
@@ -135,7 +135,7 @@ Tarjetas accionables + estado del baseline
 contract_metadata:
   aor_id: STK_CM
   ata_scope: "00"  # ATA 00 — GENERAL
-  contract_version: 2.3.0
+  contract_version: 2.4.0
   program: SPACET
   family: Q10
   variant: BASELINE
@@ -1456,18 +1456,161 @@ knot_mapping:
   K10:
     name: "Audit Gate"
     description: "Audit pack, trazabilidad completa, sign-offs CERT"
+    purpose: "Preparar un baseline audit-ready"
+    
+    guarantees:
+      - "La trazabilidad end-to-end está completa"
+      - "La evidencia está cerrada (closure) y empaquetada"
+      - "Los sign-offs requeridos están obtenidos y registrados"
+      - "Existe clearance CERT para uso ante auditoría interna/externa"
+    
     objects:
       - "audit_pack"
       - "audit_trail"
       - "signoff_records"
       - "evidence_bundle"
+      - "traceability_matrix"
+      - "evidence_index"
+      - "signoff_registry"
+      - "cert_clearance_record"
+    
     outputs:
-      - "'Audit-ready baseline' + export"
+      - type: "'Audit-ready baseline' + export"
+        description: "Baseline con estado audit-ready (no ambiguo, no provisional)"
+        includes:
+          - "Export bundle (paquete de auditoría) listo para entrega/inspección"
+          - "Evidencia, registros, manifests, reportes de gates, y mapa de trazabilidad"
+    
     gates:
-      - "traceability_complete"
-      - "evidence_closure"
-      - "signoff_obtained"
-      - "cert_clearance"
+      K10-G1:
+        name: "Traceability Complete"
+        priority: "MUST"
+        objective: "Demostrar que el baseline es explicable y verificable"
+        minimum_checks:
+          traceability_map:
+            description: "Mapa de trazabilidad completo"
+            from: "CRs aprobados (K04)"
+            through: "Artefactos modificados → validaciones CI (K06)"
+            to: "Baseline manifest"
+          references:
+            description: "Referencias resolubles y consistentes"
+            includes:
+              - "IDs, rutas, commits/tags"
+              - "Versiones de estándares/esquemas"
+              - "Artefactos CI"
+          cross_ata_coverage:
+            description: "Cobertura de dependencias cross-ATA"
+            requirement: "Para ATAs impactados/interfaced: evidencias y clearance enlazadas (sin dangling approvals)"
+        output_format:
+          files:
+            - "traceability_matrix.(json|csv)"
+            - "traceability_summary.md (con links verificables)"
+      
+      K10-G2:
+        name: "Evidence Closure"
+        priority: "MUST"
+        objective: "Asegurar que no quedan open loops de evidencia"
+        minimum_checks:
+          evidence_plan_compliance:
+            description: "Todas las evidencias definidas en el evidence plan (derivado de K04) están"
+            requirements:
+              - "Presentes"
+              - "Versionadas"
+              - "Con hash/identidad"
+              - "Referenciadas desde manifest y/o registros"
+          no_pending_evidence:
+            description: "No existen evidencias draft, TBD o pending en el scope del release"
+          gate_reports_included:
+            description: "Reports de gates relevantes (K01/K06/CI) están incluidos como evidencia primaria"
+        output_format:
+          files:
+            - "evidence_index.json (inventario)"
+            - "evidence_closure_report.md"
+      
+      K10-G3:
+        name: "Signoff Obtained"
+        priority: "MUST"
+        objective: "Asegurar decisión formal y accountability para auditoría"
+        minimum_checks:
+          required_signoffs:
+            description: "Sign-offs requeridos obtenidos"
+            always_required:
+              - "STK_CM (owner primario del baseline)"
+            conditional_by_scope:
+              - condition: "Si hay cambios K04 relevantes"
+                approvers: ["Approvers correspondientes de K04"]
+              - condition: "Si baseline toca safety/security"
+                approvers: ["STK_SAF"]
+              - condition: "Si baseline toca compliance/cert"
+                approvers: ["STK_CERT"]
+          signoff_records:
+            description: "Registros formales con firma/timestamp/rol"
+            format: "Append-only"
+          no_open_objections:
+            description: "No existen objeciones no resueltas o bloqueantes"
+        output_format:
+          files:
+            - "signoff_registry.json"
+            - "signoff_summary.md"
+      
+      K10-G4:
+        name: "CERT Clearance"
+        priority: "MUST"
+        objective: "Autorización formal de CERT para uso en auditoría"
+        minimum_checks:
+          cert_review_complete:
+            description: "STK_CERT ha revisado el audit pack"
+          compliance_verified:
+            description: "Compliance con estándares aplicables verificado"
+          authority_readiness:
+            description: "Pack apto para presentación ante autoridad externa (si aplica)"
+          clearance_conditions:
+            description: "Si hay condiciones/limitaciones, deben estar explícitas y trazadas"
+        output_format:
+          files:
+            - "cert_clearance_record.json"
+            - "cert_clearance_statement.md"
+    
+    audit_pack_assembly:
+      description: "Ensamblado del export bundle una vez PASS en todos los gates"
+      contents:
+        - "Traceability matrix + summary"
+        - "Evidence index + closure report"
+        - "Signoff registry + summary"
+        - "CERT clearance record + statement"
+        - "Baseline manifest (de K06)"
+        - "Gate reports (K01/K04/K06/K10)"
+        - "Release notes"
+        - "README explicativo (navegación del pack)"
+      packaging:
+        - "Signed bundle (hash + signature STK_CM + STK_CERT)"
+        - "Immutable reference (tag/commit del pack)"
+        - "Metadata de generación (timestamp, tooling version, generator)"
+    
+    minimum_evidence:
+      audit_ready_baseline_includes:
+        - "traceability_matrix.(json|csv)"
+        - "traceability_summary.md"
+        - "evidence_index.json"
+        - "evidence_closure_report.md"
+        - "signoff_registry.json"
+        - "signoff_summary.md"
+        - "cert_clearance_record.json"
+        - "cert_clearance_statement.md"
+        - "baseline_manifest.json (de K06)"
+        - "gate_reports/ (K01, K04, K06, K10)"
+        - "release_notes.md"
+        - "audit_pack_README.md"
+    
+    definition_of_done:
+      criteria:
+        - "K10-G1 PASS (trazabilidad completa)"
+        - "K10-G2 PASS (evidencia cerrada)"
+        - "K10-G3 PASS (sign-offs obtenidos)"
+        - "K10-G4 PASS (CERT clearance)"
+        - "Export bundle (audit pack) generado, firmado y publicado"
+        - "Baseline marcado como audit-ready con referencia inmutable"
+    
     owner: STK_CM
     dependent_aors: ["STK_CERT"]
     workflow_stages:
@@ -1527,6 +1670,7 @@ publishing:
 | 2.1.0 | 2025-12-20 | STK_CM | Formalized K01 Standards as operational contract block with detailed gate specifications (K01-G1 Nomenclature Validation, K01-G2 Schema Validation), minimum artifacts, and Definition of Done criteria |
 | 2.2.0 | 2025-12-20 | STK_CM | Formalized K04 Change Control Gate as operational contract block with detailed gate specifications (K04-G1 Impact Analysis Complete, K04-G2 Approval Obtained, K04-G3 Cross-ATA Clearance), approval rules, entry/exit criteria, and Definition of Done |
 | 2.3.0 | 2025-12-20 | STK_CM | Formalized K06 Baseline Release Gate as operational contract block with detailed gate specifications (K06-G1 Nomenclature Compliance, K06-G2 Uniqueness Check, K06-G3 Baseline Integrity, K06-G4 CI Validation Pass), freeze/locking process, minimum evidence for BRP, and Definition of Done |
+| 2.4.0 | 2025-12-20 | STK_CM | Formalized K10 Audit Gate as operational contract block with detailed gate specifications (K10-G1 Traceability Complete, K10-G2 Evidence Closure, K10-G3 Signoff Obtained, K10-G4 CERT Clearance), audit pack assembly process, minimum evidence for audit-ready baseline, and Definition of Done. Completes full K01→K04→K06→K10 pathway formalization |
 
 ---
 
