@@ -116,7 +116,7 @@ features:
       - F06  # Gates & Validator Console
       - F07  # Evidence Console
       - F08  # Signoff Console
-      # F09 optional for CERT (mainly review tooling)
+      - F09  # Tool Launchpad
     
     should:
       - F10  # AI Assistant (for compliance mapping)
