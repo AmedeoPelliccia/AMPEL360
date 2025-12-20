@@ -10,7 +10,7 @@
 - **AoR:** STK_CM (Configuration Management)
 - **ATA Scope:** 00 — GENERAL
 - **Program:** SPACET Q10 BASELINE PLUS
-- **Contract Version:** 2.0.0
+- **Contract Version:** 2.1.0
 - **Maintained By:** cm-team@ampel360.org
 - **Last Updated:** 2025-12-20
 - **Status:** ACTIVE
@@ -135,7 +135,7 @@ Tarjetas accionables + estado del baseline
 contract_metadata:
   aor_id: STK_CM
   ata_scope: "00"  # ATA 00 — GENERAL
-  contract_version: 2.0.0
+  contract_version: 2.1.0
   program: SPACET
   family: Q10
   variant: BASELINE
@@ -1125,16 +1125,90 @@ knot_mapping:
   K01:
     name: "Standards"
     description: "Nomenclature, policies, templates, rules"
+    purpose: "Definir y mantener el sistema normativo del programa"
+    
+    scope:
+      - "Nomenclature: campos, vocabularios, patrones, reglas de naming, versionado"
+      - "Policies: gobierno CM, change control, baseline/release discipline, auditability"
+      - "Templates: plantillas de artefactos, front-matter, registros, checklists, manifests"
+    
     objects:
       - "standard_release"
       - "nomenclature_policy"
       - "cm_plan"
       - "enforcement_rules"
+      - "standards_index"
+      - "schema_registry"
+      - "template_registry"
+      - "rulebook"
+    
     outputs:
-      - "Standard release + enforcement rules"
+      - type: "Standard Release"
+        description: "Paquete versionado del estándar (Nomenclature vX.Y + Policy pack)"
+        includes:
+          - "changelog"
+          - "compatibility_notes"
+          - "migration_guide"
+      
+      - type: "Enforcement Rules"
+        description: "Reglas ejecutables para CI/hooks/validadores"
+        includes:
+          - "naming_validation"
+          - "schema_validation"
+          - "controlled_vocabulary_validation"
+          - "severity_rules"
+          - "exception_waivers"
+    
     gates:
-      - "nomenclature_validation"
-      - "schema_validation"
+      K01-G1:
+        name: "Nomenclature Validation"
+        priority: "MUST"
+        objective: "Asegurar que todo artefacto que entra al baseline cumple la convención"
+        checks:
+          - "Patrón de nombre fichero/carpeta (regex + campos obligatorios)"
+          - "Vocabularios permitidos (ATA, AoR, Knot, Phase, Category, Type, Status)"
+          - "Coherencia nombre ↔ front-matter"
+          - "Unicidad / colisiones (IDs, rutas, aliases)"
+        output_format:
+          machine_readable: "JSON"
+          human_readable: "MD"
+          fields:
+            - "PASS/FAIL"
+            - "violaciones: [id, archivo, regla, severidad, fix_hint]"
+      
+      K01-G2:
+        name: "Schema Validation"
+        priority: "MUST"
+        objective: "Asegurar integridad estructural y gobernanza del dato"
+        checks:
+          - "Validación contra esquemas versionados (JSON Schema / YAML / CSV)"
+          - "Campos obligatorios, tipos, enums, rangos, formatos"
+          - "Reglas de compatibilidad (no breaking fields sin bump mayor)"
+          - "Validación de referencias (IDs existentes, links internos, registers)"
+        output_format:
+          machine_readable: "JSON"
+          evidence:
+            - "schema_version_used"
+            - "schema_checksum"
+            - "results_per_file"
+    
+    minimum_artifacts:
+      - name: "Standards Index"
+        description: "Qué está vigente y dónde vive"
+      - name: "Schema Registry"
+        description: "Lista de esquemas + versión + aplicabilidad"
+      - name: "Template Registry"
+        description: "Plantillas oficiales + versión + uso"
+      - name: "Rulebook"
+        description: "Reglas y severidades + política de excepciones"
+    
+    definition_of_done:
+      criteria:
+        - "Versionado (tag/release) y publicado en canal estándar del repo"
+        - "Enforcement rules listas para ejecutar en CI"
+        - "Gate K01-G1 y K01-G2 pasan con set de pruebas mínimo (fixtures)"
+        - "Incluye changelog y guía de migración si hay cambios breaking"
+    
     owner: STK_CM
     workflow_stages:
       - "draft"
@@ -1255,6 +1329,7 @@ publishing:
 |----------|------|--------|---------|
 | 1.0.0 | 2025-12-19 | STK_CM | Initial contract |
 | 2.0.0 | 2025-12-20 | STK_CM | Enhanced for ATA 00 scope with comprehensive portal contract specification including: Views, Communication matrix, Outputs, Tools, Validation, Publishing, MoSCoW backlog (25 features), Portal-aware AI Assistants (6 assistants), Knot mapping (K01/K04/K06/K10), Backend service integrations |
+| 2.1.0 | 2025-12-20 | STK_CM | Formalized K01 Standards as operational contract block with detailed gate specifications (K01-G1 Nomenclature Validation, K01-G2 Schema Validation), minimum artifacts, and Definition of Done criteria |
 
 ---
 
