@@ -1,0 +1,40 @@
+Feature_ID,Feature_Name,Description,MoSCoW,Owner,Dependencies_STK,Knot,Evidence_Output,UI_Component,Backend_Service
+F01,Context Bar (Slice Selector),Persistent UI showing current operational context,MUST,STK_CM,STK_DAB,K01,Context state log,Context bar component,Context resolution service
+F02,AoR Dashboard,Landing screen with role-specific KPIs,MUST,STK_CM,STK_DAB,All,Dashboard snapshot,Dashboard component,Registry aggregation + KPI engine
+F03,Registry-Driven Work Queue,Auto-generated work items from SSOT registries,MUST,STK_CM,STK_DAB,All,Work queue snapshot,Work queue component,Registry scanner + work item generator
+F04,Kanban / Backlog,Visual task management mapped to KNOT stages,MUST,STK_CM,STK_DAB,All,Board state snapshot,Kanban board component,Task registry + state update service
+F05,Artifact Generator,Create governed artifacts from approved templates,MUST,STK_CM,STK_DAB,All,Generated artifacts,Wizard UI component,Template registry + artifact generation + validator
+F06,Gates & Validator Console,Run and view CI gates with failing checks,MUST,STK_CM,STK_DAB,K04/K06/K10,Gate results + validation logs,Validator console component,Validator service + gate orchestrator
+F07,Evidence Console,Index + attach + hash evidence,MUST,STK_CM,STK_DAB,All,Evidence index + hashes,Evidence console component,Evidence service + hash verifier
+F08,Signoff Console,Formal approval workflow,MUST,STK_CM,"STK_PMO,STK_SE,STK_SAF,STK_CERT,STK_DAB",All,Signoff records,Signoff console component,Signoff workflow + notification service
+F09,Tool Launchpad,TALF-aware tool access with preflight checks,MUST,STK_CM,STK_DAB,All,Launch audit logs,Tool launchpad component,TALF service + entitlement + license pool
+F_CM01,Baseline Registry & Manifest,Registry of baseline activo + manifiesto,MUST,STK_CM,STK_DAB,K06,BRP manifest + snapshot,Baseline registry view,Register service + baseline indexer
+F_CM02,Change Request Workflow (CR/ECR/ECO),Creación triage estados aprobaciones rollback,MUST,STK_CM,"STK_PMO,STK_SE,STK_SAF,STK_CERT,STK_DAB",K04,Registro de cambios,Change workflow UI,Workflow service + approval engine
+F_CM03,Impact Analysis Cross-ATA,Selección ATAs interfaced cálculo impacto,MUST,STK_CM,"STK_SE,STK_SAF,STK_CERT",K04,Matriz de impacto,Impact analysis view,Cross-ATA impact analyzer + coupling matrix
+F_CM04,Gate Enforcement (K04/K06/K10),Reglas bloquear avance si faltan evidencias,MUST,STK_CM,"STK_CERT,STK_SAF,STK_SE,STK_DAB",K04/K06/K10,Checklist + audit trail,Gate enforcement UI,Policy rules service + gate workflow
+F_CM05,CI Gate Monitor,Vista pipelines por baseline/cambio resultados artefactos,MUST,STK_CM,STK_DAB,K06,Links evidencias reproducibles,CI monitor dashboard,CI integration service + artifact indexer
+F_CM06,Nomenclature & Standards Enforcement,Versionado estándar validación automática PR/CI,MUST,STK_CM,STK_DAB,K01,Report de compliance,Standards manager UI,Nomenclature validator + standards registry
+F_CM07,Audit Trail (Immutable Log),Quién/cuándo/qué cambios aprobaciones excepciones releases,MUST,STK_CM,STK_DAB,K10,Export audit-ready,Audit trail viewer,Audit log service (append-only)
+F_CM08,Release Builder (Baseline Release Package),Ensamblado automatizado release notes lista cambios evidencias,MUST,STK_CM,"STK_PMO,STK_CERT,STK_DAB",K06,BRP package,BRP builder UI,Release builder service + evidence assembler
+F_CM09,Registers Hub,Catálogo registros config items decisiones excepciones,MUST,STK_CM,STK_DAB,All,CSV/JSON snapshot,Registers hub view,Register service + export engine
+F_CM10,Role-based Access Control (RBAC),Permisos por AoR leer/escribir/aprobar/exportar,MUST,STK_CM,STK_DAB,All,Políticas auditables,RBAC admin console,Identity service + entitlement service
+F12,Cross-AoR Handshake Panel,Show interfaces with dependent AoRs,SHOULD,STK_CM,"STK_PMO,STK_SE,STK_SAF,STK_CERT,STK_DAB",All,Interface status matrix,Handshake panel component,Cross-AoR coordination service
+F14,Notification Engine,Event-driven notifications and escalations,SHOULD,STK_CM,STK_DAB,All,Notification logs,Notification center component,Notification service + escalation engine
+F_CM11,Decision Log + Minutes,Captura decisiones rationale impacto links evidencias,SHOULD,STK_CM,"STK_PMO,STK_SE",All,Registro decisiones,Decision log view,Decision registry + evidence linker
+F_CM12,Exception/Deviation Management,Gestión waivers caducidad condiciones evidencias,SHOULD,STK_CM,"STK_SAF,STK_CERT",K04/K06,Log de excepciones,Exception manager UI,Exception workflow + approval tracker
+F_CM13,Interface Pack (ICD Indexer),Indexación ICDs por ATA interfaced estado vs baseline,SHOULD,STK_SE (colab) / STK_CM (portal),STK_DAB,K04,Índice ICD,ICD indexer view,ICD indexer + baseline comparator
+F_CM14,Baseline Diff Viewer,Comparación entre baselines contenido métricas breaking changes,SHOULD,STK_CM,STK_DAB,K06,Delta report,Diff viewer component,Baseline comparator + delta analyzer
+F_CM15,KPI Dashboard (CM/Flow),Lead time cambios tasa rechazo defect escape rework,SHOULD,STK_PMO + STK_CM,STK_DAB,All,KPI pack,KPI dashboard component,KPI computation engine + trend analyzer
+F_CM16,Notification & Escalation Rules,Reglas gate fail aprobación pendiente release emitida,SHOULD,STK_CM,STK_PMO,All,Eventos/alerts,Rules configuration UI,Escalation engine + notification router
+F_CM17,Evidence Checklist Generator,Por tipo cambio qué evidencias requiere SE/SAF/CERT,SHOULD,STK_CERT (contenido) / STK_CM (orquestación),STK_DAB,K04/K06,Evidence checklist,Checklist generator UI,Evidence requirement engine + template service
+F_CM18,Linkage to Coupling Matrix,Conectar cambios dependencias técnicas impact_mode/severity/likelihood,SHOULD,STK_SE + STK_SAF,STK_CM,K04,Risk-aware impact,Coupling matrix view,Coupling analyzer + risk assessor
+F15,Start Task Execution Runner,Execute tasks directly from portal,COULD,STK_CM,STK_DAB,All,Task execution logs,Task runner component,Execution orchestrator
+F_CM19,Kanban por Knot (K01/K04/K06/K10),Tableros WIP swimlanes por AoR aging bloqueos,COULD,STK_PMO + STK_CM,STK_DAB,K01/K04/K06/K10,Board metrics,Knot-specific kanban,Task analytics service
+F_CM20,What-if Baseline Simulation,Simular release candidate riesgos evidencias faltantes,COULD,STK_CM,"STK_SE,STK_SAF,STK_CERT,STK_DAB",K06,Simulation report,Simulation UI,Simulation engine + risk predictor
+F_CM21,Auto-generation Release Notes (curated),Resumen automático PRs commits registros,COULD,STK_CM,STK_DAB,K06,Release notes draft,Release notes generator,NLP service + commit analyzer
+F_CM22,Audit Pack One-click,Plantillas por agencia/contexto QA/AUDIT/CERT bundle,COULD,STK_CERT + STK_CM,STK_DAB,K10,Complete audit pack,One-click export UI,Audit pack assembler + template engine
+F_CM23,Portfolio/Program Views,Vista ejecutiva baseline maturity readiness riesgo acumulado,COULD,STK_PMO,"STK_CM,STK_SAF,STK_CERT",All,Executive report,Portfolio dashboard,Portfolio aggregator + risk rollup
+F19,Auto-merge / Auto-signoff,Automated approval without human review,WONT,N/A,N/A,N/A,N/A,N/A,N/A
+F20,Unbounded external chatbots,Uncontrolled external AI tools,WONT,N/A,N/A,N/A,N/A,N/A,N/A
+F_CM24,Edición directa artefactos técnicos ATA,Direct editing of ATA-specific technical artifacts,WONT,N/A,N/A,N/A,Portal referencia y gobierna no sustituye portales ATA,N/A,N/A
+F_CM25,Gestión herramientas externas propietarias,Full management of proprietary external tools,WONT,N/A,N/A,N/A,Integración vía enlaces/API sin replicar funcionalidad,N/A,N/A

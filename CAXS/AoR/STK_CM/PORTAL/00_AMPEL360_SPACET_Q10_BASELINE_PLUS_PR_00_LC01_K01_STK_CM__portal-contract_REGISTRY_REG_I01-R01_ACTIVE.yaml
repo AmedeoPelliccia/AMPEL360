@@ -1,32 +1,154 @@
-# STK_CM Portal Contract
+# STK_CM Portal Contract — ATA 00 Configuration
 
 **AMPEL360 CA360º — Configuration Management Portal Configuration**
+**ATA 00 — GENERAL (Entry Point: STK_CM)**
 
 ---
 
 ## Metadata
 
 - **AoR:** STK_CM (Configuration Management)
+- **ATA Scope:** 00 — GENERAL
 - **Program:** SPACET Q10 BASELINE PLUS
-- **Contract Version:** 1.0.0
+- **Contract Version:** 2.4.0
 - **Maintained By:** cm-team@ampel360.org
-- **Last Updated:** 2025-12-19
+- **Last Updated:** 2025-12-20
 - **Status:** ACTIVE
+- **Context:** PROG_GOV, CM, PMO, DATA_GOV, AUDIT
+- **Knots:** K01 (Standards), K04 (Change Control), K06 (Baseline Releases), K10 (Audits)
+- **Pathway:** Standards → Automation → Baseline releases → Audits → CI
 
 ---
 
-## Contract Definition
+## 1) Portal Contract — ATA 00 (Owner: STK_CM)
+
+### 1.1 What to View (Views)
+
+**Estado del Baseline del programa:**
+- Versión activa, histórico, freeze points, deltas
+- Baseline maturity dashboard with readiness indicators
+
+**Cola de cambios:**
+- CR/ECR/ECO queue with impacto por ATA interfaced
+- Change request workflow with approvals and impact analysis
+
+**Registros maestros:**
+- Nomenclatura, configuración, releases
+- Excepciones/deviations with rationale and approval chain
+- Decisiones y actas with traceability
+
+**Trazabilidad CI/CD:**
+- Ejecuciones, gates, resultados de validación
+- Artefactos generados con hashes y links
+
+**Panel de interfaces (cross-ATA):**
+- Dependencias y acoplamientos relevantes al baseline
+- ATA coupling matrix with impact modes
+
+### 1.2 Communication (Cross-AoR Dependencies)
+
+**STK_PMO:** Planificación, hitos, reporting, priorización
+**STK_SE:** Coherencia de requisitos, arquitectura, ICDs
+**STK_SAF:** Impactos safety/security, hazard/risk gating
+**STK_CERT:** Evidencias, compliance packs, sign-offs formales
+**STK_DAB (formerly STK_DATA):** Gobierno del dato, linaje, calidad, esquemas, retention
+
+### 1.3 Outputs (What to Produce)
+
+**Baseline Release Package (BRP):**
+- Release notes, manifiesto de baseline, lista de cambios
+- Evidencias, hashes, signed manifests
+
+**CM Plan / CM Records:**
+- Reglas, flujos de aprobación, criterios de freeze
+- Matrices de impacto
+
+**Program Registers:**
+- Snapshots exportables (CSV/JSON) de cambios, decisiones, evidencias
+
+**Audit Pack:**
+- Trazabilidad completa (quién/cuándo/qué/por qué)
+- Evidencias reproducibles
+
+### 1.4 Tools (Portal Tool Launchpad)
+
+**Change Control Console:** Workflow, aprobación, impact analysis
+**Baseline Builder:** Compose/lock/export baseline
+**Standards & Nomenclature Manager:** Versionado y enforcement
+**CI Gate Monitor:** Validaciones, resultados, logs, artefactos
+**Audit Evidence Assembler:** Paquetizado por contexto CERT/QA/AUDIT
+
+### 1.5 Validation (Sign-offs and Gates)
+
+**Sign-off primario:** STK_CM
+
+**Sign-offs cruzados condicionados (por tipo de cambio):**
+- SE (interfaces/requisitos)
+- SAF (safety/security)
+- CERT (compliance)
+- PMO (plan/hitos)
+- DAB (calidad/linaje)
+
+**Regla base:** Ningún baseline "releaseable" sin pasar K04 → K06 → K10 (según aplicabilidad del cambio)
+
+### 1.6 Publish (Export and Notification Destinations)
+
+**Repositorio baseline:** Tags/releases
+**Registros "read-only":** Para auditoría
+**Paquetes de evidencia:** Para CERT/AUDIT
+**Notificaciones:** A PMO/SE/SAF/CERT/DAB según eventos (aprobado, rechazado, gate fail, release emitida)
+
+---
+
+## 2) UI/Navigation Specification
+
+### Home (ATA 00 Launchpad)
+Tarjetas accionables + estado del baseline
+
+### Left Navigation (Recommended Structure)
+
+1. **K01 Standards** — Nomenclature, policy, templates, enforcement
+2. **K04 Change Control** — CRs, impacto, approvals
+3. **K06 Baseline Releases** — Build, freeze, release notes, manifests
+4. **K10 Audits** — Evidence packs, audit trails, compliance status
+5. **Registers** — Master data: config items, decisions, exceptions
+6. **Interfaces (Cross-ATA)** — Mapa ATA interfaced + coupling
+7. **CI/CD** — Pipelines, validations, artefactos
+8. **Dashboards** — KPIs, trends, burndown, lead time
+
+### UI Patterns (Minimum)
+
+**Filtros globales:**
+- Program / Variant / Block / Phase / Knot / ATA scope / Status
+
+**Vistas:**
+- Tabla + detalle lateral (drill-down sin perder contexto)
+
+**Todo objeto clave con:**
+- ID, owner, estado, evidencias, links a commits/artefactos, auditoría
+
+---
+
+## Contract Definition (YAML)
 
 ```yaml
 contract_metadata:
   aor_id: STK_CM
-  contract_version: 1.0.0
+  ata_scope: "00"  # ATA 00 — GENERAL
+  contract_version: 2.4.0
   program: SPACET
   family: Q10
   variant: BASELINE
   version: PLUS
   maintained_by: cm-team@ampel360.org
-  last_updated: 2025-12-19
+  last_updated: 2025-12-20
+  context_tags:
+    - PROG_GOV
+    - CM
+    - PMO
+    - DATA_GOV
+    - AUDIT
+  pathway: "Standards → Automation → Baseline releases → Audits → CI"
 
 # Default workspace context
 default_context:
@@ -37,7 +159,7 @@ default_context:
       - O-OPS             # Organization policy
     
     ata_chapters:
-      - 00  # GENERAL
+      - 00  # GENERAL (primary for ATA 00 scope)
       - 11  # Placards and Markings
       - 91  # Data Schemas / Ontologies
       - 93  # Traceability Graph
@@ -52,10 +174,10 @@ default_context:
       - LC10  # Industrialization / Serialization / CM
     
     knots:
-      - K01  # Problem Definition
-      - K06  # Verification
-      - K07  # Release
-      - K09  # Baseline Management
+      - K01  # Standards (Problem Definition)
+      - K04  # Change Control Gate
+      - K06  # Baseline Release Gate (Verification)
+      - K10  # Audit Gate
     
     blocks:
       - 00  # GENERAL
@@ -76,6 +198,7 @@ default_context:
       - CAT
       - IDX
       - MANIFEST
+      - BRP  # Baseline Release Package
     
     statuses:
       - ACTIVE
@@ -98,7 +221,50 @@ default_context:
       version: PLUS
       node: "ATA-00"  # General as default
 
-# Feature set (MoSCoW)
+# Cross-AoR Communication Matrix
+cross_aor_dependencies:
+  STK_PMO:
+    purpose: "Planificación, hitos, reporting, priorización"
+    interfaces:
+      - program_planning
+      - milestone_tracking
+      - priority_management
+      - resource_allocation
+  
+  STK_SE:
+    purpose: "Coherencia de requisitos, arquitectura, ICDs"
+    interfaces:
+      - requirements_traceability
+      - architecture_review
+      - icd_management
+      - interface_control
+  
+  STK_SAF:
+    purpose: "Impactos safety/security, hazard/risk gating"
+    interfaces:
+      - safety_impact_analysis
+      - security_review
+      - hazard_assessment
+      - risk_gating
+  
+  STK_CERT:
+    purpose: "Evidencias, compliance packs, sign-offs formales"
+    interfaces:
+      - compliance_evidence
+      - certification_packs
+      - formal_signoffs
+      - authority_deliverables
+  
+  STK_DAB:
+    purpose: "Gobierno del dato, linaje, calidad, esquemas, retention"
+    interfaces:
+      - data_governance
+      - data_lineage
+      - quality_assurance
+      - schema_management
+      - data_retention
+
+# Feature set (MoSCoW) — Enhanced for ATA 00
 features:
   moscow:
     must:
@@ -110,48 +276,99 @@ features:
       - F06  # Gates & Validator Console (emphasized - uniqueness, release protocol)
       - F07  # Evidence Console
       - F08  # Signoff Console
-      # F09 optional for CM (mainly governance tooling)
+      - F09  # Tool Launchpad
+      # Additional MUST features for ATA 00 CM
+      - F_CM01  # Baseline Registry & Manifest
+      - F_CM02  # Change Request Workflow (CR/ECR/ECO)
+      - F_CM03  # Impact Analysis Cross-ATA
+      - F_CM04  # Gate Enforcement (K04/K06/K10)
+      - F_CM05  # CI Gate Monitor
+      - F_CM06  # Nomenclature & Standards Enforcement
+      - F_CM07  # Audit Trail (Immutable Log)
+      - F_CM08  # Release Builder (Baseline Release Package)
+      - F_CM09  # Registers Hub
+      - F_CM10  # Role-based Access Control (RBAC)
     
     should:
       - F12  # Cross-AoR Handshake Panel
       - F14  # Notification Engine
+      # Additional SHOULD features for ATA 00 CM
+      - F_CM11  # Decision Log + Minutes
+      - F_CM12  # Exception/Deviation Management
+      - F_CM13  # Interface Pack (ICD Indexer)
+      - F_CM14  # Baseline Diff Viewer
+      - F_CM15  # KPI Dashboard (CM/Flow)
+      - F_CM16  # Notification & Escalation Rules
+      - F_CM17  # Evidence Checklist Generator
+      - F_CM18  # Linkage to Coupling Matrix
     
     could:
       - F15  # "Start Task" Execution Runner
+      # Additional COULD features for ATA 00 CM
+      - F_CM19  # Kanban por Knot (K01/K04/K06/K10)
+      - F_CM20  # What-if Baseline Simulation
+      - F_CM21  # Auto-generation de Release Notes (curated)
+      - F_CM22  # Audit Pack "One-click"
+      - F_CM23  # Portfolio/Program Views
     
     wont:
       - F19  # Auto-merge / Auto-signoff
       - F20  # Unbounded external chatbots
+      # Additional WON'T for ATA 00 CM
+      - F_CM24  # Edición directa de artefactos técnicos de cada ATA
+      - F_CM25  # Gestión de herramientas externas propietarias
 
   config:
     F02:  # Dashboard configuration
       enabled: true
       settings:
         kpis:
+          - id: baseline_status
+            label: "Baseline Status"
+            source: baseline_registry
+            filter: {aor: STK_CM, status: ACTIVE}
+            description: "Versión activa, histórico, freeze points, deltas"
+          
           - id: pending_baseline_approvals
             label: "Pending Baseline Approvals"
             source: signoff_index
             filter: {aor: STK_CM, type: baseline, status: pending}
+          
+          - id: open_change_requests
+            label: "Open Change Requests (CR/ECR/ECO)"
+            source: task_registry
+            filter: {aor: STK_CM, type: change_request, status: [DRAFT, ACTIVE]}
+            description: "Cola de cambios con impacto por ATA interfaced"
           
           - id: nomenclature_violations
             label: "Nomenclature Violations"
             source: gate_status
             filter: {validator: nomenclature-validator, status: failed}
           
-          - id: release_candidates
-            label: "Release Candidates"
-            source: task_registry
-            filter: {aor: STK_CM, knot: K07, status: ACTIVE}
-          
-          - id: open_change_requests
-            label: "Open Change Requests"
-            source: task_registry
-            filter: {aor: STK_CM, type: change_request, status: [DRAFT, ACTIVE]}
-          
           - id: uniqueness_violations
             label: "Uniqueness Violations"
             source: gate_status
             filter: {validator: uniqueness-validator, status: failed}
+          
+          - id: release_candidates
+            label: "Release Candidates"
+            source: task_registry
+            filter: {aor: STK_CM, knot: K06, status: ACTIVE}
+          
+          - id: ci_gate_failures
+            label: "CI Gate Failures"
+            source: ci_status
+            filter: {status: failed, context: STK_CM}
+          
+          - id: cross_ata_impact_pending
+            label: "Cross-ATA Impact Analysis Pending"
+            source: impact_analysis
+            filter: {status: pending, scope: cross_ata}
+          
+          - id: audit_readiness
+            label: "Audit Readiness Score"
+            source: audit_pack
+            filter: {aor: STK_CM, type: readiness}
         
         refresh_interval: 180  # seconds (more frequent for CM)
     
@@ -159,27 +376,37 @@ features:
       enabled: true
       settings:
         columns:
-          - id: problem_definition
-            label: "Problem Definition"
+          - id: k01_standards
+            label: "K01 — Standards"
             knot_stages: [K01]
+            description: "Nomenclature, policy, templates, enforcement"
           
-          - id: verification
-            label: "Verification"
+          - id: k04_change_control
+            label: "K04 — Change Control"
+            knot_stages: [K04]
+            description: "CRs, impacto, approvals"
+          
+          - id: k06_baseline_releases
+            label: "K06 — Baseline Releases"
             knot_stages: [K06]
+            description: "Build, freeze, release notes, manifests"
           
-          - id: release_preparation
-            label: "Release Preparation"
-            knot_stages: [K07]
-          
-          - id: baseline_management
-            label: "Baseline Management"
-            knot_stages: [K09]
+          - id: k10_audits
+            label: "K10 — Audits"
+            knot_stages: [K10]
+            description: "Evidence packs, audit trails, compliance"
           
           - id: complete
             label: "Released"
             knot_stages: [K07]
+        
+        wip_limits:
+          k01_standards: 5
+          k04_change_control: 10
+          k06_baseline_releases: 3
+          k10_audits: 5
     
-    F06:  # Gates & Validator Console (emphasized)
+    F06:  # Gates & Validator Console (emphasized for CM)
       enabled: true
       settings:
         validators:
@@ -187,47 +414,344 @@ features:
             name: "Nomenclature Validator"
             priority: critical
             blocking: true
+            description: "v6.0 nomenclature compliance"
           
           - id: uniqueness-validator
             name: "Uniqueness Validator (One Official Chain)"
             priority: critical
             blocking: true
+            description: "Ensures one official chain per deliverable"
           
           - id: schema-validator
             name: "Schema Validator"
             priority: high
             blocking: true
+            description: "YAML/JSON schema compliance"
           
           - id: baseline-integrity-validator
             name: "Baseline Integrity Validator"
             priority: critical
             blocking: true
+            description: "Hash verification and dependency closure"
           
           - id: release-protocol-validator
             name: "Release Protocol Validator"
             priority: critical
             blocking: true
+            description: "BRP completeness and sign-off requirements"
+          
+          - id: cross-ata-impact-validator
+            name: "Cross-ATA Impact Validator"
+            priority: high
+            blocking: false
+            description: "Validates impact analysis completeness"
         
         gate_emphasis:
-          - "RC gate: All validators must pass"
-          - "RELEASE gate: Signoffs + validators + baseline integrity"
+          - "K04 gate: Change approved for integration"
+          - "K06 gate: Release candidate validated, BRP releaseable"
+          - "K10 gate: Audit-ready baseline with complete traceability"
+          - "All validators must pass for K06/K10 gates"
     
     F12:  # Cross-AoR Handshake Panel
       enabled: true
       settings:
         show_interfaces:
           - type: "baseline-dependencies"
-            from_aors: ["all"]
+            from_aors: ["STK_PMO", "STK_SE", "STK_SAF", "STK_CERT", "STK_DAB"]
             status_tracking: true
+          
+          - type: "change-impact"
+            from_aors: ["STK_SE", "STK_SAF"]
+            deadline_tracking: true
           
           - type: "release-packs"
             from_aors: ["all"]
             deadline_tracking: true
+          
+          - type: "signoff-requests"
+            from_aors: ["STK_PMO", "STK_SE", "STK_SAF", "STK_CERT", "STK_DAB"]
+            escalation_enabled: true
+    
+    # CM-specific feature configurations
+    F_CM01:  # Baseline Registry & Manifest
+      enabled: true
+      settings:
+        manifest_format: "BRP"
+        include_hashes: true
+        include_refs: true
+        snapshot_frequency: "on_release"
+        export_formats: ["JSON", "CSV", "YAML"]
+    
+    F_CM02:  # Change Request Workflow
+      enabled: true
+      settings:
+        cr_types: ["CR", "ECR", "ECO"]
+        workflow_stages:
+          - "draft"
+          - "triage"
+          - "impact_analysis"
+          - "approval"
+          - "integration"
+          - "closed"
+        approval_matrix:
+          minor: ["STK_CM"]
+          major: ["STK_CM", "STK_PMO"]
+          critical: ["STK_CM", "STK_PMO", "STK_SE", "STK_SAF", "STK_CERT"]
+    
+    F_CM03:  # Impact Analysis Cross-ATA
+      enabled: true
+      settings:
+        ata_scope: "all"
+        impact_dimensions:
+          - "requirements"
+          - "interfaces"
+          - "safety"
+          - "security"
+          - "certification"
+        matrix_output: true
+    
+    F_CM04:  # Gate Enforcement
+      enabled: true
+      settings:
+        gates:
+          K04:
+            name: "Change Control Gate"
+            required_evidences:
+              - "impact_analysis"
+              - "approval_records"
+          K06:
+            name: "Baseline Release Gate"
+            required_evidences:
+              - "ci_validation"
+              - "nomenclature_compliance"
+              - "uniqueness_check"
+              - "brp_manifest"
+          K10:
+            name: "Audit Gate"
+            required_evidences:
+              - "audit_trail"
+              - "evidence_pack"
+              - "signoff_records"
+        blocking: true
+    
+    F_CM05:  # CI Gate Monitor
+      enabled: true
+      settings:
+        monitored_pipelines:
+          - "nomenclature_validation"
+          - "schema_validation"
+          - "baseline_integrity"
+          - "release_protocol"
+        realtime_updates: true
+        alert_on_failure: true
+    
+    F_CM06:  # Nomenclature & Standards Enforcement
+      enabled: true
+      settings:
+        standard_version: "v6.0"
+        auto_validate_on_pr: true
+        blocking_on_violation: true
+    
+    F_CM07:  # Audit Trail
+      enabled: true
+      settings:
+        immutable: true
+        event_types:
+          - "change_approved"
+          - "change_rejected"
+          - "baseline_released"
+          - "exception_granted"
+          - "signoff_recorded"
+        retention_period: "7_years"
+        export_format: "append_only_log"
+    
+    F_CM08:  # Release Builder (BRP)
+      enabled: true
+      settings:
+        components:
+          - "release_notes"
+          - "change_manifest"
+          - "evidence_bundle"
+          - "hash_registry"
+          - "signature_block"
+        automated_assembly: true
+        template_driven: true
+    
+    F_CM09:  # Registers Hub
+      enabled: true
+      settings:
+        registers:
+          - "config_items"
+          - "decisions"
+          - "exceptions"
+          - "baselines"
+          - "changes"
+        export_formats: ["CSV", "JSON"]
+        snapshot_on_release: true
+    
+    F_CM10:  # RBAC
+      enabled: true
+      settings:
+        roles:
+          - role: "cm_lead"
+            permissions: ["read", "write", "approve", "export", "release"]
+          - role: "cm_engineer"
+            permissions: ["read", "write", "export"]
+          - role: "reviewer"
+            permissions: ["read", "comment"]
+          - role: "auditor"
+            permissions: ["read", "export"]
+        audit_access: true
 
-# Tool Launchpad (TALF-aware)
+# Tool Launchpad (TALF-aware) — ATA 00 CM Tools
 tool_launchpad:
   tiles:
-    # Git/VCS Interface
+    # Change Control Console
+    - tool_id: change-control-console
+      tool_name: "Change Control Console"
+      version: "2024.1"
+      tool_class: "cm"
+      owner_aor: STK_CM
+      vendor: "internal"
+      description: "Workflow, aprobación, impact analysis for CR/ECR/ECO"
+      
+      launch:
+        channel: web
+        deep_link: "https://change.ampel360.org/portal?aor=STK_CM&ata=00"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_CM"]
+        datasets: ["change-requests", "impact-analysis"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["cm-engineers", "cm-leads", "ccb-members"]
+      
+      audit:
+        events: [launch, change_create, change_approve, change_reject, export]
+    
+    # Baseline Builder
+    - tool_id: baseline-builder
+      tool_name: "Baseline Builder"
+      version: "2024.1"
+      tool_class: "cm"
+      owner_aor: STK_CM
+      vendor: "internal"
+      description: "Compose/lock/export baseline"
+      
+      launch:
+        channel: web
+        deep_link: "https://baseline.ampel360.org/builder?aor=STK_CM"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS"]
+        datasets: ["baseline-snapshots", "baseline-manifests"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["cm-engineers", "cm-leads"]
+      
+      audit:
+        events: [launch, baseline_compose, baseline_lock, baseline_export, baseline_release]
+    
+    # Standards & Nomenclature Manager
+    - tool_id: standards-nomenclature-manager
+      tool_name: "Standards & Nomenclature Manager"
+      version: "6.0"
+      tool_class: "governance"
+      owner_aor: STK_CM
+      vendor: "internal"
+      description: "Versionado y enforcement de nomenclatura v6.0"
+      
+      launch:
+        channel: web
+        deep_link: "https://standards.ampel360.org/manager?aor=STK_CM"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS"]
+        datasets: ["nomenclature-registry", "standards-catalog"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["cm-engineers", "cm-leads", "all-engineers"]
+      
+      audit:
+        events: [launch, standard_update, validation_run, export]
+    
+    # CI Gate Monitor
+    - tool_id: ci-gate-monitor
+      tool_name: "CI Gate Monitor"
+      version: "latest"
+      tool_class: "ci"
+      owner_aor: STK_CM
+      vendor: "internal"
+      description: "Validaciones, resultados, logs, artefactos de CI/CD"
+      
+      launch:
+        channel: web
+        deep_link: "https://ci.ampel360.org/gates?aor=STK_CM"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS"]
+        datasets: ["ci-results", "validation-logs", "gate-status"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["cm-engineers", "developers", "all-engineers"]
+      
+      audit:
+        events: [launch, gate_trigger, export]
+    
+    # Audit Evidence Assembler
+    - tool_id: audit-evidence-assembler
+      tool_name: "Audit Evidence Assembler"
+      version: "2024.1"
+      tool_class: "audit"
+      owner_aor: STK_CM
+      vendor: "internal"
+      description: "Paquetizado por contexto CERT/QA/AUDIT"
+      
+      launch:
+        channel: web
+        deep_link: "https://audit.ampel360.org/assembler?aor=STK_CM"
+      
+      workspace_bindings:
+        repo_nodes: ["CAXS/AoR/STK_CM"]
+        datasets: ["evidence-packs", "audit-trails", "signoff-records"]
+      
+      licensing:
+        model: unlimited
+      
+      preflight:
+        checks: [sso_session, entitlement]
+        requirements:
+          entitlement:
+            groups: ["cm-leads", "cert-engineers", "auditors"]
+      
+      audit:
+        events: [launch, pack_create, pack_export, pack_sign]
+    
+    # Git Portal
     - tool_id: git-portal
       tool_name: "Git Portal"
       version: "latest"
@@ -253,34 +777,6 @@ tool_launchpad:
       
       audit:
         events: [launch]
-    
-    # Baseline Manager
-    - tool_id: baseline-manager
-      tool_name: "Baseline Manager"
-      version: "2024.1"
-      tool_class: "cm"
-      owner_aor: STK_CM
-      vendor: "internal"
-      
-      launch:
-        channel: web
-        deep_link: "https://baseline.ampel360.org/launch"
-      
-      workspace_bindings:
-        repo_nodes: ["CAXS"]
-        datasets: ["baseline-snapshots"]
-      
-      licensing:
-        model: unlimited
-      
-      preflight:
-        checks: [sso_session, entitlement]
-        requirements:
-          entitlement:
-            groups: ["cm-engineers"]
-      
-      audit:
-        events: [launch, export]
     
     # Change Control Board Portal
     - tool_id: ccb-portal
@@ -309,14 +805,27 @@ tool_launchpad:
       audit:
         events: [launch, export]
 
-# Execution surfaces
+# Execution surfaces — ATA 00 Specific
 execution:
   kanban:
     enabled: true
     default_filters:
       aor: STK_CM
+      ata: "00"
       lc_phase: [LC01, LC06, LC10]
+      knot: [K01, K04, K06, K10]
       status: [ACTIVE, RELEASED]
+    
+    views:
+      - name: "By Knot"
+        swimlanes: "knot"
+        columns: "status"
+      - name: "By ATA"
+        swimlanes: "ata_chapter"
+        columns: "knot"
+      - name: "By Cross-AoR"
+        swimlanes: "dependent_aor"
+        columns: "status"
   
   task_wizard:
     enabled: true
@@ -326,24 +835,141 @@ execution:
       - "cm-release-pack"
       - "cm-nomenclature-update"
       - "cm-schema-definition"
+      - "cm-decision-record"
+      - "cm-exception-request"
+      - "cm-impact-analysis"
+      - "cm-audit-pack"
   
   evidence_console:
     enabled: true
     default_view: index
+    filters:
+      - "by_knot"
+      - "by_gate"
+      - "by_artifact"
+      - "by_signoff"
   
   signoff_console:
     enabled: true
     routing_rules:
       - signoff_type: "baseline-approval"
         target_aor: STK_CM
+        escalation_path: ["cm-lead", "pmo-lead"]
+      
       - signoff_type: "release-approval"
         target_aor: STK_CM
+        requires_multi_aor: true
+        dependent_aors: ["STK_PMO", "STK_SE", "STK_SAF", "STK_CERT"]
+      
       - signoff_type: "change-approval"
         target_aor: STK_CM
+        conditional_aors:
+          major: ["STK_PMO"]
+          critical: ["STK_PMO", "STK_SE", "STK_SAF", "STK_CERT"]
+      
+      - signoff_type: "exception-approval"
+        target_aor: STK_CM
+        requires_rationale: true
+        audit_level: high
 
-# Assistant + communications
-assistant:
-  enabled: false  # CM prefers manual control for governance
+# Portal-aware AI Assistants (Context-aware per AoR)
+assistants:
+  # Primary CM Assistant
+  cm_assistant:
+    enabled: true
+    aor: STK_CM
+    capabilities:
+      - "triage_changes"
+      - "suggest_approval_routing"
+      - "prepare_brp"
+      - "check_nomenclature"
+      - "explain_policies"
+      - "identify_cross_ata_impact"
+      - "generate_audit_trail_summary"
+      - "suggest_evidence_requirements"
+    
+    constraints:
+      cannot_bypass_gates: true
+      cannot_invent_aors: true
+      must_cite_sources: true
+      must_link_ssot: true
+      requires_baseline_context: true
+    
+    audit_trail: true
+    prompting_context:
+      - "Operate within ATA 00 — GENERAL scope"
+      - "Focus on configuration management, baselines, and change control"
+      - "Apply v6.0 nomenclature standard"
+      - "Reference K01/K04/K06/K10 knot framework"
+      - "Ensure cross-AoR dependency awareness"
+  
+  # Collaborative Assistants (Cross-AoR)
+  pmo_assistant:
+    enabled: true
+    aor: STK_PMO
+    capabilities:
+      - "prioritize_changes"
+      - "estimate_lead_time"
+      - "alert_blockers"
+      - "generate_reports"
+      - "track_milestones"
+    
+    context_sharing: true
+    audit_trail: true
+  
+  se_assistant:
+    enabled: true
+    aor: STK_SE
+    capabilities:
+      - "analyze_interface_impact"
+      - "check_icd_coherence"
+      - "assess_requirements_impact"
+      - "identify_cross_ata_dependencies"
+    
+    context_sharing: true
+    audit_trail: true
+  
+  saf_assistant:
+    enabled: true
+    aor: STK_SAF
+    capabilities:
+      - "identify_safety_implications"
+      - "suggest_safety_evidences"
+      - "assess_security_impact"
+      - "check_hazard_controls"
+    
+    context_sharing: true
+    audit_trail: true
+  
+  cert_assistant:
+    enabled: true
+    aor: STK_CERT
+    capabilities:
+      - "generate_compliance_checklist"
+      - "structure_evidence_pack"
+      - "prepare_audit_documentation"
+      - "verify_authority_requirements"
+    
+    context_sharing: true
+    audit_trail: true
+  
+  dab_assistant:
+    enabled: true
+    aor: STK_DAB
+    capabilities:
+      - "check_data_lineage"
+      - "validate_data_quality"
+      - "verify_schema_consistency"
+      - "assess_retention_compliance"
+    
+    context_sharing: true
+    audit_trail: true
+  
+  assistant_coordination:
+    enabled: true
+    cross_aor_handoffs: true
+    shared_context_baseline: true
+    audit_recommendations: true
 
 communications:
   threads:
@@ -353,9 +979,75 @@ communications:
       - task
       - signoff
       - decision
+      - baseline
+      - change_request
+      - audit_item
+  
+  notification_channels:
+    - portal
+    - email
+    - webhook
+  
+  escalation_rules:
+    enabled: true
+    timeout_policies:
+      signoff_pending: "PT48H"
+      gate_failure: "PT24H"
+      blocker_unresolved: "PT72H"
 
-# Backend bindings
+# Backend bindings — ATA 00 Specific Services
 backend:
+  # Core CM Services
+  register_service:
+    enabled: true
+    functions:
+      - "baseline_registry"
+      - "change_registry"
+      - "decision_registry"
+      - "exception_registry"
+      - "config_item_registry"
+    export_formats: ["JSON", "CSV", "YAML"]
+    snapshot_api: true
+  
+  workflow_service:
+    enabled: true
+    functions:
+      - "change_workflow"
+      - "approval_workflow"
+      - "gate_workflow"
+      - "escalation_workflow"
+    state_machine: true
+    audit_log: immutable
+  
+  evidence_service:
+    enabled: true
+    functions:
+      - "evidence_storage"
+      - "hash_verification"
+      - "artifact_linking"
+      - "ci_integration"
+    retention: "7_years"
+  
+  policy_rules_service:
+    enabled: true
+    functions:
+      - "nomenclature_validation"
+      - "uniqueness_validation"
+      - "gate_criteria"
+      - "blocking_rules"
+    version_controlled: true
+  
+  audit_log_service:
+    enabled: true
+    functions:
+      - "event_sourcing"
+      - "append_only_log"
+      - "query_api"
+      - "export_api"
+    immutable: true
+    retention: "permanent"
+  
+  # Validators
   validators:
     - nomenclature-validator
     - uniqueness-validator
@@ -363,32 +1055,608 @@ backend:
     - baseline-integrity-validator
     - release-protocol-validator
     - identifier-validator
+    - cross-ata-impact-validator
   
+  # Indexers
   indexers:
     - artifact-indexer
     - baseline-indexer
     - change-indexer
+    - evidence-indexer
+    - signoff-indexer
+    - decision-indexer
   
+  # Trace Services
   trace_services:
     - traceability-graph
     - baseline-dependency-analyzer
+    - cross-ata-impact-analyzer
+    - change-propagation-tracker
   
+  # Notification Rules
   notification_rules:
     - event: gate_failure
       channels: [portal, email]
       recipients: ["cm-leads", "artifact-owner"]
+      severity: high
     
     - event: signoff_request
       channels: [portal, email]
       recipients: ["aor-specific"]
+      severity: medium
     
     - event: new_blocker
       channels: [portal, email]
       recipients: ["cm-leads", "task-owner"]
+      severity: high
     
     - event: evidence_gap
       channels: [portal]
       recipients: ["task-owner"]
+      severity: medium
+    
+    - event: baseline_released
+      channels: [portal, email, webhook]
+      recipients: ["all-stakeholders"]
+      severity: info
+    
+    - event: change_approved
+      channels: [portal, email]
+      recipients: ["change-owner", "dependent-aors"]
+      severity: info
+    
+    - event: change_rejected
+      channels: [portal, email]
+      recipients: ["change-owner"]
+      severity: medium
+    
+    - event: exception_granted
+      channels: [portal, email]
+      recipients: ["cm-leads", "cert-team"]
+      severity: high
+    
+    - event: audit_pack_ready
+      channels: [portal, email]
+      recipients: ["cm-leads", "auditors"]
+      severity: info
+
+# Knot Operational Mapping (K01/K04/K06/K10)
+knot_mapping:
+  K01:
+    name: "Standards"
+    description: "Nomenclature, policies, templates, rules"
+    purpose: "Definir y mantener el sistema normativo del programa"
+    
+    scope:
+      - "Nomenclature: campos, vocabularios, patrones, reglas de naming, versionado"
+      - "Policies: gobierno CM, change control, baseline/release discipline, auditability"
+      - "Templates: plantillas de artefactos, front-matter, registros, checklists, manifests"
+    
+    objects:
+      - "standard_release"
+      - "nomenclature_policy"
+      - "cm_plan"
+      - "enforcement_rules"
+      - "standards_index"
+      - "schema_registry"
+      - "template_registry"
+      - "rulebook"
+    
+    outputs:
+      - type: "Standard Release"
+        description: "Paquete versionado del estándar (Nomenclature vX.Y + Policy pack)"
+        includes:
+          - "changelog"
+          - "compatibility_notes"
+          - "migration_guide"
+      
+      - type: "Enforcement Rules"
+        description: "Reglas ejecutables para CI/hooks/validadores"
+        includes:
+          - "naming_validation"
+          - "schema_validation"
+          - "controlled_vocabulary_validation"
+          - "severity_rules"
+          - "exception_waivers"
+    
+    gates:
+      K01-G1:
+        name: "Nomenclature Validation"
+        priority: "MUST"
+        objective: "Asegurar que todo artefacto que entra al baseline cumple la convención"
+        checks:
+          - "Patrón de nombre fichero/carpeta (regex + campos obligatorios)"
+          - "Vocabularios permitidos (ATA, AoR, Knot, Phase, Category, Type, Status)"
+          - "Coherencia nombre ↔ front-matter"
+          - "Unicidad / colisiones (IDs, rutas, aliases)"
+        output_format:
+          machine_readable: "JSON"
+          human_readable: "MD"
+          fields:
+            - "PASS/FAIL"
+            - "violaciones: [id, archivo, regla, severidad, fix_hint]"
+      
+      K01-G2:
+        name: "Schema Validation"
+        priority: "MUST"
+        objective: "Asegurar integridad estructural y gobernanza del dato"
+        checks:
+          - "Validación contra esquemas versionados (JSON Schema / YAML / CSV)"
+          - "Campos obligatorios, tipos, enums, rangos, formatos"
+          - "Reglas de compatibilidad (no breaking fields sin bump mayor)"
+          - "Validación de referencias (IDs existentes, links internos, registers)"
+        output_format:
+          machine_readable: "JSON"
+          evidence:
+            - "schema_version_used"
+            - "schema_checksum"
+            - "results_per_file"
+    
+    minimum_artifacts:
+      - name: "Standards Index"
+        description: "Qué está vigente y dónde vive"
+      - name: "Schema Registry"
+        description: "Lista de esquemas + versión + aplicabilidad"
+      - name: "Template Registry"
+        description: "Plantillas oficiales + versión + uso"
+      - name: "Rulebook"
+        description: "Reglas y severidades + política de excepciones"
+    
+    definition_of_done:
+      criteria:
+        - "Versionado (tag/release) y publicado en canal estándar del repo"
+        - "Enforcement rules listas para ejecutar en CI"
+        - "Gate K01-G1 y K01-G2 pasan con set de pruebas mínimo (fixtures)"
+        - "Incluye changelog y guía de migración si hay cambios breaking"
+    
+    owner: STK_CM
+    workflow_stages:
+      - "draft"
+      - "review"
+      - "approve"
+      - "release"
+  
+  K04:
+    name: "Change Control Gate"
+    description: "CR with impact + approvals required"
+    purpose: "Aprobar cambios para su integración controlada en el baseline del programa"
+    
+    guarantees:
+      - "Trazabilidad de decisión"
+      - "Análisis de impacto completo"
+      - "Aprobaciones y clearance cross-ATA conforme a dependencias"
+    
+    objects:
+      - "change_request"
+      - "impact_analysis"
+      - "approval_records"
+      - "clearance_matrix"
+      - "evidence_plan"
+      - "rollback_plan"
+    
+    outputs:
+      - type: "CR 'Approved for integration'"
+        description: "Estado formal del CR que habilita integración"
+        enables:
+          - "Creación/actualización de branch de integración"
+          - "Ejecución de gates posteriores (K06/K10) según aplique"
+          - "Inclusión en release candidate"
+    
+    gates:
+      K04-G1:
+        name: "Impact Analysis Complete"
+        priority: "MUST"
+        objective: "No se integra nada sin entender impacto y evidencias requeridas"
+        minimum_content:
+          - name: "Scope"
+            description: "Artefactos afectados (paths/IDs), tipo de cambio"
+          - name: "Cross-ATA impact"
+            description: "Lista de ATAs touched y ATA interfaced afectados (incluye acoplamientos)"
+          - name: "Impact mode"
+            description: "Requirements/design/interface/verification/data governance"
+          - name: "Risk screen"
+            description: "Severidad/probabilidad preliminar + si dispara SAF/CERT"
+          - name: "Evidence plan"
+            description: "Qué evidencias serán necesarias para K06/K10 (por AoR)"
+          - name: "Rollback plan"
+            description: "Condición de reversión y owner"
+        output_format:
+          machine_readable: "JSON"
+          human_readable: "MD"
+          linked_to: "CR"
+      
+      K04-G2:
+        name: "Approval Obtained"
+        priority: "MUST"
+        objective: "Asegurar decisión y accountability"
+        approval_rules:
+          always_required:
+            - "STK_CM"
+          conditional:
+            - condition: "Afecta requisitos/arquitectura/ICDs/interfaces"
+              approver: "STK_SE"
+            - condition: "Afecta safety/security o cambia assumptions de riesgo"
+              approver: "STK_SAF"
+            - condition: "Afecta compliance/evidencia/cert baselines"
+              approver: "STK_CERT"
+            - condition: "Impacta hitos/plan/recursos (impacto programático)"
+              approver: "STK_PMO"
+            - condition: "Cambia esquemas, registros, linaje, retención, calidad"
+              approver: "STK_DAB"
+        approval_requirements:
+          - "Firma/registro auditable (quién/cuándo/rol/condición)"
+          - "Comentario obligatorio si hay desviación o excepción"
+        output_format:
+          type: "Approval record (append-only)"
+          updates: "Estado CR actualizado"
+      
+      K04-G3:
+        name: "Cross-ATA Clearance"
+        priority: "MUST"
+        objective: "Evitar integraciones que rompan coherencia entre ATAs o sus interfaces"
+        minimum_checks:
+          - "Interfaces cross-ATA afectadas están identificadas"
+          - "Existe owner responsable por cada interfaz afectada (SE/CM según tipo)"
+          - "No hay open blockers en ATAs impactados (pendencias críticas, gate fail previo)"
+          - "Impacto indirecto explícito como cleared/acknowledged"
+        output_format:
+          type: "Clearance matrix por ATA"
+          values: ["Cleared", "Cleared-with-conditions", "Blocked"]
+          includes: "Rationale"
+    
+    minimum_evidence:
+      entry_criteria:
+        - "CR con clasificación y alcance"
+        - "Impact analysis inicial + lista ATA interfaced"
+        - "Lista de aprobadores requerida (derivada del impacto)"
+      exit_criteria:
+        - "Impact report final + clearance matrix"
+        - "Approval records completos"
+        - "CR en estado 'Approved for integration'"
+        - "Listo para K06 cuando aplique"
+    
+    definition_of_done:
+      criteria:
+        - "K04-G1 PASS (impacto completo y consistente)"
+        - "K04-G2 PASS (aprobaciones exigibles obtenidas)"
+        - "K04-G3 PASS (clearance cross-ATA no bloqueante)"
+        - "Trazabilidad auditable (IDs, timestamps, owners, evidencias enlazadas)"
+    
+    owner: STK_CM
+    workflow_stages:
+      - "triage"
+      - "impact_analysis"
+      - "approval"
+      - "integration"
+  
+  K06:
+    name: "Baseline Release Gate"
+    description: "Release candidate, evidencias CI, manifiesto"
+    purpose: "Validar y congelar (freeze) un release candidate del baseline del programa"
+    
+    guarantees:
+      - "Cumple estándares (nomenclatura y reglas)"
+      - "Es consistente y reproducible"
+      - "Está validado por CI"
+      - "Queda listo para empaquetado y distribución controlada"
+    
+    objects:
+      - "release_candidate"
+      - "ci_evidences"
+      - "brp_manifest"
+      - "validation_results"
+      - "nomenclature_report"
+      - "uniqueness_report"
+      - "integrity_report"
+      - "ci_summary"
+      - "release_notes"
+      - "freeze_reference"
+    
+    outputs:
+      - type: "BRP 'Releaseable' (Baseline Release Package)"
+        description: "Paquete formal de release candidate"
+        includes:
+          - "Manifest del baseline (contenido, versiones, hashes)"
+          - "Release notes"
+          - "Evidencias de validación (reports)"
+          - "Estado frozen (immutable tag / lock reference)"
+    
+    gates:
+      K06-G1:
+        name: "Nomenclature Compliance"
+        priority: "MUST"
+        objective: "Asegurar que el release candidate cumple la convención de nombres y vocabularios"
+        minimum_checks:
+          - "Ejecución completa del validador de nomenclatura sobre el scope del baseline"
+          - "Cero violaciones FAIL; violaciones WARN solo si están justificadas y aceptadas por política (waiver trazado)"
+          - "Coherencia nombre ↔ metadata interna (front-matter) donde aplique"
+        output_format:
+          files:
+            - "nomenclature_report.json"
+            - "nomenclature_report.md"
+          linked_to: "BRP"
+      
+      K06-G2:
+        name: "Uniqueness Check"
+        priority: "MUST"
+        objective: "Prevenir colisiones de identidad en el baseline"
+        minimum_checks:
+          - "IDs únicos (document_id / asset_id / registry keys) dentro del baseline"
+          - "Rutas y nombres únicos (sin duplicados por case-sensitivity)"
+          - "Hashes/anchors: no duplicados inesperados (dedup controlado) y ausencia de ghost references"
+          - "Verificación de no-reutilización de identificadores retirados si aplica política"
+        output_format:
+          files:
+            - "uniqueness_report.json"
+          includes: "Lista de colisiones (si existen) con remedios propuestos"
+      
+      K06-G3:
+        name: "Baseline Integrity"
+        priority: "MUST"
+        objective: "Asegurar integridad interna y trazabilidad"
+        minimum_checks:
+          completeness: "Baseline incluye todos los artefactos obligatorios (manifests, registers, indexes)"
+          referential_integrity: "Enlaces internos, referencias a registros, cross-links resolubles (sin dangling refs)"
+          compatibility: "Consistencia de versiones (estándar vs artefactos), compatibilidad de esquemas (sin breaking no declarado)"
+          reproducibility: "BRP puede reconstruirse desde commits/tags referenciados (build determinista)"
+        output_format:
+          files:
+            - "integrity_report.json"
+            - "baseline_manifest.json (firmado con hash)"
+          evidence: "Baseline manifest como evidencia principal"
+      
+      K06-G4:
+        name: "CI Validation Pass"
+        priority: "MUST"
+        objective: "Asegurar que el release candidate pasa el conjunto oficial de pipelines"
+        minimum_checks:
+          - "Todos los pipelines requeridos en scope → PASS (sin jobs en rojo)"
+          - "Artefactos CI adjuntos al BRP (logs resumidos, reports, outputs)"
+          - "Si hubo retries, deben quedar registrados con rationale (para auditoría)"
+        output_format:
+          files:
+            - "ci_summary.json"
+          includes: "Enlaces a runs + bundle de reports"
+    
+    freeze_locking:
+      description: "Acción de cierre de K06 tras PASS en todos los gates"
+      actions:
+        - "Crear Freeze Reference (tag/release candidate ID)"
+        - "Publicar BRP 'Releaseable'"
+      brp_contents:
+        - "Manifest + checksums"
+        - "Reports de gates"
+        - "Release notes"
+        - "Immutability statement (qué se congeló y bajo qué reglas)"
+    
+    minimum_evidence:
+      brp_releaseable_includes:
+        - "baseline_manifest.json (contenido, versiones, hashes, scope)"
+        - "nomenclature_report.json|md"
+        - "uniqueness_report.json"
+        - "integrity_report.json"
+        - "ci_summary.json + referencias a ejecuciones CI"
+        - "release_notes.md (derivado de CRs integrados)"
+    
+    definition_of_done:
+      criteria:
+        - "K06-G1 PASS (nomenclatura)"
+        - "K06-G2 PASS (unicidad)"
+        - "K06-G3 PASS (integridad)"
+        - "K06-G4 PASS (CI)"
+        - "Existe freeze reference auditable que fija el contenido"
+    
+    owner: STK_CM
+    workflow_stages:
+      - "candidate_build"
+      - "validation"
+      - "freeze"
+      - "release"
+  
+  K10:
+    name: "Audit Gate"
+    description: "Audit pack, trazabilidad completa, sign-offs CERT"
+    purpose: "Preparar un baseline audit-ready"
+    
+    guarantees:
+      - "La trazabilidad end-to-end está completa"
+      - "La evidencia está cerrada (closure) y empaquetada"
+      - "Los sign-offs requeridos están obtenidos y registrados"
+      - "Existe clearance CERT para uso ante auditoría interna/externa"
+    
+    objects:
+      - "audit_pack"
+      - "audit_trail"
+      - "signoff_records"
+      - "evidence_bundle"
+      - "traceability_matrix"
+      - "evidence_index"
+      - "signoff_registry"
+      - "cert_clearance_record"
+    
+    outputs:
+      - type: "'Audit-ready baseline' + export"
+        description: "Baseline con estado audit-ready (no ambiguo, no provisional)"
+        includes:
+          - "Export bundle (paquete de auditoría) listo para entrega/inspección"
+          - "Evidencia, registros, manifests, reportes de gates, y mapa de trazabilidad"
+    
+    gates:
+      K10-G1:
+        name: "Traceability Complete"
+        priority: "MUST"
+        objective: "Demostrar que el baseline es explicable y verificable"
+        minimum_checks:
+          traceability_map:
+            description: "Mapa de trazabilidad completo"
+            from: "CRs aprobados (K04)"
+            through: "Artefactos modificados → validaciones CI (K06)"
+            to: "Baseline manifest"
+          references:
+            description: "Referencias resolubles y consistentes"
+            includes:
+              - "IDs, rutas, commits/tags"
+              - "Versiones de estándares/esquemas"
+              - "Artefactos CI"
+          cross_ata_coverage:
+            description: "Cobertura de dependencias cross-ATA"
+            requirement: "Para ATAs impactados/interfaced: evidencias y clearance enlazadas (sin dangling approvals)"
+        output_format:
+          files:
+            - "traceability_matrix.(json|csv)"
+            - "traceability_summary.md (con links verificables)"
+      
+      K10-G2:
+        name: "Evidence Closure"
+        priority: "MUST"
+        objective: "Asegurar que no quedan open loops de evidencia"
+        minimum_checks:
+          evidence_plan_compliance:
+            description: "Todas las evidencias definidas en el evidence plan (derivado de K04) están"
+            requirements:
+              - "Presentes"
+              - "Versionadas"
+              - "Con hash/identidad"
+              - "Referenciadas desde manifest y/o registros"
+          no_pending_evidence:
+            description: "No existen evidencias draft, TBD o pending en el scope del release"
+          gate_reports_included:
+            description: "Reports de gates relevantes (K01/K06/CI) están incluidos como evidencia primaria"
+        output_format:
+          files:
+            - "evidence_index.json (inventario)"
+            - "evidence_closure_report.md"
+      
+      K10-G3:
+        name: "Signoff Obtained"
+        priority: "MUST"
+        objective: "Asegurar decisión formal y accountability para auditoría"
+        minimum_checks:
+          required_signoffs:
+            description: "Sign-offs requeridos obtenidos"
+            always_required:
+              - "STK_CM (owner primario del baseline)"
+            conditional_by_scope:
+              - condition: "Si hay cambios K04 relevantes"
+                approvers: ["Approvers correspondientes de K04"]
+              - condition: "Si baseline toca safety/security"
+                approvers: ["STK_SAF"]
+              - condition: "Si baseline toca compliance/cert"
+                approvers: ["STK_CERT"]
+          signoff_records:
+            description: "Registros formales con firma/timestamp/rol"
+            format: "Append-only"
+          no_open_objections:
+            description: "No existen objeciones no resueltas o bloqueantes"
+        output_format:
+          files:
+            - "signoff_registry.json"
+            - "signoff_summary.md"
+      
+      K10-G4:
+        name: "CERT Clearance"
+        priority: "MUST"
+        objective: "Autorización formal de CERT para uso en auditoría"
+        minimum_checks:
+          cert_review_complete:
+            description: "STK_CERT ha revisado el audit pack"
+          compliance_verified:
+            description: "Compliance con estándares aplicables verificado"
+          authority_readiness:
+            description: "Pack apto para presentación ante autoridad externa (si aplica)"
+          clearance_conditions:
+            description: "Si hay condiciones/limitaciones, deben estar explícitas y trazadas"
+        output_format:
+          files:
+            - "cert_clearance_record.json"
+            - "cert_clearance_statement.md"
+    
+    audit_pack_assembly:
+      description: "Ensamblado del export bundle una vez PASS en todos los gates"
+      contents:
+        - "Traceability matrix + summary"
+        - "Evidence index + closure report"
+        - "Signoff registry + summary"
+        - "CERT clearance record + statement"
+        - "Baseline manifest (de K06)"
+        - "Gate reports (K01/K04/K06/K10)"
+        - "Release notes"
+        - "README explicativo (navegación del pack)"
+      packaging:
+        - "Signed bundle (hash + signature STK_CM + STK_CERT)"
+        - "Immutable reference (tag/commit del pack)"
+        - "Metadata de generación (timestamp, tooling version, generator)"
+    
+    minimum_evidence:
+      audit_ready_baseline_includes:
+        - "traceability_matrix.(json|csv)"
+        - "traceability_summary.md"
+        - "evidence_index.json"
+        - "evidence_closure_report.md"
+        - "signoff_registry.json"
+        - "signoff_summary.md"
+        - "cert_clearance_record.json"
+        - "cert_clearance_statement.md"
+        - "baseline_manifest.json (de K06)"
+        - "gate_reports/ (K01, K04, K06, K10)"
+        - "release_notes.md"
+        - "audit_pack_README.md"
+    
+    definition_of_done:
+      criteria:
+        - "K10-G1 PASS (trazabilidad completa)"
+        - "K10-G2 PASS (evidencia cerrada)"
+        - "K10-G3 PASS (sign-offs obtenidos)"
+        - "K10-G4 PASS (CERT clearance)"
+        - "Export bundle (audit pack) generado, firmado y publicado"
+        - "Baseline marcado como audit-ready con referencia inmutable"
+    
+    owner: STK_CM
+    dependent_aors: ["STK_CERT"]
+    workflow_stages:
+      - "evidence_assembly"
+      - "traceability_check"
+      - "cert_review"
+      - "audit_ready"
+
+# Publishing Configuration
+publishing:
+  destinations:
+    - type: "repository_baseline"
+      location: "git_tags_releases"
+      format: "immutable_tag"
+      access: "read_all"
+    
+    - type: "registry_readonly"
+      location: "audit_registry"
+      format: "append_only"
+      access: "auditors_only"
+    
+    - type: "evidence_packs"
+      location: "evidence_store"
+      format: "signed_bundle"
+      access: "cert_audit_teams"
+    
+    - type: "notification_feed"
+      channels: ["portal", "email", "webhook"]
+      events:
+        - "baseline_released"
+        - "change_approved"
+        - "change_rejected"
+        - "gate_failure"
+        - "audit_pack_ready"
+  
+  export_formats:
+    - "JSON"
+    - "CSV"
+    - "YAML"
+    - "PDF" # for audit packs
+  
+  signing:
+    enabled: true
+    algorithm: "SHA256-RSA"
+    key_owner: STK_CM
+    verification_required: true
 ```
 
 ---
@@ -398,6 +1666,11 @@ backend:
 | Revision | Date | Author | Changes |
 |----------|------|--------|---------|
 | 1.0.0 | 2025-12-19 | STK_CM | Initial contract |
+| 2.0.0 | 2025-12-20 | STK_CM | Enhanced for ATA 00 scope with comprehensive portal contract specification including: Views, Communication matrix, Outputs, Tools, Validation, Publishing, MoSCoW backlog (39 features), Portal-aware AI Assistants (6 assistants), Knot mapping (K01/K04/K06/K10), Backend service integrations |
+| 2.1.0 | 2025-12-20 | STK_CM | Formalized K01 Standards as operational contract block with detailed gate specifications (K01-G1 Nomenclature Validation, K01-G2 Schema Validation), minimum artifacts, and Definition of Done criteria |
+| 2.2.0 | 2025-12-20 | STK_CM | Formalized K04 Change Control Gate as operational contract block with detailed gate specifications (K04-G1 Impact Analysis Complete, K04-G2 Approval Obtained, K04-G3 Cross-ATA Clearance), approval rules, entry/exit criteria, and Definition of Done |
+| 2.3.0 | 2025-12-20 | STK_CM | Formalized K06 Baseline Release Gate as operational contract block with detailed gate specifications (K06-G1 Nomenclature Compliance, K06-G2 Uniqueness Check, K06-G3 Baseline Integrity, K06-G4 CI Validation Pass), freeze/locking process, minimum evidence for BRP, and Definition of Done |
+| 2.4.0 | 2025-12-20 | STK_CM | Formalized K10 Audit Gate as operational contract block with detailed gate specifications (K10-G1 Traceability Complete, K10-G2 Evidence Closure, K10-G3 Signoff Obtained, K10-G4 CERT Clearance), audit pack assembly process, minimum evidence for audit-ready baseline, and Definition of Done. Completes full K01→K04→K06→K10 pathway formalization |
 
 ---
 
@@ -405,6 +1678,60 @@ backend:
 
 - **Portal Feature Catalog (SSOT):** `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_DAB__portal-feature-catalog_REGISTRY_CAT_I01-R01_ACTIVE.md`
 - **AoR Portal Contract Schema:** `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_DAB__aor-portal-contract-schema_DELIVERABLE_SCHEMA_I01-R01_ACTIVE.md`
+- **Tool Launchpad Specification:** `CAXS/00_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_00_LC01_K01_STK_DAB__tool-launchpad-specification_DELIVERABLE_SPEC_I01-R01_ACTIVE.md`
+- **v6.0 Nomenclature Standard:** README.md Section 10
+- **KNOTS Framework:** README.md Section 7
+- **OPT-INS Framework:** README.md Section 8
+
+---
+
+## ATA 00 Feature Backlog Summary (MoSCoW)
+
+### MUST (10 features)
+1. **F_CM01** — Baseline Registry & Manifest (STK_CM | Dep: STK_DAB | Output: BRP manifest + snapshot)
+2. **F_CM02** — Change Request Workflow CR/ECR/ECO (STK_CM | Dep: PMO/SE/SAF/CERT/DAB | Output: Registro de cambios)
+3. **F_CM03** — Impact Analysis Cross-ATA (STK_CM | Dep: SE/SAF/CERT | Output: Matriz de impacto)
+4. **F_CM04** — Gate Enforcement K04/K06/K10 (STK_CM | Dep: CERT/SAF/SE/DAB | Output: Checklist + audit trail)
+5. **F_CM05** — CI Gate Monitor (STK_CM | Dep: DAB | Output: Links a evidencias reproducibles)
+6. **F_CM06** — Nomenclature & Standards Enforcement (STK_CM | Dep: DAB | Output: Report de compliance)
+7. **F_CM07** — Audit Trail Immutable Log (STK_CM | Dep: DAB | Output: Export audit-ready)
+8. **F_CM08** — Release Builder BRP (STK_CM | Dep: PMO/CERT/DAB | Output: BRP)
+9. **F_CM09** — Registers Hub (STK_CM | Dep: DAB | Output: CSV/JSON snapshot)
+10. **F_CM10** — RBAC (STK_CM | Dep: DAB | Output: Políticas auditables)
+
+### SHOULD (8 features)
+11. **F_CM11** — Decision Log + Minutes (STK_CM | Dep: PMO/SE | Output: Registro decisiones)
+12. **F_CM12** — Exception/Deviation Management (STK_CM | Dep: SAF/CERT | Output: Log de excepciones)
+13. **F_CM13** — Interface Pack ICD Indexer (STK_SE colab / STK_CM portal | Dep: DAB | Output: Índice ICD)
+14. **F_CM14** — Baseline Diff Viewer (STK_CM | Dep: DAB | Output: Delta report)
+15. **F_CM15** — KPI Dashboard CM/Flow (STK_PMO + STK_CM | Dep: DAB | Output: KPI pack)
+16. **F_CM16** — Notification & Escalation Rules (STK_CM | Dep: PMO | Output: Eventos/alerts)
+17. **F_CM17** — Evidence Checklist Generator (STK_CERT contenido / STK_CM orquestación | Dep: DAB)
+18. **F_CM18** — Linkage to Coupling Matrix (STK_SE + STK_SAF | Dep: CM | Output: Risk-aware impact)
+
+### COULD (5 features)
+19. **F_CM19** — Kanban por Knot K01/K04/K06/K10 (STK_PMO + STK_CM | Dep: DAB)
+20. **F_CM20** — What-if Baseline Simulation (STK_CM | Dep: SE/SAF/CERT/DAB)
+21. **F_CM21** — Auto-generation de Release Notes curated (STK_CM | Dep: DAB)
+22. **F_CM22** — Audit Pack One-click (STK_CERT + STK_CM | Dep: DAB)
+23. **F_CM23** — Portfolio/Program Views (STK_PMO | Dep: CM/SAF/CERT)
+
+### WON'T (2 features)
+24. **F_CM24** — Edición directa de artefactos técnicos de cada ATA (Portal referencia y gobierna; no sustituye portales ATA específicos)
+25. **F_CM25** — Gestión de herramientas externas propietarias (Integración solo vía enlaces/API; sin replicar funcionalidad completa)
+
+---
+
+## Portal-aware AI Assistants Summary
+
+All assistants operate with **context del baseline seleccionado** and leave **rastro auditable** (qué recomendó y por qué):
+
+1. **CM Assistant (STK_CM):** Triage de cambios, sugerir routing de approvals, preparar BRP, comprobar nomenclatura, explicar políticas
+2. **PMO Assistant (STK_PMO):** Priorización, estimación de lead time, alertas de bloqueo, reporting
+3. **SE Assistant (STK_SE):** Impacto en interfaces/ICDs, coherencia de requisitos, dependencias cross-ATA
+4. **SAF Assistant (STK_SAF):** Identificar implicaciones safety/security por tipo de cambio; evidencias mínimas
+5. **CERT Assistant (STK_CERT):** Checklist compliance, estructura de evidence pack, preparación auditoría
+6. **DAB Assistant (STK_DAB):** Linaje, calidad del dato, consistencia de esquemas, retención y auditoría
 
 ---
 
