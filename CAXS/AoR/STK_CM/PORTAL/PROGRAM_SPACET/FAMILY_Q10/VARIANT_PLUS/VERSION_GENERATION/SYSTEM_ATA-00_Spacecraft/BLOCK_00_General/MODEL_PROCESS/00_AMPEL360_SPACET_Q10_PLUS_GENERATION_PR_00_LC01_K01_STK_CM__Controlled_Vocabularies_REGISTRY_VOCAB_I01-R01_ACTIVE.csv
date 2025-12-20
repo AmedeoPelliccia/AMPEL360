@@ -39,20 +39,20 @@ LC12,Support and Services,Customer support service processes service tooling sup
 LC13,MRO and Sustainment,Maintenance programs manuals sustainment evidence reliability/PHM integration,Lifecycle_Phase,,ACTIVE,2025-12-20,LC13 in filename
 LC14,Retirement Management and Circularity,End-of-life retirement procedures recycling/return flows circularity closure,Lifecycle_Phase,,ACTIVE,2025-12-20,LC14 in filename
 K00,Portal Entry,Entry point and navigation hub,Knot,,ACTIVE,2025-12-20,K00 in filename
-K01,Standards,Nomenclature policies templates enforcement rules,Knot,,ACTIVE,2025-12-20,K01 in filename
-K02,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K02 in filename
-K03,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K03 in filename
-K04,Change Control Gate,Change approval and impact analysis,Knot,,ACTIVE,2025-12-20,K04 in filename
-K05,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K05 in filename
-K06,Baseline Release Gate,Release validation and freeze,Knot,,ACTIVE,2025-12-20,K06 in filename
-K07,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K07 in filename
-K08,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K08 in filename
-K09,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K09 in filename
-K10,Audit Gate,Audit preparation and traceability,Knot,,ACTIVE,2025-12-20,K10 in filename
-K11,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K11 in filename
-K12,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K12 in filename
-K13,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K13 in filename
-K14,Reserved,Reserved for context-specific use,Knot,,ACTIVE,2025-12-20,K14 in filename
+K01,Authority Model / Certification Basis,Authority model certification basis governance,Knot,,ACTIVE,2025-12-20,K01 in filename
+K02,ConOps / Mission Operations / Command Authority,ConOps mission operations command authority,Knot,,ACTIVE,2025-12-20,K02 in filename
+K03,Hazards / Safety Case / Permits & Hazardous States,Hazards safety case permits and hazardous states,Knot,,ACTIVE,2025-12-20,K03 in filename
+K04,Interfaces / ICDs / Integration Contracts,Interfaces ICDs integration contracts multi-system coupling,Knot,,ACTIVE,2025-12-20,K04 in filename
+K05,V&V / Testing / Qualification Substantiation,Verification and validation testing qualification substantiation,Knot,,ACTIVE,2025-12-20,K05 in filename
+K06,Data Governance / SSOT / Schemas / Identifiers,Data governance SSOT schemas identifiers,Knot,,ACTIVE,2025-12-20,K06 in filename
+K07,AI Autonomy Assurance / Monitoring / Lifecycle Controls,AI autonomy assurance monitoring lifecycle controls,Knot,,ACTIVE,2025-12-20,K07 in filename
+K08,DPP / Provenance / Evidence Packaging & Release Snapshots,DPP provenance evidence packaging and release snapshots,Knot,,ACTIVE,2025-12-20,K08 in filename
+K09,Ground/Spaceport Infrastructure Interfaces / Service Readiness,Ground and spaceport infrastructure interfaces service readiness,Knot,,ACTIVE,2025-12-20,K09 in filename
+K10,Industrialization Readiness / Supply Chain / Production Maturity,Industrialization readiness supply chain production maturity,Knot,,ACTIVE,2025-12-20,K10 in filename
+K11,Human Factors / Procedures / Training / Readiness Gates,Human factors procedures training readiness gates,Knot,,ACTIVE,2025-12-20,K11 in filename
+K12,Noise & Vibration / Environment Impact / Monitoring & Limits,Noise and vibration environment impact monitoring and limits,Knot,,ACTIVE,2025-12-20,K12 in filename
+K13,Cybersecurity Zones / Key Management / Secure Operations,Cybersecurity zones key management secure operations,Knot,,ACTIVE,2025-12-20,K13 in filename
+K14,Sustainment / Reliability / Maintenance Program Feedback Loops,Sustainment reliability maintenance program feedback loops,Knot,,ACTIVE,2025-12-20,K14 in filename
 DRAFT,Draft,Work in progress not released,Status,,ACTIVE,2025-12-20,STATUS in filename
 ACTIVE,Active,Currently in use approved,Status,,ACTIVE,2025-12-20,STATUS in filename
 RELEASED,Released,Formally released baseline,Status,,ACTIVE,2025-12-20,STATUS in filename

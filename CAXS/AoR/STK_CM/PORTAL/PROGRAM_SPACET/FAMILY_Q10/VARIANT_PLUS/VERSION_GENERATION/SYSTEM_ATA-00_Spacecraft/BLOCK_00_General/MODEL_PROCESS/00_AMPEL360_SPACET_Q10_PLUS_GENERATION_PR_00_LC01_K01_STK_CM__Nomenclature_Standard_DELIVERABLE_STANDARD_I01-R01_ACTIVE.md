@@ -211,22 +211,22 @@ ATA chapters follow the ATA 100 standard specification. Key codes for this progr
 | Code | Name | Purpose |
 |------|------|---------|
 | `K00` | Portal Entry | Entry point and navigation |
-| `K01` | Standards | Nomenclature, policies, templates, enforcement rules |
-| `K02` | Reserved | Reserved for context-specific use (see AXIS definitions) |
-| `K03` | Reserved | Reserved for context-specific use (see AXIS definitions) |
-| `K04` | Change Control Gate | Change approval and impact analysis |
-| `K05` | Reserved | Reserved for context-specific use (see AXIS definitions) |
-| `K06` | Baseline Release Gate | Release validation and freeze |
-| `K07` | Reserved | Reserved for context-specific use (see AXIS definitions) |
-| `K08` | Reserved | Reserved for context-specific use (see AXIS definitions) |
-| `K09` | Reserved | Reserved for context-specific use (see AXIS definitions) |
-| `K10` | Audit Gate | Audit preparation and traceability |
-| `K11` | Reserved | Reserved for context-specific use (see AXIS definitions) |
-| `K12` | Reserved | Reserved for context-specific use (see AXIS definitions) |
-| `K13` | Reserved | Reserved for context-specific use (see AXIS definitions) |
-| `K14` | Reserved | Reserved for context-specific use (see AXIS definitions) |
+| `K01` | Authority Model / Certification Basis | Authority model, certification basis, governance |
+| `K02` | ConOps / Mission Operations / Command Authority | Concept of operations, mission operations, command authority |
+| `K03` | Hazards / Safety Case / Permits & Hazardous States | Hazards, safety case, permits and hazardous states |
+| `K04` | Interfaces / ICDs / Integration Contracts | Interfaces, ICDs, integration contracts (multi-system coupling) |
+| `K05` | V&V / Testing / Qualification Substantiation | Verification and validation, testing, qualification substantiation |
+| `K06` | Data Governance / SSOT / Schemas / Identifiers | Data governance, SSOT, schemas, identifiers |
+| `K07` | AI Autonomy Assurance / Monitoring / Lifecycle Controls | AI autonomy assurance, monitoring, lifecycle controls |
+| `K08` | DPP / Provenance / Evidence Packaging & Release Snapshots | DPP, provenance, evidence packaging and release snapshots |
+| `K09` | Ground/Spaceport Infrastructure Interfaces / Service Readiness | Ground and spaceport infrastructure interfaces, service readiness |
+| `K10` | Industrialization Readiness / Supply Chain / Production Maturity | Industrialization readiness, supply chain, production maturity |
+| `K11` | Human Factors / Procedures / Training / Readiness Gates | Human factors, procedures, training, readiness gates |
+| `K12` | Noise & Vibration / Environment Impact / Monitoring & Limits | Noise and vibration, environment impact, monitoring and limits |
+| `K13` | Cybersecurity Zones / Key Management / Secure Operations | Cybersecurity zones, key management, secure operations |
+| `K14` | Sustainment / Reliability / Maintenance Program Feedback Loops | Sustainment, reliability, maintenance program feedback loops |
 
-**Note:** KNOT meanings vary by AXIS context (P-PROGRAM, O-OPERATIONS, T-TECHNOLOGY, I-INFRASTRUCTURE, N-NEURAL, S-SIMULATION). The definitions above reflect the STK_CM Configuration Management context. Refer to AXIS-specific KNOT documents for complete definitions.
+**Note:** These are the 14 controlled KNOT IDs defined for AMPEL360 CAXS. These are the only allowed filename/governance tokens unless CM upgrades the standard.
 
 ### 3.5 Program/Family/Variant Codes
 
