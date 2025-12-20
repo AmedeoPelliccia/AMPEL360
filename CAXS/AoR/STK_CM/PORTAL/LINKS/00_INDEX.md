@@ -2,27 +2,25 @@
 
 ## High-frequency shortcuts
 - **K01 Standards**
-  - Nomenclature standard (repo path / release tag): [ADD_LINK_ID]
-  - Schema registry: [ADD_LINK_ID]
-  - Template registry: [ADD_LINK_ID]
+  - Nomenclature standard (repo path / release tag): LNK-STKCM-0001
+  - Schema registry: LNK-STKCM-0002
+  - Template registry: LNK-STKCM-0003
 
 - **K04 Change Control**
-  - CR board / queue: [ADD_LINK_ID]
-  - Impact analysis matrix: [ADD_LINK_ID]
+  - CR board / queue: LNK-STKCM-0101
+  - Impact analysis matrix: LNK-STKCM-0102
 
 - **K06 Baseline Release**
-  - Current Release Candidate (RC): [ADD_LINK_ID]
-  - BRP packages (latest): [ADD_LINK_ID]
+  - Current Release Candidate (RC): LNK-STKCM-0201
+  - BRP packages (latest): LNK-STKCM-0202
 
 - **K10 Audit**
-  - Traceability matrix (latest baseline): [ADD_LINK_ID]
-  - Evidence index (latest baseline): [ADD_LINK_ID]
-  - Signoff register (latest baseline): [ADD_LINK_ID]
-  - CERT clearance statement (latest baseline): [ADD_LINK_ID]
+  - Traceability matrix (latest baseline): LNK-STKCM-0301
+  - Evidence index (latest baseline): LNK-STKCM-0302
+  - Signoff register (latest baseline): LNK-STKCM-0303
+  - CERT clearance statement (latest baseline): LNK-STKCM-0304
 
 ## CI / Validation
-- CI Gate monitor: [ADD_LINK_ID]
-- Nomenclature validator results: [ADD_LINK_ID]
-- Schema validation results: [ADD_LINK_ID]
+- CI Gate monitor: LNK-STKCM-0401
 
 > Source of truth: LINKS_REGISTER.csv

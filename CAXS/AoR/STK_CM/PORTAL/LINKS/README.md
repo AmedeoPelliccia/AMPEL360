@@ -14,7 +14,7 @@ This folder contains **references**, not primary engineering content.
 ## Governance
 - **Owner (AoR):** STK_CM
 - **Update method:** PR-only (no direct edits on main)
-- **Validation:** LINKS_REGISTER must pass schema validation (LINKS_REGISTER.schema.json)
+- **Validation:** LINKS_REGISTER must pass schema validation (LINKS_REGISTER.schema.json). CSV data is mapped to JSON format in CI before validation.
 - **Review cadence:** at every Baseline Release (K06) and before Audit Gate (K10)
 
 ## Rules
