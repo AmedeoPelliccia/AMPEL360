@@ -808,7 +808,7 @@ jobs:
               MISSING_MUST=0
               
               for feature in "${MUST_FEATURES[@]}"; do
-                if grep -q "- $feature" "$CONTRACT_FILE"; then
+                if grep -q -- "- $feature" "$CONTRACT_FILE"; then
                   true  # Feature found
                 else
                   echo "    ✗ ERROR: MUST feature $feature missing"
