@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "STK_CM Links Register Schema",
+  "type": "object",
+  "properties": {
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "link_id","title","link_type","target","owner_aor",
+          "knot","context","scope","access_level","status"
+        ],
+        "properties": {
+          "link_id": { "type": "string", "pattern": "^LNK-STKCM-[0-9]{4}$" },
+          "title": { "type": "string", "minLength": 3 },
+          "link_type": {
+            "type": "string",
+            "enum": ["REPO_PATH","URL","DOC","DASHBOARD","CONTACT","EXPORT_ENDPOINT"]
+          },
+          "target": { "type": "string", "minLength": 3 },
+          "owner_aor": { "type": "string", "enum": ["STK_CM","STK_PMO","STK_SE","STK_SAF","STK_CERT","STK_DATA"] },
+          "knot": { "type": "string", "enum": ["K01","K04","K06","K10"] },
+          "context": { "type": "string" },
+          "scope": { "type": "string", "enum": ["PROGRAM","ATA","PORTAL"] },
+          "tags": { "type": "string" },
+          "access_level": { "type": "string", "enum": ["PUBLIC","INTERNAL","CONFIDENTIAL"] },
+          "status": { "type": "string", "enum": ["ACTIVE","DEPRECATED","ARCHIVED"] },
+          "review_cycle": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  },
+  "required": ["rows"]
+}

@@ -1,0 +1,13 @@
+link_id,title,link_type,target,owner_aor,knot,context,scope,tags,access_level,status,review_cycle,notes
+LNK-STKCM-0001,"Nomenclature Standard (latest)","REPO_PATH","<repo_path_or_ref>","STK_CM","K01","PROG_GOV","PROGRAM","nomenclature;standard","INTERNAL","ACTIVE","K06","Update on every standard release"
+LNK-STKCM-0002,"Schema Registry","REPO_PATH","<repo_path_or_ref>","STK_DATA","K01","DATA_GOV","PROGRAM","schema;registry","INTERNAL","ACTIVE","K06","Linked from STK_CM launchpad"
+LNK-STKCM-0003,"Template Registry","REPO_PATH","<repo_path_or_ref>","STK_CM","K01","PROG_GOV","PROGRAM","templates;standard","INTERNAL","ACTIVE","K06",""
+LNK-STKCM-0101,"Change Requests Queue","URL","<tool_url>","STK_CM","K04","CM","PROGRAM","change_control;cr","INTERNAL","ACTIVE","K04",""
+LNK-STKCM-0102,"Impact Analysis Matrix","REPO_PATH","<repo_path_or_ref>","STK_SE","K04","TECH_PROP","PROGRAM","impact;cross_ata","INTERNAL","ACTIVE","K04",""
+LNK-STKCM-0201,"Release Candidate (current)","REPO_PATH","<repo_path_or_ref>","STK_CM","K06","CM","PROGRAM","baseline;rc;brp","INTERNAL","ACTIVE","K06","Freeze ref must be recorded"
+LNK-STKCM-0202,"BRP Packages (latest)","REPO_PATH","<repo_path_or_ref>","STK_CM","K06","CM","PROGRAM","brp;release","INTERNAL","ACTIVE","K06",""
+LNK-STKCM-0301,"Traceability Matrix (latest baseline)","REPO_PATH","<repo_path_or_ref>","STK_CM","K10","AUDIT","PROGRAM","traceability;audit","CONFIDENTIAL","ACTIVE","K10",""
+LNK-STKCM-0302,"Evidence Index (latest baseline)","REPO_PATH","<repo_path_or_ref>","STK_CERT","K10","CERT","PROGRAM","evidence;closure","CONFIDENTIAL","ACTIVE","K10",""
+LNK-STKCM-0303,"Signoff Register (latest baseline)","REPO_PATH","<repo_path_or_ref>","STK_CM","K10","AUDIT","PROGRAM","signoff;approvals","CONFIDENTIAL","ACTIVE","K10",""
+LNK-STKCM-0304,"CERT Clearance Statement (latest baseline)","REPO_PATH","<repo_path_or_ref>","STK_CERT","K10","CERT","PROGRAM","clearance;cert","CONFIDENTIAL","ACTIVE","K10",""
+LNK-STKCM-0401,"CI Gate Monitor","URL","<ci_dashboard_url>","STK_DATA","K06","QA","PROGRAM","ci;gates;validation","INTERNAL","ACTIVE","K06",""
