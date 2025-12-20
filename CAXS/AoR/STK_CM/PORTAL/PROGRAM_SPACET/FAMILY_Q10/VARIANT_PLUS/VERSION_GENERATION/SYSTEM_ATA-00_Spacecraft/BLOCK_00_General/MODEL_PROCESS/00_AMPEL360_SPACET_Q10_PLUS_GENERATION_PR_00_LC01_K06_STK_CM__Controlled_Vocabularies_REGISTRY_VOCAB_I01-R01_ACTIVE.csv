@@ -96,6 +96,6 @@ BASELINE,Baseline,Baseline configuration,Version_Stream,,ACTIVE,2025-12-20,Versi
 PLUS,Plus,Enhanced or Plus variant,Version_Stream,,ACTIVE,2025-12-20,Version field
 CERT,Certification,Certification variant,Version_Stream,,ACTIVE,2025-12-20,Version field
 GENERATION,Generation,Generation development phase,Phase,,ACTIVE,2025-12-20,Phase field
-PR,Process,Process model token for governance/process artifacts (MODEL_PROCESS; non-physical),Model,,ACTIVE,2025-12-20,00_AMPEL360_SPACET_..._PR_...
+PR,Process,Process model token for governance/process artifacts (MODEL_PROCESS; non-physical),Model,,Model field
 HW,Hardware,Hardware development phase,Phase,,ACTIVE,2025-12-20,Phase field
 SW,Software,Software development phase,Phase,,ACTIVE,2025-12-20,Phase field
