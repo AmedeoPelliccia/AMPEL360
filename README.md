@@ -920,3 +920,58 @@ For `TYPE in {BADGE,CERT,LIC}` (CATEGORY `REGISTRY`):
 
 **REGISTRY (TEKNIA credential)**
 `94_AMPEL360_SPACET_Q10_BASELINE_PLUS_PR_30_LC06_K06_STK_CERT__teknia-credential_REGISTRY_CERT_I01-R01_RELEASED.json`
+
+---
+
+## 11. MODEL_SOFTWARE Directory Structure
+
+The **MODEL_SOFTWARE** directory organizes software artifacts, automation tooling, and process scripts across all lifecycle phases. This structure provides a canonical organization for software models (MODEL=SW) aligned with the AMPEL360 lifecycle phases.
+
+```
+MODEL_SOFTWARE/
+├── LC00_GENERAL/
+├── LC01_PROBLEM_STATEMENT_GENERATION_PROMPTING_ENGINEERING/
+├── LC02_SYSTEM_REQUIREMENTS/
+├── LC03_DESIGN_MODELS/
+├── LC04_ENGINEERING_ANALYSIS_AND_CALCULATION_MODELS/
+├── LC05_INTEGRATION_TESTING_AND_PROTOTYPING_VV_V6V/
+├── LC06_QUALITY/
+├── LC07_SAFETY_AND_SECURITY/
+├── LC08_CERTIFICATION_AND_FIRST_FLIGHT/
+├── LC09_GREEN_AIRCRAFT_BASELINES/
+├── LC10_INDUSTRIALIZATION_SERIALIZATION_PRODUCTION_PLAN_CM/
+├── LC11_OPERATIONS/
+├── LC12_SUPPORT_AND_SERVICES/
+├── LC13_MRO_AND_SUSTAINMENT/
+└── LC14_RETIREMENT_MANAGEMENT_AND_CIRCULARITY/
+```
+
+### 11.1 Directory Descriptions
+
+| Directory | Phase | Description |
+|-----------|-------|-------------|
+| **LC00_GENERAL** | General | Cross-phase software artifacts, shared libraries, common utilities, and general-purpose tooling |
+| **LC01_PROBLEM_STATEMENT_GENERATION_PROMPTING_ENGINEERING** | Problem Statement / Generation / Prompting Engineering | Problem framing tools, ideation software, NKU generation pathways, prompting engineering baselines, initial scope statement generators |
+| **LC02_SYSTEM_REQUIREMENTS** | System Requirements | Requirements management tools, allocation software, traceability automation, acceptance criteria validators |
+| **LC03_DESIGN_MODELS** | Design Models | Architecture modeling tools, SysML/MBSE software, design baseline generators, interface modeling utilities |
+| **LC04_ENGINEERING_ANALYSIS_AND_CALCULATION_MODELS** | Engineering Analysis & Calculation Models | Analysis software, calculation engines, trade study tools, margin calculators, model validation utilities |
+| **LC05_INTEGRATION_TESTING_AND_PROTOTYPING_VV_V6V** | Integration Testing & Prototyping (V&V / V6V) | Prototyping tools, integration test automation, SIL/HIL/PIL software, closure evidence generators |
+| **LC06_QUALITY** | Quality | QMS software, process quality tools, audit automation, nonconformance management systems, quality gate validators |
+| **LC07_SAFETY_AND_SECURITY** | Safety and Security | Safety case tools, hazard analysis software, cybersecurity assurance utilities, operational limits validators |
+| **LC08_CERTIFICATION_AND_FIRST_FLIGHT** | Certification and First Flight | Certification planning software, compliance evidence generators, authority-facing deliverable builders, first-flight readiness tools |
+| **LC09_GREEN_AIRCRAFT_BASELINES** | Green Aircraft / Baselines | Sustainability baseline tools, circularity KPI calculators, green tech analysis software, ESG reporting generators |
+| **LC10_INDUSTRIALIZATION_SERIALIZATION_PRODUCTION_PLAN_CM** | Industrialization / Serialization / Production Plan / CM | Industrial planning software, production readiness tools, configuration baseline managers, manufacturing interface utilities |
+| **LC11_OPERATIONS** | Operations | ConOps tools, procedure generators, readiness validators, operational baseline software, mission operations control systems |
+| **LC12_SUPPORT_AND_SERVICES** | Support and Services | Customer support tools, service process automation, support documentation generators, service tooling |
+| **LC13_MRO_AND_SUSTAINMENT** | MRO and Sustainment | Maintenance program tools, manual generators, sustainment evidence software, reliability/PHM integration utilities |
+| **LC14_RETIREMENT_MANAGEMENT_AND_CIRCULARITY** | Retirement Management and Circularity | End-of-life tools, retirement procedure generators, recycling/return flow software, circularity closure validators |
+
+### 11.2 Usage Notes
+
+- Each directory contains software artifacts (scripts, tools, validators, generators) specific to that lifecycle phase
+- Software follows the v6.0 nomenclature standard with `MODEL=SW` token
+- Cross-phase or general-purpose software should be placed in **LC00_GENERAL**
+- All software artifacts must be configuration-controlled and version-tracked
+- Software in these directories supports the execution of tasks aligned to the corresponding KNOT (K01..K14) framework
+
+---
