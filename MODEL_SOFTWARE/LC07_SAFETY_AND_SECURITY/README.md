@@ -1,43 +1,66 @@
 # LC07_SAFETY_AND_SECURITY
-
-**Lifecycle Phase:** Safety and Security
+**Lifecycle Phase:** LC07 — Safety and Security (Assurance Objectives + Evidence)
 
 ## Purpose
+This directory contains **LC07 software artifacts** that support the Safety and Security assurance
+activities for the `MODEL_SOFTWARE` portal node (ATA-00 / Block 10). It covers tooling for:
+- safety case and security case support (generation, consistency checks, evidence indexing),
+- hazard analysis automation (FHA / PSSA / SSA or program-equivalent),
+- cybersecurity assurance utilities (control verification support, assurance objectives tracking),
+- operational constraints / limits validators derived from safety and security requirements,
+- risk assessment automation and validation workflows.
 
-This directory contains software for safety case tools, hazard analysis, cybersecurity assurance utilities, and operational limits validators.
+LC07 is the authoritative location for **assurance-focused tooling** that substantiates safety and
+cybersecurity objectives with traceable, auditable evidence pointers.
 
-## Contents
+## Contents (What belongs in LC07)
+Artifacts in this directory typically include:
 
-Software artifacts in this directory include:
-- Safety case tools and generators
-- Hazard analysis software (FHA/PSSA/SSA)
-- Cybersecurity assurance utilities
-- Operational limits validators
-- Safety constraint checkers
-- Security scanning and validation tools
-- Risk assessment automation
+### A) Safety assurance tooling
+- Safety case generators and consistency validators (structure, completeness checks)
+- Hazard analysis automation (FHA/PSSA/SSA workflows, hazard/control mapping utilities)
+- Safety constraint checkers (policy validators enforcing derived operational constraints)
+
+### B) Security assurance tooling
+- Cybersecurity assurance utilities (objective/control mapping, verification support tooling)
+- Security scanning and validation tools (as governed by program policy)
+- Risk assessment automation (threat/risk scoring helpers, mitigation tracking utilities)
+
+### C) Constraints & limits validation
+- Validators for operational limits/constraints derived from:
+  - safety requirements and hazard controls, and/or
+  - cybersecurity assurance objectives and controls.
+
+> Note: LC07 is about safety/security assurance objectives and evidence tooling. **Quality process/QMS,
+> audits, and nonconformance workflows** belong to LC06. **Authority-facing certification packs and
+> formal compliance submissions** belong to LC08.
 
 ## Naming Convention
+All artifacts in this directory follow the **v6.0 nomenclature standard** with:
+- `MODEL=SW`
+- `PHASE=LC07`
+- `KNOT` binding **as applicable** (commonly K07 for safety/security assurance activities)
+- Full compliance with the controlled vocabulary defined by the program standard
 
-All software artifacts follow the **v6.0 nomenclature standard** with:
-- `MODEL=SW` token
-- `PHASE=LC07` token
-- `KNOT` binding (typically K07 for safety/security)
-- Full compliance with controlled vocabulary (Section 10.2 of main README)
-
-## Usage
-
+## Usage Rules
 Place software here when it:
-- Supports safety engineering
-- Implements cybersecurity controls
-- Manages hazard analysis
-- Validates safety requirements
-- Automates security assessments
+- supports safety engineering assurance workflows (case structure, hazard analysis automation),
+- supports cybersecurity assurance workflows (controls, assessments, validation tooling),
+- validates derived operational constraints/limits tied to safety/security objectives,
+- automates risk/threat/hazard assessments within the governed program method.
 
----
+Do **not** place software here when it:
+- primarily executes integration tests and produces technical closure evidence (use LC05),
+- primarily governs QMS, audits, NCR management, or quality gates (use LC06),
+- primarily assembles certification submissions and authority-facing packs (use LC08),
+- primarily defines requirements/acceptance criteria (use LC02) or design models (use LC03),
+- is cross-phase portal governance/templates/contracts (use LC00).
 
-**Primary AoR:** STK_SAF, STK_CY, STK_SE
+## Ownership
+**AoR (owners): STK_SAF, STK_CY, STK_SE**
 
-**References:**
-- Main README Section 11: MODEL_SOFTWARE Directory Structure
-- Lifecycle Phases: Section 10.2.8 of main README
+## References
+- Main README: `MODEL_SOFTWARE` directory structure definition
+- Lifecycle phases (LC00–LC14) definition
+- Nomenclature Standard v6.0 and controlled vocabulary section
+
