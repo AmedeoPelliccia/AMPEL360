@@ -1,42 +1,62 @@
-# LC04_ENGINEERING_ANALYSIS_AND_CALCULATION_MODELS
-
-**Lifecycle Phase:** Engineering Analysis & Calculation Models
+# LC03_DESIGN_MODELS
+**Lifecycle Phase:** LC03 — Design Models (Architecture + Interface Modeling)
 
 ## Purpose
+This directory contains **LC03 software artifacts** used to define, maintain, and baseline the
+**architecture and design models** for the `MODEL_SOFTWARE` node (ATA-00 / Block 10). It covers:
+- architecture modeling and MBSE/SysML workflows,
+- design baseline generation and control,
+- interface modeling utilities (ICDs, contracts, schema baselines),
+- model transformations and design documentation generation.
 
-This directory contains software for engineering analyses, calculation engines, trade studies, margin calculators, and model validation utilities.
+LC03 is the authoritative location for **design intent and interface definition tooling** that seeds
+downstream analysis (LC04), integration/testing (LC05), and release baselines (LC10/LC11).
 
-## Contents
+## Contents (What belongs in LC03)
+Artifacts in this directory typically include:
 
-Software artifacts in this directory include:
-- Analysis software and calculation engines
-- Trade study tools and frameworks
-- Margin calculators and budget tools
-- Model validation utilities
-- Simulation wrappers and drivers
-- Performance analysis tools
+### A) Architecture & MBSE/SysML tooling
+- SysML/MBSE model utilities (validation, consistency checks, exports)
+- Architecture model generators and baseline packagers
+- Model repositories/tooling wrappers (only if governed and versioned)
+
+### B) Design baseline generators
+- Scripts/utilities to generate design baselines (snapshots, diffs, model manifests)
+- Design documentation generators (model-to-doc pipelines)
+
+### C) Interface modeling & contract utilities
+- Interface definition utilities (ICD schema generators, contract validators)
+- Interface compatibility tooling (versioning rules, diff tools, breaking-change checks)
+- Model transformation utilities (e.g., SysML ↔ schema ↔ documentation mappings)
+
+> Note: LC03 may include interface contract tooling, but **numerical analyses, trade studies, and calculation
+> models** belong to LC04, and **integration/test harnesses** belong to LC05.
 
 ## Naming Convention
+All artifacts in this directory follow the **v6.0 nomenclature standard** with:
+- `MODEL=SW`
+- `PHASE=LC03`
+- `KNOT` binding **as applicable** (commonly K03 for design baselines and interface control)
+- Full compliance with the controlled vocabulary defined by the program standard
 
-All software artifacts follow the **v6.0 nomenclature standard** with:
-- `MODEL=SW` token
-- `PHASE=LC04` token
-- `KNOT` binding (typically K04 for analysis)
-- Full compliance with controlled vocabulary (Section 10.2 of main README)
-
-## Usage
-
+## Usage Rules
 Place software here when it:
-- Performs engineering calculations
-- Conducts trade studies
-- Validates design models
-- Analyzes system performance
-- Manages engineering margins
+- supports system/software architecture definition and refinement,
+- implements MBSE workflows (SysML validation, export, baseline creation),
+- generates or controls design baselines (including model manifests),
+- manages interface definitions as governed configuration items (ICDs/contracts),
+- produces design documentation derived from authoritative models.
 
----
+Do **not** place software here when it:
+- primarily executes engineering analyses or trade studies (use LC04),
+- is a test/prototyping harness or V&V tooling (use LC05),
+- is CM governance, cross-phase templates, or export contracts (use LC00),
+- is release packaging/serialization tooling (use LC10/LC11 as applicable).
 
-**Primary AoR:** STK_PHM, STK_SE, STK_DAB
+## Ownership
+**AoR (owners): STK_SE, STK_PHM, STK_DAB**
 
-**References:**
-- Main README Section 11: MODEL_SOFTWARE Directory Structure
-- Lifecycle Phases: Section 10.2.8 of main README
+## References
+- Main README: `MODEL_SOFTWARE` directory structure definition
+- Lifecycle phases (LC00–LC14) definition
+- Nomenclature Standard v6.0 and controlled vocabulary section
