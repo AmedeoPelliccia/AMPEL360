@@ -36,7 +36,7 @@ Place software here when it:
 
 ---
 
-**Primary AoR:** STK_PMO, STK_DAB, STK_CM, STK_CEGT
+**Primary AoR:** STK_PMO, STK_DAB, STK_CM
 
 **References:**
 - Main README Section 11: MODEL_SOFTWARE Directory Structure
