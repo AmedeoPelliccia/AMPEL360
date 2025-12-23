@@ -33,6 +33,9 @@ Place software here when it:
 
 ---
 
+**Primary AoR:** STK_DAB (with cross-AoR usage)
+
 **References:**
 - Main README Section 11: MODEL_SOFTWARE Directory Structure
+- Lifecycle Phases: Section 10.2.8 of main README
 - Nomenclature Standard: Section 10 of main README (v6.0)
