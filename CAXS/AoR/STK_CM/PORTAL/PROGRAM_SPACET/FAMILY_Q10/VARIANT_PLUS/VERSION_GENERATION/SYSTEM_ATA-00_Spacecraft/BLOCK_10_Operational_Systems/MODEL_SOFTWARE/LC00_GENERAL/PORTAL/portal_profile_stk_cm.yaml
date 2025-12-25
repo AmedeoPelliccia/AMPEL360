@@ -80,6 +80,16 @@ portal_profile:
       - read
 
   # Data Scope Constraints
+  # allowed_paths defines the CM data-access boundary for this portal profile.
+  # Enforcement:
+  #   - The portal runtime evaluates these glob patterns on every data read/write
+  #     request initiated from STK_CM apps.
+  #   - CI guardrails (pipeline jobs for STK_CM) re-validate that all files
+  #     touched by a change fall within these patterns.
+  # On violation:
+  #   - Runtime access outside allowed_paths is blocked and the attempt is
+  #     logged as a CM policy violation in the audit_log_viewer feed.
+  #   - CI checks fail the pipeline if modified files are outside allowed_paths.
   data_scope:
     allowed_paths:
       - "CAXS/AoR/STK_CM/PORTAL/PROGRAM_SPACET/FAMILY_Q10/VARIANT_PLUS/VERSION_GENERATION/**"
@@ -156,6 +166,13 @@ portal_profile:
     audit_log_path: "artifacts/audit/"
 
   # Notifications
+  # Recipient identifiers are resolved via the TALF (Tool Access & Licensing Fabric) service:
+  #   - "pr_author" → GitHub username of the PR author
+  #   - "aor_owners" → Users listed in AoR portal contracts (CAXS/AoR/*/PORTAL/*__portal-contract_*)
+  #   - "stk_cm_team" → Team membership from GitHub org (AMPEL360/STK_CM)
+  #   - "stk_cm_lead" → AoR lead defined in STK_CM portal contract
+  #   - "affected_aor_owners" → Dynamically resolved from impact analysis collector output
+  # Mapping source: CAXS/INFRASTRUCTURE/portals/talf-service-specification
   notifications:
     gate_failure:
       notify:
@@ -175,24 +192,24 @@ portal_profile:
       channel: "github_pr_comment"
 
   # Integration Settings
-  # Note: Paths can be overridden via environment variables for different environments
-  # Use CAXS_SSOT_PATH, CAXS_INDEX_PATH, CM_WORKFLOW_PATH environment variables
+  # Note: Paths can be overridden via environment variables for different environments.
+  # Consuming tooling should check for environment variables and use defaults below if not set.
   integrations:
     github_actions:
-      # Override with CM_WORKFLOW_PATH environment variable
-      workflow_path: "${CM_WORKFLOW_PATH:-.github/workflows/cm-gates.yaml}"
+      # Default workflow path; consuming tooling may override via CM_WORKFLOW_PATH environment variable
+      workflow_path: ".github/workflows/cm-gates.yaml"
       artifact_retention_days: 30
     
     talf:
       enabled: true
-      # Override with TALF_SERVICE_ENDPOINT environment variable
-      service_endpoint: "${TALF_SERVICE_ENDPOINT:-internal://talf-service}"
+      # Default TALF endpoint; may be overridden via TALF_SERVICE_ENDPOINT environment variable at runtime
+      service_endpoint: "internal://talf-service"
     
     registry:
-      # Override with CAXS_SSOT_PATH environment variable
-      ssot_path: "${CAXS_SSOT_PATH:-CAXS/INFRASTRUCTURE/registries/}"
-      # Override with CAXS_INDEX_PATH environment variable
-      index_path: "${CAXS_INDEX_PATH:-CAXS/INFRASTRUCTURE/indexes/}"
+      # Default SSOT path; consuming tooling may override via CAXS_SSOT_PATH environment variable
+      ssot_path: "CAXS/INFRASTRUCTURE/registries/"
+      # Default index path; consuming tooling may override via CAXS_INDEX_PATH environment variable
+      index_path: "CAXS/INFRASTRUCTURE/indexes/"
 
 # Metadata
 metadata:

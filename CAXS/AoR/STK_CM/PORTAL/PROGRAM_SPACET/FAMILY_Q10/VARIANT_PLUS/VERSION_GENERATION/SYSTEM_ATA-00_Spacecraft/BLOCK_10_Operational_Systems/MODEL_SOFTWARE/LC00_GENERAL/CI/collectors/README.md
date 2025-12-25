@@ -128,7 +128,7 @@ Name collectors by **what they collect**, not by the pipeline step name:
 - `collect_trace_edges.*`
 - `collect_trace_integrity.*`
 - `collect_coverage_matrix.*`
-- `collect_impact_packet.*`
+- `collect_change_impact_packet.*`
 - `collect_release_manifest.*`
 - `collect_hashes.*`
 - `collect_release_notes.*`

@@ -302,7 +302,7 @@ jobs:
 - Validators: `../validators/`
 - Export Utilities: `../../EXPORT/`
 - Nomenclature Standard: Main README Section 10 (v6.0)
-- Portal Gates: Main README Section 6.9
+- Portal Gates: Main system README `../../README.md` (see "Portal Gates" section)
 
 ---
 
