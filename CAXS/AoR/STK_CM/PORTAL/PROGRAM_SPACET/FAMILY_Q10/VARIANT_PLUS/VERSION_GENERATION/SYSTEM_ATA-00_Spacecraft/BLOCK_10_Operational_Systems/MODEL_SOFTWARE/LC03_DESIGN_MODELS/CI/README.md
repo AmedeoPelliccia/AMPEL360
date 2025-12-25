@@ -1,4 +1,4 @@
-# CI — LC03 Gates and Workflow Helpers
+# CI — LC03 gates and workflow helpers
 
 **Directory:** `LC03_DESIGN_MODELS/CI/`
 

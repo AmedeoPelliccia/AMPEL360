@@ -1,4 +1,4 @@
-# INTERFACES — ICD Scaffolding, Port/Signal Dictionary Compilers
+# INTERFACES — ICD scaffolding, port/signal dictionary compilers
 
 **Directory:** `LC03_DESIGN_MODELS/INTERFACES/`
 

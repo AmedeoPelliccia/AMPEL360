@@ -1,4 +1,4 @@
-# EXPORT — Exporters to CAE/Simulation Configs and Downstream Tools
+# EXPORT — exporters to CAE/simulation configs and downstream tools
 
 **Directory:** `LC03_DESIGN_MODELS/EXPORT/`
 

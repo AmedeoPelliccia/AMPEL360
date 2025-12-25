@@ -1,4 +1,4 @@
-# MBSE — SysML/UML Generators, Package Skeleton Builders, Sync Engines
+# MBSE — SysML/UML generators, package skeleton builders, sync engines
 
 **Directory:** `LC03_DESIGN_MODELS/MBSE/`
 

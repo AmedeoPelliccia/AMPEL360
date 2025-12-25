@@ -1,4 +1,4 @@
-# BASELINES — Snapshot Tooling, Diff Engines, Reproducibility Pipelines
+# BASELINES — snapshot tooling, diff engines, reproducibility pipelines
 
 **Directory:** `LC03_DESIGN_MODELS/BASELINES/`
 

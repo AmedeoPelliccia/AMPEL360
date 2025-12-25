@@ -1,4 +1,4 @@
-# VALIDATORS — Model Linting, Consistency Checks, Trace Checks
+# VALIDATORS — model linting, consistency checks, trace checks
 
 **Directory:** `LC03_DESIGN_MODELS/VALIDATORS/`
 

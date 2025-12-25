@@ -1,4 +1,4 @@
-# FIXTURES — Small Deterministic Test Fixtures
+# FIXTURES — small deterministic test fixtures
 
 **Directory:** `LC03_DESIGN_MODELS/FIXTURES/`
 

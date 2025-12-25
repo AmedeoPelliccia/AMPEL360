@@ -1,4 +1,4 @@
-# TRANSFORMS — Converters (SysML↔JSON/YAML), Model-to-Doc Pipelines
+# TRANSFORMS — converters (SysML↔JSON/YAML), model-to-doc pipelines
 
 **Directory:** `LC03_DESIGN_MODELS/TRANSFORMS/`
 
