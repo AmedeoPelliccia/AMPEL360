@@ -38,7 +38,6 @@ def main() -> int:
 
     status = "PASSED"
     exit_code = 0
-    blocking = True
 
     if errors:
         status = "FAILED"
@@ -49,6 +48,9 @@ def main() -> int:
     elif warnings:
         status = "WARNING"
         exit_code = 0
+
+    # Gate is blocking if it fails (has errors or warnings with warnings_blocking=true)
+    blocking = exit_code != 0
 
     run_id = (
         f"{os.environ.get('GITHUB_SHA', 'local')}_"

@@ -25,9 +25,18 @@ RE_PHASE = re.compile(r"^LC\d{2}$")  # "LC00".."LC14" (range check below)
 RE_KNOT = re.compile(r"^K\d{2}(-T\d{3})?$")  # "K01".."K14" optional "-T###"
 RE_AOR = re.compile(r"^STK_[A-Z0-9]+$")  # conservative: STK_*
 RE_SUBJECT = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")  # kebab-case
+RE_BLOCK = re.compile(r"^\d{2}$")  # "00", "10", "20", etc.
 
 RE_ISSUE_REV = re.compile(r"^I\d{2,3}-R\d{2,3}$")
 RE_STATUS = re.compile(r"^(DRAFT|ACTIVE|RELEASED|SUPERSEDED|OBSOLETE)$")
+
+# Vocabulary allowlists for core tokens
+DEFAULT_PROJECT_ALLOW = {"AMPEL360"}
+DEFAULT_PROGRAM_ALLOW = {"AIRT", "SPACET"}
+DEFAULT_FAMILY_ALLOW = {"Q100", "Q200LR", "Q10", "QHABITAT"}
+DEFAULT_VARIANT_ALLOW = {"GEN", "BASELINE", "FLIGHT_TEST", "CERT", "MSN", "CUST", "PLUS"}
+DEFAULT_VERSION_ALLOW = {"PLUS", "PLUSULTRA", "GENERATION"}
+DEFAULT_MODEL_ALLOW = {"BB", "HW", "SW", "PR"}
 
 # Folder token extractors (path scope)
 RE_PATH_TOKEN = {
@@ -196,6 +205,20 @@ def parse_filename(base: str) -> Tuple[Optional[Dict[str, str]], List[str]]:
     # Basic structural checks
     if not RE_ATA.match(ata):
         errs.append(f"ATA invalid: '{ata}' (expected 2 digits)")
+    if project not in DEFAULT_PROJECT_ALLOW:
+        errs.append(f"PROJECT invalid: '{project}' (allowed: {sorted(DEFAULT_PROJECT_ALLOW)})")
+    if program not in DEFAULT_PROGRAM_ALLOW:
+        errs.append(f"PROGRAM invalid: '{program}' (allowed: {sorted(DEFAULT_PROGRAM_ALLOW)})")
+    if family not in DEFAULT_FAMILY_ALLOW:
+        errs.append(f"FAMILY invalid: '{family}' (allowed: {sorted(DEFAULT_FAMILY_ALLOW)})")
+    if variant not in DEFAULT_VARIANT_ALLOW:
+        errs.append(f"VARIANT invalid: '{variant}' (allowed: {sorted(DEFAULT_VARIANT_ALLOW)})")
+    if version not in DEFAULT_VERSION_ALLOW:
+        errs.append(f"VERSION invalid: '{version}' (allowed: {sorted(DEFAULT_VERSION_ALLOW)})")
+    if model not in DEFAULT_MODEL_ALLOW:
+        errs.append(f"MODEL invalid: '{model}' (allowed: {sorted(DEFAULT_MODEL_ALLOW)})")
+    if not RE_BLOCK.match(block):
+        errs.append(f"BLOCK invalid: '{block}' (expected 2 digits)")
     if not RE_PHASE.match(phase):
         errs.append(f"PHASE invalid: '{phase}' (expected LC##)")
     else:
