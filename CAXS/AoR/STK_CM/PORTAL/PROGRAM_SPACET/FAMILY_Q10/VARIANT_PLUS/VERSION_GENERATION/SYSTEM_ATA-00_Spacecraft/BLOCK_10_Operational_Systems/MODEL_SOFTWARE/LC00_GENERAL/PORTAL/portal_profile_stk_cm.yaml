@@ -175,18 +175,24 @@ portal_profile:
       channel: "github_pr_comment"
 
   # Integration Settings
+  # Note: Paths can be overridden via environment variables for different environments
+  # Use CAXS_SSOT_PATH, CAXS_INDEX_PATH, CM_WORKFLOW_PATH environment variables
   integrations:
     github_actions:
-      workflow_path: ".github/workflows/cm-gates.yaml"
+      # Override with CM_WORKFLOW_PATH environment variable
+      workflow_path: "${CM_WORKFLOW_PATH:-.github/workflows/cm-gates.yaml}"
       artifact_retention_days: 30
     
     talf:
       enabled: true
-      service_endpoint: "internal://talf-service"
+      # Override with TALF_SERVICE_ENDPOINT environment variable
+      service_endpoint: "${TALF_SERVICE_ENDPOINT:-internal://talf-service}"
     
     registry:
-      ssot_path: "CAXS/INFRASTRUCTURE/registries/"
-      index_path: "CAXS/INFRASTRUCTURE/indexes/"
+      # Override with CAXS_SSOT_PATH environment variable
+      ssot_path: "${CAXS_SSOT_PATH:-CAXS/INFRASTRUCTURE/registries/}"
+      # Override with CAXS_INDEX_PATH environment variable
+      index_path: "${CAXS_INDEX_PATH:-CAXS/INFRASTRUCTURE/indexes/}"
 
 # Metadata
 metadata:
