@@ -976,4 +976,40 @@ MODEL_SOFTWARE/
 - All software artifacts must be configuration-controlled and version-tracked
 - Software in these directories supports the execution of tasks aligned to the corresponding KNOT (K01..K14) framework
 
+### 11.3 LC01 Subdirectory Structure
+
+The **LC01_PROBLEM_STATEMENT_GENERATION_PROMPTING_ENGINEERING** directory implements a specialized structure for prompt engineering governance:
+
+```
+LC01_PROBLEM_STATEMENT_GENERATION_PROMPTING_ENGINEERING/
+├── PROMPTS/          — prompt definitions, templates, macro libraries
+├── ENGINES/          — prompt compilers, orchestrators, routers, policy gates
+├── EVAL/             — evaluation suites, scoring tools, regression tests, benchmark harnesses
+├── AGENTS/           — portal-aware assistants (AoR routing, tool access control, guardrails)
+├── SCHEMAS/          — JSON/YAML schemas for prompt records and problem statements
+├── CI/               — validators, linters, GitHub Actions helpers specific to LC01
+└── FIXTURES/         — minimal test fixtures (small, deterministic)
+```
+
+| Subdirectory | Purpose | Key Contents |
+|--------------|---------|--------------|
+| **PROMPTS/** | Prompt definitions and templates | Prompt catalog, templates, macro libraries, parameterization configs |
+| **ENGINES/** | Executable prompt processing | Compilers, orchestrators, routers, policy gates, workflow coordinators |
+| **EVAL/** | Quality and testing | Evaluation suites, scoring tools, regression tests, benchmark harnesses, golden sets |
+| **AGENTS/** | Portal-aware assistance | AoR-aware agents, routing logic, access control, guardrails, tool integration |
+| **SCHEMAS/** | Data validation | JSON/YAML schemas for prompts, problem statements, evaluations, configurations |
+| **CI/** | Continuous integration | Validators, linters, GitHub Actions helpers, PR gate enforcement |
+| **FIXTURES/** | Test data | Minimal test fixtures, golden outputs, edge cases, schema examples |
+
+**Integration Flow:**
+1. **PROMPTS/** → Define reusable prompt templates and catalogs
+2. **SCHEMAS/** → Validate prompt structure and metadata
+3. **ENGINES/** → Compile and execute prompts with policy enforcement
+4. **AGENTS/** → Route prompts through AoR-aware assistants
+5. **EVAL/** → Score, test, and validate outputs
+6. **CI/** → Enforce quality gates and compliance
+7. **FIXTURES/** → Provide test data for all components
+
+This structure ensures **reproducible, reviewable, configuration-controlled prompt engineering** aligned with AMPEL360 governance requirements.
+
 ---
