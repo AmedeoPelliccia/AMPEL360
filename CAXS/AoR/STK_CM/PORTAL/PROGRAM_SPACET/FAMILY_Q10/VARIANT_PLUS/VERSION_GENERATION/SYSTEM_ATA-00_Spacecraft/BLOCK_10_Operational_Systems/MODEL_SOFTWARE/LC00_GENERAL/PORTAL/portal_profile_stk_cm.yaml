@@ -1,0 +1,224 @@
+# Portal Profile for STK_CM (Configuration Management)
+#
+# This profile defines the CM-specific portal configuration including
+# enabled apps, capabilities, data scope, required gates, and audit settings.
+#
+# Owner: STK_CM (Configuration Management)
+# Context: SPACET/Q10/PLUS/GENERATION/ATA-00_Spacecraft/BLOCK_10
+# Status: ACTIVE
+
+portal_profile:
+  id: "PORTAL_PROFILE_STK_CM"
+  version: "I01-R01"
+  owner_aor: "STK_CM"
+  status: "ACTIVE"
+  
+  # Program/Product Context
+  context:
+    program: "SPACET"
+    family: "Q10"
+    variant: "PLUS"
+    version: "GENERATION"
+    system: "ATA-00_Spacecraft"
+    block: "10_Operational_Systems"
+
+  # CM Operational Objectives
+  objectives:
+    - "Maintain baselines reproducible (truth at each version)"
+    - "Control change (what, why, who approves, what to revalidate)"
+    - "Ensure integrity (nomenclature/vocab, links/trace, registries)"
+    - "Produce evidence/export packages (release bundles, manifests, hashes)"
+
+  # Apps Enabled for CM Portal
+  # Must-have apps (CM core) + Should-have apps (CM efficiency)
+  apps_enabled:
+    # Must-have: CM Core
+    - baseline_manager           # create/update baseline manifests, freeze points
+    - change_control_console     # view collectors, gate results, PR checklist
+    - diff_impact_analyzer       # change set → impacted AoRs/KNOTs/LC
+    - trace_graph_explorer       # Req↔Model↔Evidence↔Export integrity
+    - registry_console           # IDs, duplicates, versions, owners, states
+    - release_export_packager    # build bundles: manifest + hashes + evidence
+    - audit_log_viewer           # run manifests, tool versions, sha256, provenance
+    
+    # Should-have: CM Efficiency
+    - ci_results_dashboard       # CI workflow results visualization
+    - vocabulary_nomenclature_ui # view violations by PR and by area
+    - coupling_risk_viewer       # coupling analysis visualization
+    - artifact_catalog_search    # search by v6.0 tokens
+
+  # Capability Matrix per App
+  capabilities:
+    baseline_manager:
+      - read
+      - write
+      - execute
+    change_control_console:
+      - read
+    diff_impact_analyzer:
+      - read
+      - execute
+    trace_graph_explorer:
+      - read
+      - execute
+    registry_console:
+      - read
+      - write
+    release_export_packager:
+      - read
+      - execute
+      - export
+    audit_log_viewer:
+      - read
+    ci_results_dashboard:
+      - read
+    vocabulary_nomenclature_ui:
+      - read
+    coupling_risk_viewer:
+      - read
+    artifact_catalog_search:
+      - read
+
+  # Data Scope Constraints
+  # allowed_paths defines the CM data-access boundary for this portal profile.
+  # Enforcement:
+  #   - The portal runtime evaluates these glob patterns on every data read/write
+  #     request initiated from STK_CM apps.
+  #   - CI guardrails (pipeline jobs for STK_CM) re-validate that all files
+  #     touched by a change fall within these patterns.
+  # On violation:
+  #   - Runtime access outside allowed_paths is blocked and the attempt is
+  #     logged as a CM policy violation in the audit_log_viewer feed.
+  #   - CI checks fail the pipeline if modified files are outside allowed_paths.
+  data_scope:
+    allowed_paths:
+      - "CAXS/AoR/STK_CM/PORTAL/PROGRAM_SPACET/FAMILY_Q10/VARIANT_PLUS/VERSION_GENERATION/**"
+      - "CAXS/AoR/STK_CM/PORTAL/PROGRAM_SPACET/FAMILY_Q10/VARIANT_PLUS/VERSION_GENERATION/SYSTEM_ATA-00_Spacecraft/**"
+    
+    write_constraints:
+      - constraint: "no_direct_write_to_release_dirs_without_gate3"
+        description: "Release directories require Gate 3 approval before write"
+        affected_paths:
+          - "**/EXPORT/releases/**"
+          - "**/releases/**"
+      
+      - constraint: "baseline_changes_require_approval"
+        description: "Baseline manifest changes require CM signoff"
+        affected_paths:
+          - "**/baselines/**"
+          - "**/manifests/baseline_*.yaml"
+
+  # Required Gates for CM Workflows
+  required_gates:
+    # Gate 0: Format (always required)
+    - gate_id: "gate0_nomenclature_vocab"
+      name: "Nomenclature & Vocabulary"
+      description: "Enforce v6.0 naming and controlled vocabulary"
+      blocking: true
+      applies_to:
+        - "all_prs"
+      consumes:
+        - "collect_nomenclature_tokens"
+        - "collect_vocab_usage"
+    
+    # Gate 1: Integrity (always required)
+    - gate_id: "gate1_registry_trace_integrity"
+      name: "Registry & Trace Integrity"
+      description: "Ensure IDs unique, registries consistent, links valid"
+      blocking: true
+      applies_to:
+        - "all_prs"
+      consumes:
+        - "collect_registry_deltas"
+        - "collect_trace_edges"
+        - "collect_trace_integrity"
+    
+    # Gate 2: Impact (always required)
+    - gate_id: "gate2_change_impact"
+      name: "Change Impact Analysis"
+      description: "Identify affected LC/KNOT/AoR requiring revalidation"
+      blocking: false  # Warning mode by default
+      applies_to:
+        - "all_prs"
+      consumes:
+        - "collect_change_impact_packet"
+    
+    # Gate 3: Release (when exporting/releasing)
+    - gate_id: "gate3_release_bundle"
+      name: "Release Bundle Readiness"
+      description: "Validate reproducible bundle, manifest, hashes"
+      blocking: true
+      applies_to:
+        - "release_workflows"
+        - "export_workflows"
+      consumes:
+        - "collect_release_manifest"
+        - "collect_hashes"
+        - "collect_release_notes"
+
+  # Audit Requirements
+  audit:
+    require_run_manifest: true
+    require_sha256: true
+    require_provenance: true
+    retain_ci_artifacts_days: 180
+    audit_log_format: "json"
+    audit_log_path: "artifacts/audit/"
+
+  # Notifications
+  # Recipient identifiers are resolved via the TALF (Tool Access & Licensing Fabric) service:
+  #   - "pr_author" → GitHub username of the PR author
+  #   - "aor_owners" → Users listed in AoR portal contracts (CAXS/AoR/*/PORTAL/*__portal-contract_*)
+  #   - "stk_cm_team" → Team membership from GitHub org (AMPEL360/STK_CM)
+  #   - "stk_cm_lead" → AoR lead defined in STK_CM portal contract
+  #   - "affected_aor_owners" → Dynamically resolved from impact analysis collector output
+  # Mapping source: CAXS/INFRASTRUCTURE/portals/talf-service-specification
+  notifications:
+    gate_failure:
+      notify:
+        - "pr_author"
+        - "aor_owners"
+      channel: "github_pr_comment"
+    
+    release_ready:
+      notify:
+        - "stk_cm_team"
+      channel: "github_pr_comment"
+    
+    baseline_change:
+      notify:
+        - "stk_cm_lead"
+        - "affected_aor_owners"
+      channel: "github_pr_comment"
+
+  # Integration Settings
+  # Note: Paths can be overridden via environment variables for different environments.
+  # Consuming tooling should check for environment variables and use defaults below if not set.
+  integrations:
+    github_actions:
+      # Default workflow path; consuming tooling may override via CM_WORKFLOW_PATH environment variable
+      workflow_path: ".github/workflows/cm-gates.yaml"
+      artifact_retention_days: 30
+    
+    talf:
+      enabled: true
+      # Default TALF endpoint; may be overridden via TALF_SERVICE_ENDPOINT environment variable at runtime
+      service_endpoint: "internal://talf-service"
+    
+    registry:
+      # Default SSOT path; consuming tooling may override via CAXS_SSOT_PATH environment variable
+      ssot_path: "CAXS/INFRASTRUCTURE/registries/"
+      # Default index path; consuming tooling may override via CAXS_INDEX_PATH environment variable
+      index_path: "CAXS/INFRASTRUCTURE/indexes/"
+
+# Metadata
+metadata:
+  created: "2024-12-25"
+  last_updated: "2024-12-25"
+  schema_version: "1.0"
+  references:
+    - "Main README Section 5: Portal Operating Model"
+    - "Main README Section 6: AoR Portal Feature Model"
+    - "Main README Section 10: Nomenclature Standard v6.0"
+    - "CI/collectors/README.md"
+    - "CI/gates/README.md"
