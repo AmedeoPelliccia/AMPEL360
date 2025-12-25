@@ -1,67 +1,162 @@
-# LC03_DESIGN_MODELS
-**Lifecycle Phase:** LC03 — Design Models (Architecture + Interface Modeling)
+# LC03 — Design Models (MODEL=SW)
 
-## Purpose
-This directory contains **LC03 software artifacts** used to define, maintain, and baseline
-the **architecture and design models** for the `MODEL_SOFTWARE` node (ATA-00 / Block 10). It covers:
-- architecture modeling and MBSE/SysML workflows,
-- design baseline generation and control,
-- interface modeling utilities (ICDs, contracts, schema baselines),
-- model transformations and design documentation generation.
+**Portal Context:** CAXS → AoR → STK_CM → PORTAL → PROGRAM_SPACET → FAMILY_Q10 → VARIANT_PLUS → VERSION_GENERATION  
+**System Context:** SYSTEM_ATA-00_Spacecraft → BLOCK_10_Operational_Systems  
+**Lifecycle:** LC03_DESIGN_MODELS  
+**Primary Owner (AoR):** STK_CM  
+**Status:** Active (Portal Baseline)
 
-LC03 is the authoritative location for **design intent** and **interface definition tooling** that
-seeds downstream analysis (LC04), integration/testing (LC05), and release baselines (LC10/LC11).
+---
 
-## Contents (What belongs in LC03)
-Artifacts in this directory typically include:
+## 1. Purpose
 
-### A) Architecture & MBSE/SysML tooling
-- SysML/MBSE model utilities (validation, consistency checks, exports)
-- Architecture model generators and baseline packagers
-- Model transformation utilities (model-to-schema, schema-to-doc, etc.)
+This directory contains **software artifacts** that support the creation, management, validation, and export of
+**design models** for Space-T in the portal context, including:
 
-### B) Design baseline generators
-- Scripts/utilities to generate design baselines (snapshots, diffs, model manifests)
-- Design documentation generators (model-to-doc pipelines)
+- MBSE/SysML model automation (structure, behavior, interfaces),
+- architecture baselining and configuration control for models,
+- interface model generation (ICD scaffolds, ports, signals),
+- model-to-model and model-to-document transformations,
+- portal-grade governance for reproducible design model outputs.
 
-### C) Interface modeling & contract utilities
-- Interface definition utilities (ICD schema generators, contract validators)
-- Interface compatibility tooling (versioning rules, diff tools, breaking-change checks)
-- Interface baseline control helpers (interface manifests, interface CI mapping)
+This is **MODEL_SOFTWARE**: tooling and automation that *produces or validates* LC03 design models.
 
-> Note: LC03 owns architecture/design and interface definition tooling. Numerical analyses and trade studies
-> belong to LC04. Integration/test harnesses and verification closure tooling belong to LC05.
+---
 
-## Naming Convention
-All artifacts in this directory follow the **v6.0 nomenclature standard** with:
+## 2. Scope (What belongs here)
+
+Store here software that performs any of the following LC03 functions:
+
+### 2.1 Architecture modeling & MBSE automation
+- SysML/UML model generators and updaters (blocks, activities, state machines),
+- architecture skeleton generators (system decomposition, packages),
+- requirement-to-model synchronization tools.
+
+### 2.2 Interface modeling & ICD scaffolding
+- port/signal dictionary compilers,
+- interface requirement extractors and ICD draft generators,
+- cross-ATA dependency modelers (coupling graph integration).
+
+### 2.3 Model transformations & exports
+- SysML ↔ JSON/YAML interchange converters,
+- model-to-doc generators (design summaries, interface lists),
+- exporters to downstream analysis tools (CAE inputs, simulation configs).
+
+### 2.4 Model validation & quality gates
+- model linting (naming rules, package structure, stereotype usage),
+- consistency checks (unconnected ports, orphan functions, invalid links),
+- traceability checks (model elements ↔ requirements ↔ knots).
+
+### 2.5 Baseline control & comparison
+- model diff tooling (structural diffs, semantic diffs),
+- baseline snapshots and reproducibility tooling,
+- build pipelines for “known-good” architecture baselines.
+
+---
+
+## 3. Out of scope (Do NOT place here)
+
+- The design models themselves (unless they are small tool fixtures)
+- Large binary model artifacts without an accompanying reproducible pipeline
+- Formal approvals/signoffs (K01 governance folders)
+- Published baselines (export to controlled release/export locations)
+
+This folder should contain the **software** that generates/validates models, not the authoritative model repositories.
+
+---
+
+## 4. Minimum expected capabilities (baseline)
+
+This LC03 tooling must support, at minimum:
+
+1) **Model Baseline Generator** (repeatable, versioned architecture skeleton)  
+2) **Interface Scaffolding Tooling** (ports/signals/ICD candidates)  
+3) **Model Quality Gate** (lint + structural integrity checks in CI)  
+4) **Traceability Binding** (model elements ↔ LC02 requirements ↔ KNOT tasks)  
+
+---
+
+## 5. Recommended sub-structure (tooling lanes)
+
+Use these subfolders if/when needed:
+
+- `MBSE/` — SysML/UML generators, package skeleton builders, sync engines
+- `INTERFACES/` — ICD scaffolding, port/signal dictionary compilers
+- `TRANSFORMS/` — converters (SysML↔JSON/YAML), model-to-doc pipelines
+- `VALIDATORS/` — model linting, consistency checks, trace checks
+- `BASELINES/` — snapshot tooling, diff engines, reproducibility pipelines
+- `EXPORT/` — exporters to CAE/simulation configs and downstream tools
+- `CI/` — LC03 gates and workflow helpers
+- `FIXTURES/` — small deterministic test fixtures
+
+If `00_INDEX.md` is auto-generated by CGen, do not edit it manually.
+
+---
+
+## 6. Interfaces (LC03 I/O)
+
+**Upstream inputs**
+- LC02 requirement records and trace bindings (normalized)
+- coupling constraints (cross-ATA dependencies / ICD requirements)
+- portal policies (AoR gates, allowable tools, naming rules)
+
+**Downstream outputs**
+- LC04: analysis model inputs (simulation configs, parameter sets)
+- LC05/LC06: integration and verification model scaffolds (test harness configs)
+- Portal: architecture baseline packages, model diffs, interface registers
+- AoR review: interface impact packets and baseline change summaries
+
+---
+
+## 7. MoSCoW feature definition (Portal LC03 launchpad)
+
+### Must have
+- **Architecture Skeleton Generator** (repeatable packages/decomposition)
+- **Interface Scaffolding** (ports/signals + ICD candidate generation)
+- **Model Quality Gate** (structure/lint rules enforced in CI)
+- **Traceability Binding** (model elements ↔ requirements ↔ knots)
+- **Baseline Diff + Impact** (what changed, which interfaces/reqs are affected)
+
+### Should have
+- **Model-to-Doc Exports** (design summaries, interface tables, change logs)
+- **Cross-ATA Coupling Integration** (dependency graph awareness in model)
+- **Deterministic Build Mode** (reproducible baselines from inputs)
+
+### Could have
+- **Interactive Model Workbench UI** in portal (guardrails + audit logs)
+- **Automated Refactoring Suggestions** (anti-duplication, pattern guidance)
+- **Multi-tool Bridges** (SysML tool adapters: Cameo, Capella, etc.)
+
+### Won’t have (in this folder)
+- Authority approvals and certification signoffs (K01)
+- Final published baselines (release/export directories)
+
+---
+
+## 8. Naming & compliance
+
+All artifacts must follow the repository **v6.0 nomenclature** and controlled vocabulary rules.
+
+Minimum enforcement:
 - `MODEL=SW`
 - `PHASE=LC03`
-- `KNOT` binding **as applicable** (commonly K03 for design baselines and interface control)
-- Full compliance with the controlled vocabulary defined by the program standard
+- correct bindings for `SYSTEM`, `BLOCK`, `KNOT`, `AoR`.
 
-## Usage Rules
-Place software here when it:
-- supports system/software architecture definition and refinement,
-- implements MBSE workflows (SysML validation, export, baseline creation),
-- generates or controls design baselines (including model manifests),
-- manages interface definitions as governed configuration items (ICDs/contracts),
-- produces design documentation derived from authoritative models.
+Tool outputs must carry:
+- stable IDs for model elements,
+- trace hooks to LC02 requirement IDs and KNOT tasks,
+- deterministic export behavior where feasible.
 
-Do **not** place software here when it:
-- primarily defines requirements/acceptance criteria or traceability capture (use LC02),
-- primarily executes engineering analyses or trade studies (use LC04),
-- is a test/prototyping harness or V&V tooling (use LC05),
-- is cross-phase CM governance, templates, or export contracts (use LC00),
-- is release packaging/serialization CM tooling (use LC10/LC11 as applicable).
+---
 
-## Ownership
-**AoR (owners): STK_SE, STK_PHM, STK_DAB**
+## 9. Review & change control
 
-## References
-- Main README: `MODEL_SOFTWARE` directory structure definition
-- Lifecycle phases (LC00–LC14) definition
-- Nomenclature Standard v6.0 and controlled vocabulary section
+- Changes to LC03 engines/validators/transforms require:
+  - PR diff summary,
+  - model gate execution (lint + consistency + trace checks),
+  - baseline regeneration if generators or ID rules change,
+  - update of registries if interfaces/exports are affected.
 
-**References:**
-- Main README Section 11: MODEL_SOFTWARE Directory Structure
-- Lifecycle Phases: Section 10.2.8 of main README
+STK_CM maintains configuration control and ensures LC03 remains reproducible and portal-consistent.
+
+---
