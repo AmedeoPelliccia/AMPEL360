@@ -1,55 +1,61 @@
-# INDEX — BLOCK_10_Operational_Systems / MODEL_SOFTWARE (STK_CM)
+# MODEL_SOFTWARE — Lifecycle-Organized Software Artifacts
 
-**Path:** `.../SYSTEM_ATA-00_Spacecraft/BLOCK_10_Operational_Systems/MODEL_SOFTWARE/`  
-**Owner (AoR):** STK_CM  
-**Scope:** internal software/tooling used to enforce operational CM controls for Block 10
+This directory organizes software artifacts, automation tooling, and process scripts across all AMPEL360 lifecycle phases. Each subdirectory corresponds to a specific lifecycle phase and contains software models (MODEL=SW) aligned with the v6.0 nomenclature standard.
 
----
+## Directory Structure
+
+```
+MODEL_SOFTWARE/
+├── LC00_GENERAL/                                              # Cross-phase utilities
+├── LC01_PROBLEM_STATEMENT_GENERATION_PROMPTING_ENGINEERING/   # Problem framing tools
+├── LC02_SYSTEM_REQUIREMENTS/                                  # Requirements management
+├── LC03_DESIGN_MODELS/                                        # Architecture & design tools
+├── LC04_ENGINEERING_ANALYSIS_AND_CALCULATION_MODELS/          # Analysis software
+├── LC05_INTEGRATION_TESTING_AND_PROTOTYPING_VV_V6V/          # Test & integration tools
+├── LC06_QUALITY/                                              # QMS & quality tools
+├── LC07_SAFETY_AND_SECURITY/                                  # Safety & security tools
+├── LC08_CERTIFICATION_AND_FIRST_FLIGHT/                       # Certification tools
+├── LC09_GREEN_AIRCRAFT_BASELINES/                             # Sustainability tools
+├── LC10_INDUSTRIALIZATION_SERIALIZATION_PRODUCTION_PLAN_CM/   # Production tools
+├── LC11_OPERATIONS/                                           # Operational tools
+├── LC12_SUPPORT_AND_SERVICES/                                 # Support tools
+├── LC13_MRO_AND_SUSTAINMENT/                                  # Maintenance tools
+└── LC14_RETIREMENT_MANAGEMENT_AND_CIRCULARITY/                # End-of-life tools
+```
 
 ## Purpose
 
-This folder hosts **internal production** software artifacts (scripts/config) that support:
-- **K06** — data governance validation (schemas, identifiers, SSOT registers)
-- **K08** — evidence packaging & release snapshots (operational snapshots, export bundles)
-- **K13** — secure operations controls (optional: key management hooks, access control checks)
-- **K09/K11/K14** — operational readiness and sustainment evidence automation (as applicable)
+Each directory contains:
+- **Scripts and tools** specific to that lifecycle phase
+- **Validators and generators** for phase-specific artifacts
+- **Automation software** supporting KNOT (K01..K14) framework tasks
+- **Process utilities** aligned with AoR responsibilities
+
+## Naming Convention
+
+All software artifacts in this directory tree follow the **v6.0 nomenclature standard** with:
+- `MODEL=SW` token
+- Appropriate `PHASE` token (LC01..LC14)
+- Proper `KNOT` binding (K01..K14)
+- Full compliance with controlled vocabulary (Section 10.2 of main README)
+
+## Usage Guidelines
+
+1. **Cross-phase artifacts**: Place in `LC00_GENERAL/`
+2. **Phase-specific tools**: Place in the corresponding `LC##_*/` directory
+3. **Configuration control**: All artifacts must be version-tracked
+4. **Traceability**: Software must link to requirements and evidence
+5. **KNOT alignment**: Tools should support uncertainty resolution tasks
+
+## References
+
+- **Main README**: See Section 11 for detailed phase descriptions
+- **Nomenclature Standard**: See Section 10 of main README (v6.0)
+- **Lifecycle Phases**: See Section 10.2.8 of main README
+- **KNOTS Framework**: See Section 7 of main README
 
 ---
 
-## Subfolders
-
-- [INTERNAL_PRODUCTION/](./INTERNAL_PRODUCTION/) — scripts, configs, validators, packagers
-- [EVIDENCE/](./EVIDENCE/) — outputs produced by tooling (reports/logs/receipts)
-- [CONFIG/](./CONFIG/) — reusable profiles (CI profiles, validation profiles, bundle profiles)
-- [TEST_FIXTURES/](./TEST_FIXTURES/) — non-sensitive fixtures for validation and regression tests
-- [DOCS/](./DOCS/) — toolchain documentation (how to run, expected inputs/outputs)
-
----
-
-## Recommended internal-production modules (by KNOT)
-
-### K06 — Data governance validators
-- nomenclature validator (filenames/metadata)
-- registry schema validator
-- SSOT consistency checker (cross-register integrity)
-- uniqueness/identifier collision checks
-
-### K08 — Snapshot and packaging builders
-- release snapshot builder (freeze refs, manifests)
-- evidence index generator (closure checks)
-- export bundle builder (structure + checksums)
-- audit-pack assembler (operational bundle completeness)
-
-### K13 — Secure-ops hooks (only if used)
-- signing integration hooks (no keys stored here)
-- checksum verification tools
-- access policy linting for bundle destinations/channels
-
----
-
-## Notes / Controls
-
-1. **No secrets** (keys/tokens) stored in this tree. Reference secure stores.
-2. Tool outputs belong under `./EVIDENCE/` (not mixed with scripts).
-3. Any profile that affects release gating must be versioned and traceable to baseline snapshots.
-
+**Owner (AoR)**: STK_DAB (Digital Applications & Blockchains)  
+**Status**: ACTIVE  
+**Issue-Rev**: I01-R01
