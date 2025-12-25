@@ -954,7 +954,7 @@ MODEL_SOFTWARE/
 |-----------|-------|-------------|
 | **LC00_GENERAL** | General | Cross-phase software artifacts, shared libraries, common utilities, and general-purpose tooling |
 | **LC01_PROBLEM_STATEMENT_GENERATION_PROMPTING_ENGINEERING** | Problem Statement / Generation / Prompting Engineering | Problem framing tools, ideation software, NKU generation pathways, prompting engineering baselines, initial scope statement generators |
-| **LC02_SYSTEM_REQUIREMENTS** | System Requirements | Requirements management tools, allocation software, traceability automation, acceptance criteria validators |
+| **LC02_SYSTEM_REQUIREMENTS** | System Requirements | Requirements management tools, allocation software, traceability automation, acceptance criteria validators. **Detailed structure:** SCHEMAS/ (requirement schemas, controlled vocab), ENGINES/ (parsers, normalizers, ID services), VALIDATORS/ (quality checks, constraint checks), TRACE/ (trace graph builders), INTERFACES/ (ICD extraction, cross-ATA coupling), EXPORT/ (SysML/ReqIF/CSV/JSON converters), CI/ (LC02 gate scripts), FIXTURES/ (test fixtures) |
 | **LC03_DESIGN_MODELS** | Design Models | Architecture modeling tools, SysML/MBSE software, design baseline generators, interface modeling utilities |
 | **LC04_ENGINEERING_ANALYSIS_AND_CALCULATION_MODELS** | Engineering Analysis & Calculation Models | Analysis software, calculation engines, trade study tools, margin calculators, model validation utilities |
 | **LC05_INTEGRATION_TESTING_AND_PROTOTYPING_VV_V6V** | Integration Testing & Prototyping (V&V / V6V) | Prototyping tools, integration test automation, SIL/HIL/PIL software, closure evidence generators |
@@ -975,5 +975,42 @@ MODEL_SOFTWARE/
 - Cross-phase or general-purpose software should be placed in **LC00_GENERAL**
 - All software artifacts must be configuration-controlled and version-tracked
 - Software in these directories supports the execution of tasks aligned to the corresponding KNOT (K01..K14) framework
+
+### 11.3 LC02_SYSTEM_REQUIREMENTS Detailed Structure
+
+The **LC02_SYSTEM_REQUIREMENTS** directory has a specialized internal structure to organize requirement management tooling:
+
+**Location:** `CAXS/AoR/STK_CM/PORTAL/PROGRAM_SPACET/FAMILY_Q10/VARIANT_PLUS/VERSION_GENERATION/SYSTEM_ATA-00_Spacecraft/BLOCK_10_Operational_Systems/MODEL_SOFTWARE/LC02_SYSTEM_REQUIREMENTS/`
+
+```
+LC02_SYSTEM_REQUIREMENTS/
+├── SCHEMAS/      — requirement record schemas, controlled vocab dictionaries
+├── ENGINES/      — parsers, normalizers, ID services, baseline managers
+├── VALIDATORS/   — quality checks, constraint checks, contradiction detectors
+├── TRACE/        — trace graph builders, link resolvers, impact analyzers
+├── INTERFACES/   — ICD candidate extraction and cross-ATA coupling tools
+├── EXPORT/       — converters to SysML/ReqIF/CSV/JSON, portal registry writers
+├── CI/           — LC02 gate scripts for GitHub Actions / pipelines
+└── FIXTURES/     — small deterministic test fixtures
+```
+
+#### Subdirectory Descriptions
+
+| Subdirectory | Purpose | Key Artifacts |
+|--------------|---------|---------------|
+| **SCHEMAS/** | Requirement record schemas, controlled vocabulary dictionaries | JSON/YAML schemas, field definitions, validation rules, controlled taxonomies |
+| **ENGINES/** | Parsers, normalizers, ID services, baseline managers | Document parsers, normalization tools, ID generators, baseline managers |
+| **VALIDATORS/** | Quality checks, constraint checks, contradiction detectors | Quality validators, constraint checkers, conflict detectors, completeness analyzers |
+| **TRACE/** | Trace graph builders, link resolvers, impact analyzers | Traceability graph tools, link validators, impact analysis engines, trace matrices |
+| **INTERFACES/** | ICD candidate extraction, cross-ATA coupling tools | ICD extractors, coupling analyzers, interface validators, catalog generators |
+| **EXPORT/** | Converters to SysML/ReqIF/CSV/JSON, portal registry writers | Format converters (SysML, ReqIF, CSV, JSON), portal writers, documentation generators |
+| **CI/** | LC02 gate scripts for GitHub Actions / pipelines | PR-blocking gates, validation orchestrators, gate reporters, evidence generators |
+| **FIXTURES/** | Small deterministic test fixtures | Sample requirements, schema test data, traceability scenarios, integration fixtures |
+
+**References:**
+- Detailed documentation in `LC02_SYSTEM_REQUIREMENTS/README.md`
+- Individual subdirectory README files for specific guidance
+- ATA 93 (Traceability Graph) for trace tooling specifications
+- ATA 99 (Master Registers) for schema and vocabulary standards
 
 ---
