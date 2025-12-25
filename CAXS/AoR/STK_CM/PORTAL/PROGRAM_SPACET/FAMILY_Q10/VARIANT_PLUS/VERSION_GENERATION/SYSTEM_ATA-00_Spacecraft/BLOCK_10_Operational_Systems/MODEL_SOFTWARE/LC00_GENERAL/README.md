@@ -1,75 +1,157 @@
-# LC00_GENERAL
-**Lifecycle Phase:** LC00 — General / Cross-Phase (Portal + Configuration Management layer)
+# LC00 — General (MODEL=SW)
 
-## Purpose
-This directory contains the **cross-phase (LC00) governance and shared control artifacts** for the
-`MODEL_SOFTWARE` portal node (ATA-00 / Block 10). It exists to ensure that **all lifecycle phases (LC01–LC14)**
-operate under a consistent **configuration management, naming, registry, export, and evidence** framework.
+**Portal Context:** CAXS → AoR → STK_CM → PORTAL → PROGRAM_SPACET → FAMILY_Q10 → VARIANT_PLUS → VERSION_GENERATION  
+**System Context:** SYSTEM_ATA-00_Spacecraft → BLOCK_10_Operational_Systems  
+**Lifecycle:** LC00_GENERAL  
+**Primary Owner (AoR):** STK_CM  
+**Status:** Active (Portal Baseline)
 
-LC00_GENERAL is the **single source of truth** for:
-- Portal node scope and boundaries (what belongs here vs. other LC folders)
-- Cross-phase CM rules (baseline/release conventions, immutability rules, traceability expectations)
-- Common templates and checklists reused across LC folders
-- Registry seeds and canonical index structures used by the portal renderer
-- Export and packaging contracts (release packs, manifests, retention, verification rules)
+---
 
-## Contents (What belongs in LC00_GENERAL)
-Artifacts in this directory typically include:
+## 1. Purpose
 
-### A) Portal governance & navigation
-- Node scope statement and applicability notes (ATA-00 / B10 / MODEL_SOFTWARE)
-- `00_INDEX.md` navigation for LC00–LC14
-- Access/write rules aligned to lifecycle ownership (LC01–LC14 owners)
+This directory contains **general-purpose software assets** that support the Space-T portal’s
+**MODEL_SOFTWARE** stack for this system/block, including:
 
-### B) CM cross-phase control
-- Baseline and release conventions (IDs, tagging strategy, freeze/unfreeze policy)
-- Configuration status accounting principles for software CIs
-- Controlled vocabulary references and policy bindings (v6.0 compliance hooks)
+- shared libraries and utilities reused across lifecycle phases (LC01–LC14),
+- common schemas, controlled vocabularies, and ID services,
+- portal integration adapters (routing, permissions, audit logging),
+- baseline tooling for indexing, packaging, and export scaffolding,
+- cross-cutting validation and CI helpers.
 
-### C) Shared templates (reused in multiple LCs)
-- Standard stubs for: requirements, design, test evidence, audit packs, release notes
-- KNOT checklist templates (K01–K14) to be instantiated per release/program increment
+LC00 is the **foundation layer**: anything software-related that is **not phase-specific** belongs here.
 
-### D) Registry seeds (not phase-specific)
-- Canonical registry schemas (CSV/JSON) and field definitions for:
-  - Software CI Register
-  - Approval/Signoff Register
-  - SBOM index (if used)
-  - Export manifest index (if used)
+---
 
-### E) Shared tooling (only if cross-phase)
-- Utility scripts that support **CM enforcement** (naming validation, index generation, packaging checks)
-- Common configuration constants used by multiple lifecycle workflows
+## 2. Scope (What belongs here)
 
-> Note: **Product/source code** that is specific to a lifecycle phase or a single delivery should live in the
-> relevant LC folder (LC02 requirements tooling, LC05 test harness, etc.), unless it is demonstrably cross-phase
-> and governed here.
+Typical LC00 software artifacts include:
 
-## Naming Convention
-All artifacts in this directory follow the **v6.0 nomenclature standard** with:
+### 2.1 Shared foundations
+- common Python/JS libraries used by LC01–LCxx tools,
+- shared CLI frameworks and configuration loaders,
+- reusable components for deterministic builds.
+
+### 2.2 Governance enablers (software)
+- nomenclature validators and token parsers,
+- controlled vocabulary checkers and dictionary loaders,
+- ID generators/resolvers (stable IDs, link resolvers).
+
+### 2.3 Portal integration & orchestration
+- AoR-aware routing logic and policy gates (software side),
+- audit logging utilities (hashes, provenance stamps),
+- connectors to registers/indexes (read/write APIs, file emitters).
+
+### 2.4 Common schemas & registries (as software inputs)
+- JSON/YAML schemas used across phases,
+- small registry compilers or schema-to-doc generators.
+
+### 2.5 CI helpers
+- GitHub Actions helpers, lint wrappers, test runners,
+- shared checklists or report generators emitted by CI.
+
+---
+
+## 3. Out of scope (Do NOT place here)
+
+- Phase-specific tooling (place in the relevant LCxx directory)
+- Non-software governance signoffs/approvals (K01 governance folders)
+- Large datasets or bulky generated outputs
+- Final published baselines (export/release locations)
+
+---
+
+## 4. Minimum expected capabilities (baseline)
+
+LC00 should enable the following for the entire MODEL_SOFTWARE stack:
+
+1) **Configuration Loader** (single canonical config model for tools)  
+2) **Nomenclature / Vocabulary Validator** (v6.0 enforcement in CI)  
+3) **Stable ID + Trace Helpers** (shared primitives for link integrity)  
+4) **Common Schemas** (prompt/requirement/model/evidence record shapes)  
+5) **Packaging/Export Scaffolding** (consistent artifact packaging patterns)  
+
+---
+
+## 5. Recommended sub-structure (tooling lanes)
+
+Use these subfolders if/when needed:
+
+- `LIB/` — shared libraries, reusable modules
+- `SCHEMAS/` — cross-phase JSON/YAML schemas (canonical record shapes)
+- `VOCAB/` — controlled vocabulary dictionaries + loaders
+- `IDS/` — ID generation, resolution, linking utilities
+- `PORTAL/` — AoR routing, policy gates, audit/provenance utilities
+- `CI/` — shared CI wrappers, reporters, pipeline helpers
+- `EXPORT/` — common packaging, manifest emitters, bundle builders
+- `FIXTURES/` — minimal deterministic fixtures for unit tests
+
+If `00_INDEX.md` is auto-generated by CGen, do not edit it manually.
+
+---
+
+## 6. Interfaces (LC00 I/O)
+
+**Inputs**
+- portal configuration (AoR policies, allowed tools, gate rules)
+- controlled vocabularies and naming standards (v6.0 tokens)
+- cross-phase schema requirements
+
+**Outputs**
+- reusable libraries consumed by LC01–LCxx tooling
+- consistent validation results and CI reports
+- deterministic packaging/export helpers for downstream release processes
+
+---
+
+## 7. MoSCoW feature definition (LC00 foundation for the portal)
+
+### Must have
+- **Common Config + Logging** (uniform behavior across tools)
+- **Nomenclature + Vocabulary Gate** (CI enforcement, actionable errors)
+- **Stable ID & Link Resolver** (trace integrity across lifecycle)
+- **Schema Registry** (canonical record formats shared across phases)
+- **Audit/Provenance Utility** (hashing, run manifests, tool version stamping)
+
+### Should have
+- **Unified CLI Patterns** (consistent flags, help, exit codes)
+- **Report Emitters** (JSON/MD summaries for PRs and dashboards)
+- **Deterministic Build Helpers** (pinned deps, reproducible outputs)
+
+### Could have
+- **Portal SDK** (starter kit for adding new phase tools quickly)
+- **Policy-as-Code Plugins** (extensible gate rules per AoR/system)
+
+### Won’t have (in this folder)
+- Non-software approvals/signoffs (K01)
+- Phase-specific engines (LC01/LC02/LC03…)
+- Published baselines (release/export dirs)
+
+---
+
+## 8. Naming & compliance
+
+All artifacts must follow the repository **v6.0 nomenclature** and controlled vocabulary rules.
+
+Minimum enforcement:
 - `MODEL=SW`
 - `PHASE=LC00`
-- `KNOT` binding when applicable (K01..K14)
-- Full compliance with the controlled vocabulary defined by the program standard
+- correct bindings for `SYSTEM`, `BLOCK`, `AoR`.
 
-## Usage Rules
-Place an artifact in `LC00_GENERAL` when it:
-- Applies to **multiple lifecycle phases** (LC01–LC14), or
-- Defines **cross-phase governance**, registries, templates, export contracts, or
-- Is required to make the portal node **auditable and reproducible** (baseline/release discipline), or
-- Is a shared utility strictly supporting CM (validation/index/packaging), not phase-specific engineering content
+LC00 utilities are expected to be referenced by other phases; maintain backwards compatibility where feasible and version interfaces explicitly when breaking changes are required.
 
-Do **not** place artifacts here when they are:
-- Phase-specific deliverables (put them in the corresponding LC folder), or
-- Single-use scripts without cross-phase value, or
-- Uncontrolled binaries/outputs without traceability to a CI + manifest + evidence pointer
+---
 
-## Ownership
-**Primary AoR (owner): STK_CM**  
-**Cross-phase usage:** all lifecycle owners (LC01–LC14) consume LC00 rules/templates/registries as applicable.
+## 9. Review & change control
 
-## References
-- Main README: `MODEL_SOFTWARE` directory structure definition
-- Lifecycle phases (LC00–LC14) definition
-- Nomenclature Standard v6.0 and controlled vocabulary section
+- Any LC00 change is potentially cross-cutting; require:
+  - PR with clear impact note,
+  - unit tests and/or fixture-based validation,
+  - confirmation that downstream LCxx tools still pass gates,
+  - registry updates if schemas or ID rules change.
+
+STK_CM maintains configuration control and ensures LC00 remains stable, reproducible, and portal-consistent.
+
+---
+```
 
