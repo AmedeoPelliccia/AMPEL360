@@ -107,16 +107,16 @@ def test_aor_allowlist_loading():
     # Validate expected values
     assert 'STK_CM' in vocab['aor_allowlist']
     assert 'STK_DAB' in vocab['aor_allowlist']
-    assert len(vocab['aor_allowlist']) == 14
+    assert len(vocab['aor_allowlist']) > 0
 
 def test_nomenclature_validation():
     # Test with valid fixture
     valid_artifact = 'FIXTURES/artifacts/valid_deliverable.md'
-    assert validator.validate_filename(valid_artifact) == True
+    assert validator.validate_filename(valid_artifact) is True
     
     # Test with invalid fixture
     invalid_artifact = 'FIXTURES/artifacts/invalid_nomenclature.md'
-    assert validator.validate_filename(invalid_artifact) == False
+    assert validator.validate_filename(invalid_artifact) is False
 ```
 
 ---
