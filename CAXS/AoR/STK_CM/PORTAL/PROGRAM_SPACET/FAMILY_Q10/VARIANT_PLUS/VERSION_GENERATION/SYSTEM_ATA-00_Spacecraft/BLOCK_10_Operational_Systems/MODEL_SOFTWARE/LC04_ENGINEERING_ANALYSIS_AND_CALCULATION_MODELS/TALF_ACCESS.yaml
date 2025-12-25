@@ -1,0 +1,48 @@
+talf_access:
+  id: "TALF_LC04_SPACET_Q10_PLUS_GEN_ATA00_B10_SW"
+  owner_aor: "STK_CM"
+  status: "ACTIVE"
+  updated_utc: "2025-12-26T00:00:00Z"
+
+defaults:
+  read: ["STK_CM"]
+  write: ["STK_CM"]
+  execute: ["STK_CM"]
+  export: ["STK_CM"]
+  signoff: ["STK_CM"]
+
+rules:
+  - scope: "_schemas/**"
+    permissions:
+      read: ["STK_CM"]
+      write: ["STK_CM"]
+      execute: []
+      export: []
+      signoff: ["STK_CM"]
+
+  - scope: "_templates/**"
+    permissions:
+      read: ["STK_CM"]
+      write: ["STK_CM"]
+      execute: []
+      export: []
+      signoff: ["STK_CM"]
+
+  - scope: "**/*.md"
+    permissions:
+      read: ["STK_CM"]
+      write: ["STK_CM"]
+
+  - scope: "**/*.py"
+    permissions:
+      read: ["STK_CM"]
+      write: ["STK_CM"]
+      execute: ["STK_CM"]
+
+  - scope: "**/*.csv"
+    permissions:
+      read: ["STK_CM"]
+      write: ["STK_CM"]
+
+notes:
+  - "Extend reader/write lists only via CM-approved governance. Keep STK tokens controlled."

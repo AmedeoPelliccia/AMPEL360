@@ -1,0 +1,37 @@
+index:
+  id: "LC04_INDEX_SPACET_Q10_PLUS_GEN_ATA00_B10_SW"
+  owner_aor: "STK_CM"
+  lc: "LC04"
+  program: "SPACET"
+  family: "Q10"
+  variant: "PLUS"
+  version: "GEN"
+  system: "ATA00"
+  block: "B10"
+  model: "SW"
+  status: "ACTIVE"
+  updated_utc: "2025-12-26T00:00:00Z"
+
+rules:
+  naming_scheme: "{PROGRAM}_{FAMILY}_{VARIANT}_{VERSION}_{SYSTEM}_{BLOCK}_{MODEL}_{LC}_{ARTIFACT_TYPE}_{ARTIFACT_ID}_{VTAG}.{EXT}"
+  version_aliases:
+    VERSION_GENERATION: ["GEN"]
+  require_index_entry_for_new_files: true
+  ignore_paths:
+    - "_templates/"
+    - "_schemas/"
+  ignore_files:
+    - "README.md"
+    - "INDEX.yaml"
+    - "TALF_ACCESS.yaml"
+
+artifact_types:
+  - { code: "SIZING", description: "Sizing models and budgets" }
+  - { code: "TIMING", description: "Timing/latency/scheduling analyses" }
+  - { code: "CMET",   description: "Complexity and maintainability metrics" }
+  - { code: "SACFG",  description: "Static analysis configurations" }
+  - { code: "TRADE",  description: "Trade studies and decision analyses" }
+  - { code: "PERF",   description: "Performance models and param sweeps" }
+  - { code: "SAFETY", description: "Safety-related SW analyses within LC04 scope" }
+
+artifacts: []
