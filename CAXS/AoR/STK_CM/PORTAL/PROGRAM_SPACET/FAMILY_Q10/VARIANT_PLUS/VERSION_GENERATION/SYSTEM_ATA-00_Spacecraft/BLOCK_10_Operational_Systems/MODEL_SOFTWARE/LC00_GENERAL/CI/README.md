@@ -95,6 +95,11 @@ CI/
 │   ├── artifact_collector.py
 │   ├── result_aggregator.py
 │   └── evidence_packager.py
+├── gates/
+│   ├── gate0_nomenclature_vocab.py
+│   ├── gate1_registry_trace.py
+│   ├── gate2_change_impact.py
+│   └── gate3_release_bundle.py
 └── helpers/
     ├── ci_logger.py
     ├── exit_codes.py
