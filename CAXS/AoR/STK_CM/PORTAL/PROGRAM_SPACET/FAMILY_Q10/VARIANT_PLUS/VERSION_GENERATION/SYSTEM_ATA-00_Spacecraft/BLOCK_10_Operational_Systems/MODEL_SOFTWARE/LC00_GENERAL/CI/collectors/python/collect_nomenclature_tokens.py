@@ -20,7 +20,7 @@ from typing import Dict, List, Optional, Tuple
 # [ATA]_[PROJECT]_[PROGRAM]_[FAMILY]_[VARIANT]_[VERSION]_[MODEL]_[BLOCK]_[PHASE]_[KNOT]_[AoR]__
 # [SUBJECT]_[CATEGORY]_[TYPE]_[ISSUE-REV]_[STATUS].[EXT]
 
-RE_ATA = re.compile(r"^\d{2}$")  # "00".."99"
+RE_ATA = re.compile(r"^(?:\d{2}|10\d|11[0-6])$")  # "00".."116" ATA chapter range
 RE_PHASE = re.compile(r"^LC\d{2}$")  # "LC00".."LC14" (range check below)
 RE_KNOT = re.compile(r"^K\d{2}(-T\d{3})?$")  # "K01".."K14" optional "-T###"
 RE_AOR = re.compile(r"^STK_[A-Z0-9]+$")  # conservative: STK_*
@@ -34,8 +34,8 @@ RE_STATUS = re.compile(r"^(DRAFT|ACTIVE|RELEASED|SUPERSEDED|OBSOLETE)$")
 DEFAULT_PROJECT_ALLOW = {"AMPEL360"}
 DEFAULT_PROGRAM_ALLOW = {"AIRT", "SPACET"}
 DEFAULT_FAMILY_ALLOW = {"Q100", "Q200LR", "Q10", "QHABITAT"}
-DEFAULT_VARIANT_ALLOW = {"GEN", "BASELINE", "FLIGHT_TEST", "CERT", "MSN", "CUST", "PLUS"}
-DEFAULT_VERSION_ALLOW = {"PLUS", "PLUSULTRA", "GENERATION"}
+DEFAULT_VARIANT_ALLOW = {"GEN", "BASELINE", "FLIGHT_TEST", "CERT", "MSN", "CUST"}
+DEFAULT_VERSION_ALLOW = {"PLUS", "PLUSULTRA"}
 DEFAULT_MODEL_ALLOW = {"BB", "HW", "SW", "PR"}
 
 # Folder token extractors (path scope)
@@ -146,14 +146,20 @@ def is_ignored(
     ignore_basenames: List[str],
     ignore_exts: List[str],
 ) -> bool:
-    """Check if a path should be ignored."""
+    """Check if a path should be ignored.
+
+    Note: Extension comparison is case-insensitive (uses .lower()).
+    """
     base = os.path.basename(rel_path)
+    # Skip dotfiles early for efficiency
+    if base.startswith("."):
+        return True
     if base in ignore_basenames:
         return True
     for pref in ignore_prefixes:
         if rel_path.startswith(pref):
             return True
-    # Check extension
+    # Check extension (case-insensitive)
     if "." in base:
         ext = base.rsplit(".", 1)[1].lower()
         if ext in ignore_exts:
@@ -349,13 +355,21 @@ def main() -> int:
             continue
 
         abs_path = os.path.join(repo_root, rel)
+
+        # Path traversal validation: ensure resolved path is within repo_root
+        try:
+            resolved = os.path.realpath(abs_path)
+            if not resolved.startswith(os.path.realpath(repo_root) + os.sep):
+                # Skip paths that escape repo_root (e.g., via ".." sequences)
+                continue
+        except (OSError, ValueError):
+            continue
+
         if not os.path.exists(abs_path):
             # deleted/renamed edge cases
             continue
 
         base = os.path.basename(rel)
-        if base.startswith("."):
-            continue  # skip dotfiles by default
 
         parsed, errs = parse_filename(base)
         scanned += 1
