@@ -21,8 +21,8 @@
   "properties": {
     "program": { "type": "string", "enum": ["SPACET"] },
     "family":  { "type": "string", "enum": ["Q10"] },
-    "variant": { "type": "string", "enum": ["PLUS"] },
-    "version": { "type": "string", "description": "Use GEN as alias for VERSION_GENERATION", "enum": ["GEN"] },
+    "variant": { "type": "string", "enum": ["GEN"] },
+    "version": { "type": "string", "description": "Use PLUS as alias for VERSION_PLUS", "enum": ["PLUS"] },
 
     "system": { "type": "string", "enum": ["ATA00"] },
     "block":  { "type": "string", "enum": ["B10"] },
