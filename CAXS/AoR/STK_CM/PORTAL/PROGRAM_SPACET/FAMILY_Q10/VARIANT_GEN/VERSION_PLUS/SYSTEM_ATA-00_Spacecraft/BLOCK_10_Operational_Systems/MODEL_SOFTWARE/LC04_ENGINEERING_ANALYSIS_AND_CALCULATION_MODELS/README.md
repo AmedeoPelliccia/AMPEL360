@@ -1,7 +1,7 @@
 # LC04 — Engineering Analysis & Calculation Models (MODEL=SW)
 
 **Path (Portal Context):**  
-`CAXS/AoR/STK_CM/PORTAL/PROGRAM_SPACET/FAMILY_Q10/VARIANT_PLUS/VERSION_GENERATION/SYSTEM_ATA-00_Spacecraft/BLOCK_10_Operational_Systems/MODEL_SOFTWARE/LC04_ENGINEERING_ANALYSIS_AND_CALCULATION_MODELS/`
+`CAXS/AoR/STK_CM/PORTAL/PROGRAM_SPACET/FAMILY_Q10/VARIANT_GEN/VERSION_PLUS/SYSTEM_ATA-00_Spacecraft/BLOCK_10_Operational_Systems/MODEL_SOFTWARE/LC04_ENGINEERING_ANALYSIS_AND_CALCULATION_MODELS/`
 
 **Owner (AoR):** STK_CM  
 **Status:** Active (Portal Baseline)  
@@ -31,8 +31,8 @@ LC04 uses a compact naming scheme for analysis artifacts:
 Where:
 - `PROGRAM` = `SPACET`
 - `FAMILY`  = `Q10`
-- `VARIANT` = `PLUS`
-- `VERSION` = `GEN` (alias of portal folder `VERSION_GENERATION`)
+- `VARIANT` = `GEN`
+- `VERSION` = `PLUS` (alias of portal folder `VERSION_PLUS`)
 - `SYSTEM`  = `ATA00` (derived from `SYSTEM_ATA-00_Spacecraft`)
 - `BLOCK`   = `B10` (derived from `BLOCK_10_Operational_Systems`)
 - `MODEL`   = `SW`
@@ -43,7 +43,7 @@ Where:
 - `EXT` = allowed extension per artifact type
 
 **Example:**  
-`SPACET_Q10_PLUS_GEN_ATA00_B10_SW_LC04_TRADE_TS002_v1.0.md`
+`SPACET_Q10_GEN_PLUS_ATA00_B10_SW_LC04_TRADE_TS002_v1.0.md`
 
 ---
 

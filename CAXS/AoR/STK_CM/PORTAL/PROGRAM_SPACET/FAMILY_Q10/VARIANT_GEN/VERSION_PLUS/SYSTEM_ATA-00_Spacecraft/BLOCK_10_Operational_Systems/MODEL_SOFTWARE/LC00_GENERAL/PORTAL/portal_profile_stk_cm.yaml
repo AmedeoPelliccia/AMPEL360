@@ -92,8 +92,8 @@ portal_profile:
   #   - CI checks fail the pipeline if modified files are outside allowed_paths.
   data_scope:
     allowed_paths:
-      - "CAXS/AoR/STK_CM/PORTAL/PROGRAM_SPACET/FAMILY_Q10/VARIANT_PLUS/VERSION_GENERATION/**"
-      - "CAXS/AoR/STK_CM/PORTAL/PROGRAM_SPACET/FAMILY_Q10/VARIANT_PLUS/VERSION_GENERATION/SYSTEM_ATA-00_Spacecraft/**"
+      - "CAXS/AoR/STK_CM/PORTAL/PROGRAM_SPACET/FAMILY_Q10/VARIANT_GEN/VERSION_PLUS/**"
+      - "CAXS/AoR/STK_CM/PORTAL/PROGRAM_SPACET/FAMILY_Q10/VARIANT_GEN/VERSION_PLUS/SYSTEM_ATA-00_Spacecraft/**"
     
     write_constraints:
       - constraint: "no_direct_write_to_release_dirs_without_gate3"

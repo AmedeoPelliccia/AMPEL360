@@ -1,9 +1,9 @@
-# STK_CM Portal — PROGRAM_SPACET / FAMILY_Q10 / VARIANT_PLUS
+# STK_CM Portal — PROGRAM_SPACET / FAMILY_Q10 / VARIANT_GEN
 
 **AoR:** STK_CM  
 **Program:** SPACET  
 **Family:** Q10  
-**Variant:** PLUS  
+**Variant:** GEN  
 **Domain:** PROG_GOV / CM (Configuration Management)  
 **Status:** Active  
 **Primary Knots:** K01, K04, K06, K10
@@ -13,7 +13,7 @@
 ## 1. Purpose
 
 This portal is the **Configuration Management (CM) entry point** for the **SPACET Q10 family** under the
-**VARIANT_PLUS** baseline stream.
+**VARIANT_GEN** baseline stream.
 
 It governs how the PLUS stream is:
 - standardized (K01),
@@ -25,13 +25,13 @@ with explicit control of **variant-scoped** impacts and cross-ATA coherence.
 
 ---
 
-## 2. Variant scope and intent (PLUS)
+## 2. Variant scope and intent (GEN)
 
-### What VARIANT_PLUS means here
-VARIANT_PLUS represents a **variant-specific baseline stream** for Q10 used to manage enhancements and
+### What VARIANT_GEN means here
+VARIANT_GEN represents a **variant-specific baseline stream** for Q10 used to manage enhancements and
 additive capabilities relative to a reference baseline (e.g., BASELINE or other declared parent).
 
-This portal ensures PLUS changes are:
+This portal ensures GEN changes are:
 - traceable to CRs and approvals,
 - isolated/controlled when not intended for family-wide propagation,
 - and releasable/auditable with deterministic freeze references.
@@ -87,7 +87,7 @@ This portal ensures PLUS changes are:
 **Gates:** traceability complete, evidence closure, signoff obtained, CERT clearance
 
 **PLUS stream rule:** CERT clearance must explicitly state:
-- the baseline scope is **VARIANT_PLUS**,
+- the baseline scope is **VARIANT_GEN**,
 - whether it is audit-ready for internal QA only or external audit (as applicable),
 - and any constraints on operational use.
 
@@ -131,7 +131,7 @@ This portal coordinates only with:
 
 ## 7. Recommended variant registers (pointers)
 
-Recommended registers for VARIANT_PLUS CM (paths may vary by your repository standard):
+Recommended registers for VARIANT_GEN CM (paths may vary by your repository standard):
 - PLUS **CR Register** (variant-scoped)
 - PLUS **Baseline Manifest Register** (frozen baselines for PLUS)
 - PLUS **Exception/Deviation Register**

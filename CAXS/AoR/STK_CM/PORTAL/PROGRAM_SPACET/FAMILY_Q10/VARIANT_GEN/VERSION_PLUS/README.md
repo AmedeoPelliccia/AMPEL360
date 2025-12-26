@@ -1,10 +1,10 @@
-# STK_CM Portal — PROGRAM_SPACET / FAMILY_Q10 / VARIANT_PLUS / VERSION_GENERATION
+# STK_CM Portal — PROGRAM_SPACET / FAMILY_Q10 / VARIANT_GEN / VERSION_PLUS
 
 **AoR:** STK_CM  
 **Program:** SPACET  
 **Family:** Q10  
-**Variant:** PLUS  
-**Version Stream:** GENERATION  
+**Variant:** GEN  
+**Version Stream:** PLUS  
 **Domain:** PROG_GOV / CM (Configuration Management)  
 **Status:** Active  
 **Primary Knots:** K01, K04, K06, K10
@@ -13,10 +13,10 @@
 
 ## 1. Purpose
 
-This portal defines the **Configuration Management governance** for the **GENERATION version stream**
-within **SPACET / Q10 / PLUS**.
+This portal defines the **Configuration Management governance** for the **PLUS version stream**
+within **SPACET / Q10 / GEN**.
 
-GENERATION is the stream where **candidate changes and generated artifacts** are brought under control,
+PLUS is the stream where **candidate changes and generated artifacts** are brought under control,
 validated, and promoted through the CM knots:
 
 - **K01 Standards** → define/enforce rules and templates used by generation
@@ -28,7 +28,7 @@ This stream exists to ensure automation and generation remain **deterministic, r
 
 ---
 
-## 2. Scope (GENERATION stream)
+## 2. Scope (PLUS stream)
 
 ### In scope
 - Version-scoped governance for generated outputs destined for integration into PLUS baselines
@@ -44,57 +44,57 @@ This stream exists to ensure automation and generation remain **deterministic, r
 
 ## 3. Operating model (Knots)
 
-### K01 — Standards (GENERATION)
+### K01 — Standards (PLUS)
 **Purpose:** Define nomenclature, policies, templates  
 **Output:** Standard release + enforcement rules  
 **Gates:** nomenclature validation, schema validation
 
-**GENERATION rule:** generation pipelines must reference:
+**PLUS rule:** generation pipelines must reference:
 - the exact **standards version** used,
 - and the exact **schema versions** used for validation.
 
 ---
 
-### K04 — Change Control Gate (GENERATION promotions)
+### K04 — Change Control Gate (PLUS promotions)
 **Purpose:** Approve changes for integration  
 **Output:** CR “Approved for integration”  
 **Gates:** impact analysis complete, approval obtained, cross-ATA clearance
 
-**GENERATION rule:** any promotion of generated content requires a CR that declares:
+**PLUS rule:** any promotion of generated content requires a CR that declares:
 - generation source (pipeline/run ID or generator reference),
 - scope of generated artifacts (paths/IDs),
-- intended propagation (GENERATION → baseline candidate),
+- intended propagation (PLUS → baseline candidate),
 - evidence plan for K06/K10.
 
 ---
 
-### K06 — Baseline Release Gate (Release Candidate in GENERATION)
+### K06 — Baseline Release Gate (Release Candidate in PLUS)
 **Purpose:** Validate and freeze release candidate  
 **Output:** BRP “Releaseable”  
 **Gates:** nomenclature compliance, uniqueness check, baseline integrity, CI validation pass
 
-**GENERATION rule:** the BRP must include:
+**PLUS rule:** the BRP must include:
 - generator identity reference (tool version / pipeline version),
 - validation reports (nomenclature, uniqueness, integrity, CI),
 - and a freeze reference binding the candidate baseline.
 
 ---
 
-### K10 — Audit Gate (GENERATION audit packaging)
+### K10 — Audit Gate (PLUS audit packaging)
 **Purpose:** Prepare audit-ready baseline  
 **Output:** “Audit-ready baseline” + export  
 **Gates:** traceability complete, evidence closure, signoff obtained, CERT clearance
 
-**GENERATION rule:** audit readiness must demonstrate:
+**PLUS rule:** audit readiness must demonstrate:
 - traceability from generated artifacts to CR approvals and CI pass,
 - closure of evidence for generation correctness and governance compliance,
-- explicit CERT clearance covering the GENERATION scope exported.
+- explicit CERT clearance covering the PLUS scope exported.
 
 ---
 
-## 4. Required evidence (GENERATION-specific)
+## 4. Required evidence (PLUS-specific)
 
-GENERATION baselines must carry, at minimum, evidence for:
+PLUS baselines must carry, at minimum, evidence for:
 - **Standards binding:** which naming and schema rules were used
 - **Generation provenance:** generator/pipeline identity (version) and run reference
 - **Determinism:** ability to reproduce the same outputs from the same inputs (where applicable)
