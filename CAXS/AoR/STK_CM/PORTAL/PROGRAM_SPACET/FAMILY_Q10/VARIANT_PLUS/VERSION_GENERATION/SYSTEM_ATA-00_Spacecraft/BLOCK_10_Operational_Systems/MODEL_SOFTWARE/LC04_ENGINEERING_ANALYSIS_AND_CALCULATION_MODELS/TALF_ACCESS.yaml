@@ -44,5 +44,15 @@ rules:
       read: ["STK_CM"]
       write: ["STK_CM"]
 
+  - scope: "**/*.json"
+    permissions:
+      read: ["STK_CM"]
+      write: ["STK_CM"]
+
+  - scope: "**/*.yaml"
+    permissions:
+      read: ["STK_CM"]
+      write: ["STK_CM"]
+
 notes:
   - "Extend reader/write lists only via CM-approved governance. Keep STK tokens controlled."

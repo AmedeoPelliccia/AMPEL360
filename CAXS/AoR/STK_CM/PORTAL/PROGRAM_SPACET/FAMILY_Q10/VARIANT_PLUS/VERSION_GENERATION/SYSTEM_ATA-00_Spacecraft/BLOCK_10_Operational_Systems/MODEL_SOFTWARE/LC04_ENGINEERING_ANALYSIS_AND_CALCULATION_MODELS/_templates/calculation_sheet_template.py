@@ -37,15 +37,21 @@ def main() -> int:
     if not inputs_path.exists():
         raise FileNotFoundError(f"Missing inputs: {inputs_path}")
 
-    inputs = json.loads(inputs_path.read_text(encoding="utf-8"))
+    try:
+        input_data = json.loads(inputs_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as e:
+        raise ValueError(f"Invalid JSON in inputs file: {e}") from e
 
-    # TODO: validate inputs (ranges/units) deterministically
+    # TODO: validate input_data (ranges/units) deterministically
     results = {
         "computed_at_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "outputs": {}
     }
 
-    outputs_path.write_text(json.dumps(results, indent=2), encoding="utf-8")
+    try:
+        outputs_path.write_text(json.dumps(results, indent=2), encoding="utf-8")
+    except OSError as e:
+        raise OSError(f"Failed to write results file: {e}") from e
 
     manifest = {
         "toolchain": "python",
@@ -53,10 +59,14 @@ def main() -> int:
             "python": platform.python_version(),
             "platform": platform.platform()
         },
-        "sha256_inputs": { str(inputs_path): sha256_file(inputs_path) },
-        "sha256_outputs": { str(outputs_path): sha256_file(outputs_path) }
+        "sha256_inputs": { inputs_path.as_posix(): sha256_file(inputs_path) },
+        "sha256_outputs": { outputs_path.as_posix(): sha256_file(outputs_path) }
     }
-    manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+
+    try:
+        manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    except OSError as e:
+        raise OSError(f"Failed to write manifest file: {e}") from e
 
     return 0
 

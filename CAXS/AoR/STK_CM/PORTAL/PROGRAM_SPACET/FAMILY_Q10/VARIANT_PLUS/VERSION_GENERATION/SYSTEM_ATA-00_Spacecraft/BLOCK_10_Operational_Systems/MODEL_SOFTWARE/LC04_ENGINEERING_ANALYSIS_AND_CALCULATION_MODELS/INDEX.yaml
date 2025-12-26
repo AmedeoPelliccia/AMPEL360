@@ -24,6 +24,7 @@ rules:
     - "README.md"
     - "INDEX.yaml"
     - "TALF_ACCESS.yaml"
+    - ".gitkeep"
 
 artifact_types:
   - { code: "SIZING", description: "Sizing models and budgets" }
