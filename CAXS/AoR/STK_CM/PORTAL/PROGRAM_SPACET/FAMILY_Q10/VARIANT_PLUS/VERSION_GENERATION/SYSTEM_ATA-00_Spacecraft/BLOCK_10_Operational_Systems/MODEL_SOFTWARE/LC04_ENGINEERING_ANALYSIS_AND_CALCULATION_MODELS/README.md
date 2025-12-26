@@ -50,15 +50,15 @@ Where:
 ## 3. Subfolders (lanes)
 
 ### 3.1 `_templates/`
-Reusable templates for new LC04 artifacts (internal tooling - not subject to v6.0 nomenclature):
-- `sizing_model_template.csv`
-- `timing_analysis_template.md`
-- `trade_study_template.md`
+Reusable templates for new LC04 artifacts:
+- `00_AMPEL360_SPACET_Q10_PLUS_GENERATION_ATA-00_10_LC04_K04_STK_CM__sizing-model-template.csv`
+- `00_AMPEL360_SPACET_Q10_PLUS_GENERATION_ATA-00_10_LC04_K04_STK_CM__timing-analysis-template.md`
+- `00_AMPEL360_SPACET_Q10_PLUS_GENERATION_ATA-00_10_LC04_K04_STK_CM__trade-study-template.md`
 - `calculation_sheet_template.py`
 
 ### 3.2 `_schemas/`
-Schema(s) for LC04 metadata validation (internal tooling - not subject to v6.0 nomenclature):
-- `analysis_model_metadata.schema.json`
+Schema(s) for LC04 metadata validation:
+- `00_AMPEL360_SPACET_Q10_PLUS_GENERATION_ATA-00_10_LC04_K04_STK_CM__analysis-model-metadata.schema.json`
 
 ### 3.3 `sizing_models/`
 Sizing models, parametric envelopes, budget spreadsheets, sizing scripts.  
