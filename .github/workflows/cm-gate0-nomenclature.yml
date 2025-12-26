@@ -30,7 +30,12 @@ jobs:
           set -euo pipefail
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
           HEAD_SHA="${{ github.event.pull_request.head.sha }}"
-          git fetch --no-tags --prune origin "${BASE_SHA}"
+          BASE_REF="${{ github.event.pull_request.base.ref }}"
+          if ! git fetch --no-tags origin "${BASE_SHA}"; then
+            echo "Warning: Failed to fetch BASE_SHA ${BASE_SHA}. Falling back to base ref ${BASE_REF}."
+            git fetch --no-tags origin "${BASE_REF}"
+            BASE_SHA="$(git rev-parse "origin/${BASE_REF}")"
+          fi
           git diff --name-only --diff-filter=ACMRT "${BASE_SHA}" "${HEAD_SHA}" > changed_files.txt
           echo "Changed files:"
           sed -n '1,200p' changed_files.txt
@@ -50,7 +55,8 @@ jobs:
             --ignore-prefix "artifacts/" \
             --ignore-basename "README.md" \
             --ignore-basename "CHANGELOG.md" \
-            --ignore-basename ".gitkeep"
+            --ignore-basename ".gitkeep" \
+            --ignore-ext "py"
 
       - name: Run Gate 0 - gate0_nomenclature_vocab
         shell: bash
@@ -60,3 +66,17 @@ jobs:
           python "${CM_CI_ROOT}/gates/gate0_nomenclature_vocab.py" \
             --collector-json "artifacts/collectors/collect_nomenclature_tokens/collector_output.json" \
             --out-dir "artifacts/gates/gate0_nomenclature_vocab"
+
+      - name: Upload collector output artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: collect_nomenclature_tokens-output
+          path: artifacts/collectors/collect_nomenclature_tokens
+
+      - name: Upload gate output artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gate0_nomenclature_vocab-output
+          path: artifacts/gates/gate0_nomenclature_vocab

@@ -90,14 +90,21 @@ def main() -> int:
 
     # Console summary
     print(result["summary"])
+    max_items = 200
     if errors:
         print("\nErrors:")
-        for e in errors[:200]:
+        for e in errors[:max_items]:
             print(f"- {e['path']}: {e['code']} — {e['message']}")
+        if len(errors) > max_items:
+            remaining = len(errors) - max_items
+            print(f"... and {remaining} more errors not shown.")
     if warnings:
         print("\nWarnings:")
-        for w in warnings[:200]:
+        for w in warnings[:max_items]:
             print(f"- {w['path']}: {w['code']} — {w['message']}")
+        if len(warnings) > max_items:
+            remaining = len(warnings) - max_items
+            print(f"... and {remaining} more warnings not shown.")
 
     return exit_code
 

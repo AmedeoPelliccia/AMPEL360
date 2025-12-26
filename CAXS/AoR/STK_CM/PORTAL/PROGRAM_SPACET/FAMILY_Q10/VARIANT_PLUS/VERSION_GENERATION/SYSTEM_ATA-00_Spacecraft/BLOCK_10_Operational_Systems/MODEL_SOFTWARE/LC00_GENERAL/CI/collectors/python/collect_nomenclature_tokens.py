@@ -189,9 +189,14 @@ def parse_filename(base: str) -> Tuple[Optional[Dict[str, str]], List[str]]:
     left_parts = left.split("_")
     # AoR contains underscore (STK_*), so we expect 12 parts, with last 2 being AoR
     if len(left_parts) == 12:
-        # Combine last two parts as AoR (e.g., STK + CM -> STK_CM)
-        aor = f"{left_parts[10]}_{left_parts[11]}"
-        left_parts = left_parts[:10] + [aor]
+        # Combine last two parts as AoR (e.g., STK + CM -> STK_CM) but only if it matches RE_AOR
+        aor_candidate = f"{left_parts[10]}_{left_parts[11]}"
+        if RE_AOR.match(aor_candidate):
+            left_parts = left_parts[:10] + [aor_candidate]
+        else:
+            return None, [
+                f"Left side has 12 fields but last two parts do not form a valid AoR ('{aor_candidate}')"
+            ]
     elif len(left_parts) != 11:
         return None, [f"Left side must have 11 or 12 fields (AoR contains _), got {len(left_parts)}"]
 
@@ -227,7 +232,7 @@ def parse_filename(base: str) -> Tuple[Optional[Dict[str, str]], List[str]]:
             n = int(phase[2:])
             if n < 0 or n > 14:
                 errs.append(f"PHASE out of range: '{phase}' (expected LC00..LC14)")
-        except Exception:
+        except ValueError:
             errs.append(f"PHASE invalid: '{phase}'")
 
     if not RE_KNOT.match(knot):
@@ -238,7 +243,7 @@ def parse_filename(base: str) -> Tuple[Optional[Dict[str, str]], List[str]]:
             k = int(knot[1:3])
             if k < 1 or k > 14:
                 errs.append(f"KNOT out of range: '{knot}' (expected K01..K14)")
-        except Exception:
+        except ValueError:
             errs.append(f"KNOT invalid: '{knot}'")
 
     if not RE_AOR.match(aor):
