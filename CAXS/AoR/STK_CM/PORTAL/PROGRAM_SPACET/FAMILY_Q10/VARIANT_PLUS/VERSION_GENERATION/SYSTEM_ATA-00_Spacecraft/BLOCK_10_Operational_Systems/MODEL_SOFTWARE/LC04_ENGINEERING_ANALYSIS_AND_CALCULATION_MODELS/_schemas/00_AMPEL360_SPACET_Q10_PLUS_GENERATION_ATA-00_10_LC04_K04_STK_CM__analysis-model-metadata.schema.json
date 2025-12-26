@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "analysis_model_metadata.schema.json",
+  "title": "LC04 Analysis Model Metadata",
+  "type": "object",
+  "required": [
+    "program",
+    "family",
+    "variant",
+    "version",
+    "system",
+    "block",
+    "model",
+    "lc",
+    "artifact_type",
+    "artifact_id",
+    "vtag",
+    "owner_aor",
+    "status"
+  ],
+  "properties": {
+    "program": { "type": "string", "enum": ["SPACET"] },
+    "family":  { "type": "string", "enum": ["Q10"] },
+    "variant": { "type": "string", "enum": ["PLUS"] },
+    "version": { "type": "string", "description": "Use GEN as alias for VERSION_GENERATION", "enum": ["GEN"] },
+
+    "system": { "type": "string", "enum": ["ATA00"] },
+    "block":  { "type": "string", "enum": ["B10"] },
+    "model":  { "type": "string", "enum": ["SW"] },
+    "lc":     { "type": "string", "enum": ["LC04"] },
+
+    "artifact_type": {
+      "type": "string",
+      "enum": ["SIZING", "TIMING", "CMET", "SACFG", "TRADE", "PERF", "SAFETY"]
+    },
+    "artifact_id": { "type": "string", "pattern": "^[A-Z0-9]{3,12}$" },
+    "vtag": { "type": "string", "pattern": "^v\\d+\\.\\d+$" },
+
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+
+    "owner_aor": { "type": "string", "pattern": "^STK_[A-Z0-9]+$" },
+    "knot_binding": { "type": "string", "pattern": "^K(0[1-9]|1[0-4])$" },
+
+    "status": { "type": "string", "enum": ["DRAFT", "ACTIVE", "RELEASED", "SUPERSEDED", "OBSOLETE"] },
+
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref"],
+        "properties": {
+          "kind": { "type": "string" },
+          "ref": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "ref"],
+        "properties": {
+          "kind": { "type": "string" },
+          "ref": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+
+    "run_manifest": {
+      "type": "object",
+      "properties": {
+        "toolchain": { "type": "string" },
+        "tool_versions": { "type": "object", "additionalProperties": { "type": "string" } },
+        "sha256_inputs": { "type": "object", "additionalProperties": { "type": "string" } },
+        "sha256_outputs": { "type": "object", "additionalProperties": { "type": "string" } }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

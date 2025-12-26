@@ -1,0 +1,6 @@
+parameter,unit,nominal,min,max,source,notes
+mass_budget_total,kg,,,,,Populate from LC02 constraints and LC03 allocations
+power_budget_peak,W,,,,,Include margins and derating assumptions
+cpu_utilization_peak,%,,,,,"If SW model; include timing envelopes"
+memory_budget_total,MB,,,,,
+thermal_dissipation_peak,W,,,,,
