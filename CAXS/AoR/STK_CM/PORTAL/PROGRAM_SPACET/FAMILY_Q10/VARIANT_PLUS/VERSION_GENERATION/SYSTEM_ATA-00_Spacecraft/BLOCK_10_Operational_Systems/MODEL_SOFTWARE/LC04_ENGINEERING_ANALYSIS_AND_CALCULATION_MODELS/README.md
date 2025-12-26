@@ -51,14 +51,14 @@ Where:
 
 ### 3.1 `_templates/`
 Reusable templates for new LC04 artifacts:
-- `sizing_model_template.csv`
-- `timing_analysis_template.md`
-- `trade_study_template.md`
+- `00_AMPEL360_SPACET_Q10_GEN_PLUS_SW_10_LC04_K04_STK_CM__sizing-model-template_INTERNAL_PRODUCTION_SPEC_I01-R01_ACTIVE.csv`
+- `00_AMPEL360_SPACET_Q10_GEN_PLUS_SW_10_LC04_K04_STK_CM__timing-analysis-template_INTERNAL_PRODUCTION_SPEC_I01-R01_ACTIVE.md`
+- `00_AMPEL360_SPACET_Q10_GEN_PLUS_SW_10_LC04_K04_STK_CM__trade-study-template_INTERNAL_PRODUCTION_SPEC_I01-R01_ACTIVE.md`
 - `calculation_sheet_template.py`
 
 ### 3.2 `_schemas/`
 Schema(s) for LC04 metadata validation:
-- `analysis_model_metadata.schema.json`
+- `00_AMPEL360_SPACET_Q10_GEN_PLUS_SW_10_LC04_K04_STK_CM__analysis-model-metadata_REGISTRY_SCHEMA_I01-R01_ACTIVE.json`
 
 ### 3.3 `sizing_models/`
 Sizing models, parametric envelopes, budget spreadsheets, sizing scripts.  
