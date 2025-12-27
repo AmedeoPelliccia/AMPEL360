@@ -1,11 +1,11 @@
 
-# STK_CM Portal — PROGRAM_SPACET / FAMILY_Q10 / VARIANT_PLUS / VERSION_GENERATION / SYSTEM_ATA-00_Spacecraft
+# STK_CM Portal — PROGRAM_SPACET / FAMILY_Q10 / VARIANT_GEN / VERSION_PLUS / SYSTEM_ATA-00_Spacecraft
 
 **AoR:** STK_CM  
 **Program:** SPACET  
 **Family:** Q10  
-**Variant:** PLUS  
-**Version Stream:** GENERATION  
+**Variant:** GEN  
+**Version Stream:** PLUS  
 **System:** ATA-00 — Spacecraft  
 **Domain:** PROG_GOV / CM (Configuration Management)  
 **Status:** Active  
@@ -16,7 +16,7 @@
 ## 1. Purpose
 
 This system-level portal page defines **Configuration Management governance** for **ATA-00 (Spacecraft)**
-within the **SPACET / Q10 / PLUS / GENERATION** stream.
+within the **SPACET / Q10 / GEN / PLUS** stream.
 
 It provides the controlled entry point to:
 - **K01 Standards** — nomenclature, policies, templates, enforcement
@@ -28,7 +28,7 @@ for **ATA-00 governance artifacts**, ensuring cross-ATA coherence and audit-grad
 
 ---
 
-## 2. Scope (ATA-00 within GENERATION)
+## 2. Scope (ATA-00 within PLUS)
 
 ### In scope
 - ATA-00 governance assets used program-wide (baseline CM policy, nomenclature, registers, templates)

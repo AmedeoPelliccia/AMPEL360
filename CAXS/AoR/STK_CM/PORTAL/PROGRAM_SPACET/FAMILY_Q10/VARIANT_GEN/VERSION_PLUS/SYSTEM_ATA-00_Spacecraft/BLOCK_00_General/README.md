@@ -1,10 +1,10 @@
-# STK_CM Portal — PROGRAM_SPACET / FAMILY_Q10 / VARIANT_PLUS / VERSION_GENERATION / SYSTEM_ATA-00_Spacecraft / BLOCK_00_General
+# STK_CM Portal — PROGRAM_SPACET / FAMILY_Q10 / VARIANT_GEN / VERSION_PLUS / SYSTEM_ATA-00_Spacecraft / BLOCK_00_General
 
 **AoR:** STK_CM  
 **Program:** SPACET  
 **Family:** Q10  
-**Variant:** PLUS  
-**Version Stream:** GENERATION  
+**Variant:** GEN  
+**Version Stream:** PLUS  
 **System:** ATA-00 — Spacecraft  
 **Block:** 00 — General  
 **Domain:** PROG_GOV / CM (Configuration Management)  
@@ -16,7 +16,7 @@
 ## 1. Purpose
 
 This block page defines how **ATA-00 / Block 00 (General)** is governed under **STK_CM** for the
-**SPACET Q10 PLUS — GENERATION** stream.
+**SPACET Q10 GEN — PLUS** stream.
 
 Block 00 is the **governance nucleus** for program-wide configuration management:
 - standards and enforcement (K01),

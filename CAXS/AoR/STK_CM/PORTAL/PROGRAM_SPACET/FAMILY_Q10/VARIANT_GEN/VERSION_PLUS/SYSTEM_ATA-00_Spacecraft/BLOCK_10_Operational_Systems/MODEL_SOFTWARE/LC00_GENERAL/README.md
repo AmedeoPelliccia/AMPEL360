@@ -1,6 +1,6 @@
 # LC00 — General (MODEL=SW)
 
-**Portal Context:** CAXS → AoR → STK_CM → PORTAL → PROGRAM_SPACET → FAMILY_Q10 → VARIANT_PLUS → VERSION_GENERATION  
+**Portal Context:** CAXS → AoR → STK_CM → PORTAL → PROGRAM_SPACET → FAMILY_Q10 → VARIANT_GEN → VERSION_PLUS  
 **System Context:** SYSTEM_ATA-00_Spacecraft → BLOCK_10_Operational_Systems  
 **Lifecycle:** LC00_GENERAL  
 **Primary Owner (AoR):** STK_CM  

@@ -927,7 +927,7 @@ For `TYPE in {BADGE,CERT,LIC}` (CATEGORY `REGISTRY`):
 
 The **MODEL_SOFTWARE** directory organizes software artifacts, automation tooling, and process scripts across all lifecycle phases. This structure provides a canonical organization for software models (MODEL=SW) aligned with the AMPEL360 lifecycle phases.
 
-**Location:** `CAXS/AoR/STK_CM/PORTAL/PROGRAM_SPACET/FAMILY_Q10/VARIANT_PLUS/VERSION_GENERATION/SYSTEM_ATA-00_Spacecraft/BLOCK_10_Operational_Systems/MODEL_SOFTWARE/`
+**Location:** `CAXS/AoR/STK_CM/PORTAL/PROGRAM_SPACET/FAMILY_Q10/VARIANT_GEN/VERSION_PLUS/SYSTEM_ATA-00_Spacecraft/BLOCK_10_Operational_Systems/MODEL_SOFTWARE/`
 
 ```
 MODEL_SOFTWARE/
@@ -980,7 +980,7 @@ MODEL_SOFTWARE/
 
 The **LC02_SYSTEM_REQUIREMENTS** directory has a specialized internal structure to organize requirement management tooling:
 
-**Location:** `CAXS/AoR/STK_CM/PORTAL/PROGRAM_SPACET/FAMILY_Q10/VARIANT_PLUS/VERSION_GENERATION/SYSTEM_ATA-00_Spacecraft/BLOCK_10_Operational_Systems/MODEL_SOFTWARE/LC02_SYSTEM_REQUIREMENTS/`
+**Location:** `CAXS/AoR/STK_CM/PORTAL/PROGRAM_SPACET/FAMILY_Q10/VARIANT_GEN/VERSION_PLUS/SYSTEM_ATA-00_Spacecraft/BLOCK_10_Operational_Systems/MODEL_SOFTWARE/LC02_SYSTEM_REQUIREMENTS/`
 
 ```
 LC02_SYSTEM_REQUIREMENTS/

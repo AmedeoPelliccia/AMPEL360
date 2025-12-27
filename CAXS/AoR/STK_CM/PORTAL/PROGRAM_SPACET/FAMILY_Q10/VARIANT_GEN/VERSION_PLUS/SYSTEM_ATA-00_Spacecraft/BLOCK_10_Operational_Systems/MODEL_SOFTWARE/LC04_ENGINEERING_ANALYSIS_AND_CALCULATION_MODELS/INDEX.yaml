@@ -1,11 +1,11 @@
 index:
-  id: "LC04_INDEX_SPACET_Q10_PLUS_GEN_ATA00_B10_SW"
+  id: "LC04_INDEX_SPACET_Q10_GEN_PLUS_ATA00_B10_SW"
   owner_aor: "STK_CM"
   lc: "LC04"
   program: "SPACET"
   family: "Q10"
-  variant: "PLUS"
-  version: "GEN"
+  variant: "GEN"
+  version: "PLUS"
   system: "ATA00"
   block: "B10"
   model: "SW"
@@ -15,7 +15,7 @@ index:
 rules:
   naming_scheme: "{PROGRAM}_{FAMILY}_{VARIANT}_{VERSION}_{SYSTEM}_{BLOCK}_{MODEL}_{LC}_{ARTIFACT_TYPE}_{ARTIFACT_ID}_{VTAG}.{EXT}"
   version_aliases:
-    VERSION_GENERATION: ["GEN"]
+    VERSION_PLUS: ["PLUS"]
   require_index_entry_for_new_files: true
   ignore_paths:
     - "_templates/"
